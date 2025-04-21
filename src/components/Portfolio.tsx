@@ -81,13 +81,23 @@ const Portfolio = () => {
     if (titleRef.current) observer.observe(titleRef.current);
     if (dividerRef.current) observer.observe(dividerRef.current);
     if (filterRef.current) observer.observe(filterRef.current);
+    
+    // Add observation for each project card
+    projectsRef.current.forEach(el => {
+      if (el) observer.observe(el);
+    });
 
     return () => {
       if (titleRef.current) observer.unobserve(titleRef.current);
       if (dividerRef.current) observer.unobserve(dividerRef.current);
       if (filterRef.current) observer.unobserve(filterRef.current);
+      
+      // Remove observation for each project card
+      projectsRef.current.forEach(el => {
+        if (el) observer.unobserve(el);
+      });
     };
-  }, []);
+  }, [filter]); // Re-run when filter changes to observe new elements
 
   const filteredProjects = filter === "All" 
     ? projects 
@@ -113,7 +123,7 @@ const Portfolio = () => {
               key={index}
               className={`px-4 py-2 rounded-full transition-all ${
                 filter === category 
-                  ? 'bg-brand-yellow text-black' 
+                  ? 'bg-brand-yellow text-black font-medium' 
                   : 'bg-card hover:bg-brand-yellow/20'
               }`}
               onClick={() => setFilter(category)}
@@ -129,12 +139,7 @@ const Portfolio = () => {
             <div
               key={index}
               ref={(el) => projectsRef.current[index] = el}
-              className="reveal-animate"
-              style={{ 
-                transitionDelay: `${index * 100}ms`,
-                opacity: 0,
-                transform: 'translateY(20px)'
-              }}
+              className="reveal-animate opacity-0 transform translate-y-5"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
@@ -160,10 +165,9 @@ const Portfolio = () => {
                     }`}
                   >
                     <Button 
-                      asChild
                       className="bg-brand-yellow hover:bg-brand-gold text-black"
                     >
-                      <a href={project.link} target="_blank" rel="noopener noreferrer">
+                      <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex items-center">
                         View Project <ExternalLink className="ml-2 w-4 h-4" />
                       </a>
                     </Button>
@@ -179,7 +183,7 @@ const Portfolio = () => {
                     {project.tech.map((tech, techIndex) => (
                       <span 
                         key={techIndex}
-                        className="text-xs bg-brand-yellow/10 text-brand-yellow px-2 py-1 rounded-md"
+                        className="text-xs bg-brand-yellow/10 text-brand-gold px-2 py-1 rounded-md"
                       >
                         {tech}
                       </span>
@@ -193,7 +197,7 @@ const Portfolio = () => {
         
         {/* View all button */}
         <div className="text-center mt-12">
-          <Button asChild className="bg-brand-yellow text-black hover:bg-brand-gold">
+          <Button className="bg-brand-yellow text-black hover:bg-brand-gold">
             <a href="#" className="flex items-center">
               View All Projects <ExternalLink className="ml-2 w-4 h-4" />
             </a>

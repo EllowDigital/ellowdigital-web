@@ -101,7 +101,7 @@ const EngagementModel = () => {
       <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-brand-yellow/10 rounded-full blur-3xl morph-shape" style={{ animationDelay: '10s' }}></div>
       
       <div className="max-w-6xl mx-auto">
-        <h2 ref={titleRef} className="section-title reveal-animate">Our Engagement Model</h2>
+        <h2 ref={titleRef} className="section-title reveal-animate">Our Engagement Models</h2>
         <div ref={dividerRef} className="animated-divider reveal-animate mb-12"></div>
         
         {/* Process Timeline */}
@@ -115,7 +115,7 @@ const EngagementModel = () => {
             {steps.map((step, index) => (
               <div key={index} className="relative z-10">
                 {/* Timeline node */}
-                <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-card neo-effect border-2 border-brand-gold mb-4">
+                <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-card shadow-md border border-brand-gold/30 mb-4">
                   <span className="text-xl font-bold text-brand-gold">{index + 1}</span>
                 </div>
                 
@@ -131,19 +131,17 @@ const EngagementModel = () => {
         {/* Engagement Models */}
         <h3 className="text-2xl font-semibold mb-8 text-center reveal-animate">Flexible Engagement Options</h3>
         
-        <div ref={modelsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div 
+          ref={modelsRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
           {models.map((model, index) => (
             <div 
               key={index}
               ref={(el) => {
                 if (el) modelCardsRef.current[index] = el;
               }}
-              className="reveal-animate"
-              style={{ 
-                transitionDelay: `${index * 100}ms`,
-                opacity: 0,
-                transform: 'translateY(20px)'
-              }}
+              className="reveal-animate opacity-0 transform translate-y-5"
             >
               <Card className="h-full border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
                 <CardContent className="p-6">

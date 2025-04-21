@@ -2,6 +2,7 @@
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useRef, useState } from "react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const testimonials = [
   {
@@ -47,12 +48,9 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const maxVisibleItems = 3;
-  const testimonialRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const carouselRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -78,18 +76,6 @@ const Testimonials = () => {
     };
   }, []);
 
-  const handlePrev = () => {
-    setActiveIndex((prevIndex) => 
-      prevIndex > 0 ? prevIndex - 1 : testimonials.length - maxVisibleItems
-    );
-  };
-
-  const handleNext = () => {
-    setActiveIndex((prevIndex) => 
-      prevIndex < testimonials.length - maxVisibleItems ? prevIndex + 1 : 0
-    );
-  };
-
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }).map((_, index) => (
       <Star 
@@ -98,11 +84,6 @@ const Testimonials = () => {
       />
     ));
   };
-
-  const visibleTestimonials = testimonials.slice(
-    activeIndex,
-    activeIndex + maxVisibleItems
-  );
 
   return (
     <section id="testimonials" className="section-container py-24 relative overflow-hidden snap-start">
@@ -114,81 +95,53 @@ const Testimonials = () => {
         <h2 ref={titleRef} className="section-title reveal-animate">Client Testimonials</h2>
         <div ref={dividerRef} className="animated-divider reveal-animate mb-12"></div>
         
-        <div ref={carouselRef} className="reveal-animate relative">
-          {/* Carousel */}
-          <div className="overflow-hidden">
-            <div 
-              className="flex flex-col md:flex-row gap-6 transition-all duration-700 ease-out"
-              style={{ transform: `translateX(0px)` }}
-            >
-              {visibleTestimonials.map((testimonial, index) => (
-                <Card
-                  key={index}
-                  ref={(el) => testimonialRefs.current[index] = el}
-                  className="flex-shrink-0 w-full md:w-1/3 neo-effect card-3d transition-all duration-300 tilt-effect mb-6 md:mb-0"
-                >
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="flex">
-                        {renderStars(testimonial.rating)}
+        <div ref={carouselRef} className="reveal-animate">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="mx-auto max-w-5xl"
+          >
+            <CarouselContent>
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
+                  <Card className="h-full neo-effect card-3d transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex">
+                          {renderStars(testimonial.rating)}
+                        </div>
+                        <Quote className="w-10 h-10 text-brand-yellow/20" />
                       </div>
-                      <Quote className="w-10 h-10 text-brand-yellow/20" />
-                    </div>
-                    
-                    <p className="text-muted-foreground mb-6">{testimonial.text}</p>
-                    
-                    <div className="flex items-center">
-                      <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
-                        <img 
-                          src={testimonial.image} 
-                          alt={testimonial.name} 
-                          className="w-full h-full object-cover"
-                        />
+                      
+                      <p className="text-muted-foreground mb-6 line-clamp-4">{testimonial.text}</p>
+                      
+                      <div className="flex items-center">
+                        <div className="w-12 h-12 rounded-full overflow-hidden mr-4 border border-brand-gold/20">
+                          <img 
+                            src={testimonial.image} 
+                            alt={testimonial.name} 
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold">{testimonial.name}</h4>
+                          <p className="text-xs text-muted-foreground">
+                            {testimonial.position}, {testimonial.company}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-semibold">{testimonial.name}</h4>
-                        <p className="text-xs text-muted-foreground">
-                          {testimonial.position}, {testimonial.company}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
               ))}
+            </CarouselContent>
+            <div className="flex justify-center mt-8 gap-4">
+              <CarouselPrevious className="static transform-none mx-2 bg-card border-brand-gold/20 hover:bg-brand-yellow/10 hover:text-brand-gold" />
+              <CarouselNext className="static transform-none mx-2 bg-card border-brand-gold/20 hover:bg-brand-yellow/10 hover:text-brand-gold" />
             </div>
-          </div>
-          
-          {/* Navigation buttons */}
-          <div className="flex justify-center mt-8 gap-4">
-            <button
-              onClick={handlePrev}
-              className="w-10 h-10 rounded-full bg-card neo-effect flex items-center justify-center transition-all hover:bg-brand-yellow/10"
-              aria-label="Previous testimonial"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={handleNext}
-              className="w-10 h-10 rounded-full bg-card neo-effect flex items-center justify-center transition-all hover:bg-brand-yellow/10"
-              aria-label="Next testimonial"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-          
-          {/* Pagination dots */}
-          <div className="flex justify-center mt-4 gap-2">
-            {Array.from({ length: testimonials.length - maxVisibleItems + 1 }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  activeIndex === index ? 'bg-brand-yellow w-6' : 'bg-muted'
-                }`}
-                aria-label={`Go to testimonial group ${index + 1}`}
-              ></button>
-            ))}
-          </div>
+          </Carousel>
         </div>
       </div>
     </section>

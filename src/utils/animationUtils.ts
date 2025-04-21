@@ -136,6 +136,12 @@ export const init3DTiltEffect = () => {
 
 // Initialize custom cursor
 export const initCustomCursor = () => {
+  // Remove any existing custom cursor to prevent duplicates
+  const existingCursor = document.querySelector('.custom-cursor');
+  if (existingCursor) {
+    existingCursor.parentNode?.removeChild(existingCursor);
+  }
+  
   const cursor = document.createElement('div');
   cursor.classList.add('custom-cursor');
   cursor.innerHTML = `
@@ -147,12 +153,22 @@ export const initCustomCursor = () => {
   const cursorDot = cursor.querySelector('.cursor-dot') as HTMLElement;
   const cursorOutline = cursor.querySelector('.cursor-outline') as HTMLElement;
   
+  if (!cursorDot || !cursorOutline) {
+    console.error('Custom cursor elements not found');
+    return () => {};
+  }
+  
   const handleMouseMove = (e: MouseEvent) => {
-    cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    if (cursorDot) {
+      cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    }
+    
     // Add slight delay to outline for effect
     setTimeout(() => {
-      cursorOutline.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    }, 100);
+      if (cursorOutline) {
+        cursorOutline.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      }
+    }, 50);
   };
   
   const handleMouseDown = () => {
