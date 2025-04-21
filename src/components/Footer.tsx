@@ -1,5 +1,5 @@
-
 import { Mail, Phone, Github } from "lucide-react";
+import Logo from "./Logo";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -9,6 +9,7 @@ const Footer = () => {
       <div className="section-container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2 space-y-4">
+            <Logo />
             <h3 className="text-2xl font-bold gradient-text">
               Ellow<span className="text-brand-purple">Digitals</span>
             </h3>

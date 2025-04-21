@@ -10,6 +10,9 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import FeaturedOffers from "@/components/FeaturedOffers";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import FounderSection from "@/components/FounderSection";
+import EngagementModel from "@/components/EngagementModel";
+import WorkProcess from "@/components/WorkProcess";
 import { initScrollRevealAnimations, init3DTiltEffect } from "@/utils/animationUtils";
 
 const Index = () => {
@@ -32,7 +35,10 @@ const Index = () => {
         <main className="flex-grow">
           <HeroSection />
           <AboutSection />
+          <FounderSection />
           <ServicesSection />
+          <EngagementModel />
+          <WorkProcess />
           <TechStack />
           <WhyChooseUs />
           <FeaturedOffers />

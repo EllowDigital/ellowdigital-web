@@ -1,8 +1,8 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Menu, X } from "lucide-react";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -37,12 +37,9 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
-            <a href="#home" className="text-xl md:text-2xl font-bold gradient-text">
-              Ellow<span className="text-brand-purple">Digitals</span>
-            </a>
+            <Logo />
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <a
@@ -59,7 +56,6 @@ const Navbar = () => {
             </Button>
           </div>
 
-          {/* Mobile Navigation Toggle */}
           <div className="flex items-center md:hidden space-x-4">
             <ThemeToggle />
             <Button
@@ -78,7 +74,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-background border-b">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
