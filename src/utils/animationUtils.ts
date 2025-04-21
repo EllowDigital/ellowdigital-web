@@ -75,13 +75,21 @@ export const init3DTiltEffect = () => {
   };
   
   tiltElements.forEach(element => {
-    element.addEventListener('mousemove', (e) => handleMouseMove(e, element));
+    element.addEventListener('mousemove', (e) => {
+      if (e instanceof MouseEvent) {
+        handleMouseMove(e, element);
+      }
+    });
     element.addEventListener('mouseleave', () => handleMouseLeave(element));
   });
   
   return () => {
     tiltElements.forEach(element => {
-      element.removeEventListener('mousemove', (e) => handleMouseMove(e, element));
+      element.removeEventListener('mousemove', (e) => {
+        if (e instanceof MouseEvent) {
+          handleMouseMove(e, element);
+        }
+      });
       element.removeEventListener('mouseleave', () => handleMouseLeave(element));
     });
   };
