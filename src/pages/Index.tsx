@@ -8,23 +8,28 @@ import ServicesSection from "@/components/ServicesSection";
 import TechStack from "@/components/TechStack";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import FeaturedOffers from "@/components/FeaturedOffers";
-import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import FounderSection from "@/components/FounderSection";
 import EngagementModel from "@/components/EngagementModel";
 import WorkProcess from "@/components/WorkProcess";
-import { initScrollRevealAnimations, init3DTiltEffect } from "@/utils/animationUtils";
+import Testimonials from "@/components/Testimonials";
+import Portfolio from "@/components/Portfolio";
+import ImpactMetrics from "@/components/ImpactMetrics";
+import SmartContactForm from "@/components/SmartContactForm";
+import { initScrollRevealAnimations, init3DTiltEffect, initCustomCursor } from "@/utils/animationUtils";
 
 const Index = () => {
   useEffect(() => {
     // Initialize animations when component mounts
     const cleanupScrollReveal = initScrollRevealAnimations();
     const cleanupTiltEffect = init3DTiltEffect();
+    const cleanupCustomCursor = initCustomCursor();
     
     // Clean up event listeners on unmount
     return () => {
       cleanupScrollReveal();
       cleanupTiltEffect();
+      cleanupCustomCursor();
     };
   }, []);
 
@@ -32,17 +37,20 @@ const Index = () => {
     <ThemeProvider>
       <div className="min-h-screen flex flex-col transition-colors duration-300">
         <Navbar />
-        <main className="flex-grow">
+        <main className="flex-grow overflow-x-hidden">
           <HeroSection />
           <AboutSection />
           <FounderSection />
           <ServicesSection />
-          <EngagementModel />
           <WorkProcess />
+          <EngagementModel />
+          <Portfolio />
+          <ImpactMetrics />
+          <Testimonials />
           <TechStack />
           <WhyChooseUs />
           <FeaturedOffers />
-          <ContactSection />
+          <SmartContactForm />
         </main>
         <Footer />
       </div>

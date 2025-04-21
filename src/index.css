@@ -94,6 +94,7 @@
 
   body {
     @apply bg-background text-foreground font-sans;
+    cursor: none;
   }
 }
 
@@ -138,6 +139,15 @@
     @apply bg-white/10 backdrop-blur-md border border-white/20 dark:bg-black/20 dark:border-white/10 shadow-sm;
   }
   
+  .neo-effect {
+    @apply bg-card border-none shadow-[0.25rem_0.25rem_0.75rem_rgba(0,0,0,0.1),-0.25rem_-0.25rem_0.75rem_rgba(255,255,255,0.2)] dark:shadow-[0.25rem_0.25rem_0.75rem_rgba(0,0,0,0.7),-0.25rem_-0.25rem_0.75rem_rgba(255,255,255,0.05)];
+  }
+
+  .morph-shape {
+    @apply absolute -z-10 opacity-70 animate-blob filter blur-xl;
+    animation: morph 25s linear infinite alternate;
+  }
+
   .reveal-animate {
     opacity: 0;
     transform: translateY(20px);
@@ -145,6 +155,273 @@
   }
   
   .reveal-animate.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Animation classes for scroll reveal */
+  .fade-up {
+    animation: fadeUp 0.6s ease-out forwards;
+  }
+
+  .fade-down {
+    animation: fadeDown 0.6s ease-out forwards;
+  }
+
+  .fade-left {
+    animation: fadeLeft 0.6s ease-out forwards;
+  }
+
+  .fade-right {
+    animation: fadeRight 0.6s ease-out forwards;
+  }
+
+  .zoom-in {
+    animation: zoomIn 0.6s ease-out forwards;
+  }
+
+  .zoom-out {
+    animation: zoomOut 0.6s ease-out forwards;
+  }
+
+  .glare {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    background-size: 200% 200%;
+  }
+
+  /* Custom cursor */
+  .custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  .cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background-color: var(--brand-yellow);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, opacity 0.2s;
+  }
+
+  .cursor-outline {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--brand-yellow);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+  }
+
+  .cursor-dot.cursor-active,
+  .cursor-outline.cursor-active {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+
+  .cursor-dot.cursor-link,
+  .cursor-outline.cursor-link {
+    transform: translate(-50%, -50%) scale(1.5);
+    background-color: transparent;
+    opacity: 0.5;
+  }
+
+  /* 3D Card */
+  .card-3d {
+    @apply relative overflow-hidden transition-all duration-500 ease-out;
+    transform-style: preserve-3d;
+  }
+
+  .card-3d::before {
+    content: '';
+    @apply absolute inset-0 z-[-1] bg-gradient-to-tr from-brand-gold/20 via-transparent to-brand-yellow/20 rounded-xl opacity-0 transition-opacity duration-300;
+  }
+
+  .card-3d:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Animated dividers */
+  .animated-divider {
+    height: 4px;
+    width: 0;
+    @apply bg-gradient-to-r from-brand-gold to-brand-yellow mx-auto transition-all duration-1000;
+  }
+
+  .animated-divider.revealed {
+    width: 100px;
+  }
+
+  /* Floating labels for inputs */
+  .float-label-input {
+    @apply relative pt-5;
+  }
+
+  .float-label-input input,
+  .float-label-input textarea {
+    @apply w-full px-4 py-3 bg-transparent border border-input rounded-md outline-none transition-all;
+  }
+
+  .float-label-input label {
+    @apply absolute left-4 top-8 px-1 text-muted-foreground transition-all duration-200 pointer-events-none;
+  }
+
+  .float-label-input input:focus ~ label,
+  .float-label-input input:not(:placeholder-shown) ~ label,
+  .float-label-input textarea:focus ~ label,
+  .float-label-input textarea:not(:placeholder-shown) ~ label {
+    @apply -top-0 text-xs text-brand-yellow bg-background px-2;
+  }
+
+  /* Timeline component */
+  .timeline {
+    @apply relative pl-8 border-l border-muted;
+  }
+
+  .timeline-item {
+    @apply relative pb-10;
+  }
+
+  .timeline-item::before {
+    content: '';
+    @apply absolute w-4 h-4 bg-brand-yellow rounded-full -left-[29px] top-0;
+  }
+
+  .timeline-item:not(:last-child)::after {
+    content: '';
+    @apply absolute h-full w-0.5 bg-gradient-to-b from-brand-yellow to-transparent -left-[25px] top-4 z-[-1];
+  }
+
+  /* Morphing blobs */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+  }
+
+  /* Animated Logo */
+  .animated-logo {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .animated-logo span {
+    display: inline-block;
+    transform-origin: center;
+    animation: logoReveal 0.5s forwards cubic-bezier(0.11, 0, 0.5, 0);
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeLeft {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeRight {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes zoomOut {
+  from {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes morph {
+  0% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 70% 40% 30%;
+  }
+}
+
+@keyframes blob {
+  0% {
+    transform: scale(1) translate(0px, 0px);
+  }
+  33% {
+    transform: scale(1.1) translate(30px, -50px);
+  }
+  66% {
+    transform: scale(0.9) translate(-20px, 20px);
+  }
+  100% {
+    transform: scale(1) translate(0px, 0px);
+  }
+}
+
+@keyframes logoReveal {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
