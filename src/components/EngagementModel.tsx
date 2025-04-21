@@ -1,5 +1,5 @@
 
-import { ArrowRight, Clock, DollarSign, Users, Briefcase } from "lucide-react";
+import { ArrowRight, Clock, DollarSign, Users, Briefcase, Check } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useRef } from "react";
 
