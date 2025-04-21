@@ -64,10 +64,13 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				brand: {
-          blue: '#1a2e4c',
-          cyan: '#0fa0ce',
-          purple: '#9b87f5',
-          darkPurple: '#7E69AB',
+          gold: '#FFDF00',       // Rich yellow/gold
+          yellow: '#FFEB3B',     // Vibrant yellow
+          softYellow: '#FFF9C4', // Soft yellow for backgrounds
+          black: '#121212',      // Rich black
+          offBlack: '#1A1A1A',   // Slightly lighter black
+          white: '#FFFFFF',      // Pure white
+          offWhite: '#F8F8F8',   // Slightly off-white
         }
 			},
 			borderRadius: {
@@ -111,14 +114,46 @@ export default {
             opacity: '1',
             transform: 'translateX(0)'
           }
+        },
+        'float': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' }
+        },
+        'pulse-subtle': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.05)' }
+        },
+        'rotate-slow': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' }
+        },
+        'shimmer': {
+          '0%': { backgroundPosition: '-500px 0' },
+          '100%': { backgroundPosition: '500px 0' }
         }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in': 'fade-in 0.6s ease-out',
-        'fade-in-right': 'fade-in-right 0.6s ease-out'
-			}
+        'fade-in-right': 'fade-in-right 0.6s ease-out',
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-subtle': 'pulse-subtle 3s ease-in-out infinite',
+        'rotate-slow': 'rotate-slow 20s linear infinite',
+        'shimmer': 'shimmer 2s infinite linear'
+			},
+      boxShadow: {
+        'elegant': '0 10px 30px -10px rgba(0, 0, 0, 0.2)',
+        'card-hover': '0 20px 30px -15px rgba(0, 0, 0, 0.2)',
+        'button-3d': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 -2px 0 0 rgba(255, 255, 255, 0.1) inset, 0 2px 0 0 rgba(0, 0, 0, 0.1) inset',
+        'button-3d-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 -2px 0 0 rgba(255, 255, 255, 0.15) inset, 0 2px 0 0 rgba(0, 0, 0, 0.1) inset',
+      },
+      transitionProperty: {
+        'height': 'height',
+        'spacing': 'margin, padding',
+        'width': 'width',
+        'transform': 'transform',
+      },
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

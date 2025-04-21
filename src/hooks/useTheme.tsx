@@ -12,6 +12,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState<Theme>('light');
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme') as Theme | null;
@@ -26,7 +27,19 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     localStorage.setItem('theme', theme);
+    
+    // Add transition class to body for smooth theme change
+    document.body.classList.add('transition-colors');
+    document.body.classList.add('duration-300');
+    
+    setIsTransitioning(true);
     document.documentElement.classList.toggle('dark', theme === 'dark');
+    
+    const transitionTimeout = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 300);
+    
+    return () => clearTimeout(transitionTimeout);
   }, [theme]);
 
   const toggleTheme = () => {
@@ -35,7 +48,9 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
+      <div className={`${isTransitioning ? 'transitioning' : ''}`}>
+        {children}
+      </div>
     </ThemeContext.Provider>
   );
 };
