@@ -32,10 +32,10 @@ const WorkProcess = () => {
         <h2 className="section-title">How We Work</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {processes.map((process, index) => (
-            <Card key={index} className="glass-effect hover-scale transition-all duration-300">
+            <Card key={index} className="glass-effect hover-scale transition-all duration-300 border border-border">
               <CardContent className="p-6 text-center">
                 <div className="mb-4">
-                  <process.icon className="w-12 h-12 mx-auto text-brand-purple" />
+                  <process.icon className="w-12 h-12 mx-auto text-brand-yellow" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{process.title}</h3>
                 <p className="text-sm text-muted-foreground">{process.description}</p>

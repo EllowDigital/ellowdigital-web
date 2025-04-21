@@ -28,12 +28,17 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     localStorage.setItem('theme', theme);
     
-    // Add transition class to body for smooth theme change
+    // Add transition classes to body for smooth theme change
     document.body.classList.add('transition-colors');
     document.body.classList.add('duration-300');
     
     setIsTransitioning(true);
-    document.documentElement.classList.toggle('dark', theme === 'dark');
+    
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
     
     const transitionTimeout = setTimeout(() => {
       setIsTransitioning(false);

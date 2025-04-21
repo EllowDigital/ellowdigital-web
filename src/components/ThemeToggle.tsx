@@ -20,7 +20,7 @@ export const ThemeToggle = () => {
           <div className="absolute inset-0 bg-gradient-to-br from-brand-yellow/10 to-brand-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <div className="relative z-10 transition-all duration-500 ease-out">
             {theme === 'light' ? (
-              <Moon className="h-[1.2rem] w-[1.2rem] text-brand-black animate-fade-in" />
+              <Moon className="h-[1.2rem] w-[1.2rem] text-foreground animate-fade-in" />
             ) : (
               <Sun className="h-[1.2rem] w-[1.2rem] text-brand-yellow animate-fade-in" />
             )}

@@ -5,7 +5,8 @@
 
 @layer base {
   :root {
-    --background: 60 33% 98%;
+    /* Light mode */
+    --background: 0 0% 98%;
     --foreground: 0 0% 7%;
 
     --card: 0 0% 100%;
@@ -46,41 +47,42 @@
   }
 
   .dark {
-    --background: 0 0% 7%;
+    /* Dark mode */
+    --background: 0 0% 9%;
     --foreground: 60 33% 98%;
 
-    --card: 0 0% 9%;
+    --card: 0 0% 11%;
     --card-foreground: 60 33% 98%;
 
-    --popover: 0 0% 7%;
+    --popover: 0 0% 11%;
     --popover-foreground: 60 33% 98%;
 
     --primary: 45 100% 50%;
-    --primary-foreground: 0 0% 7%;
+    --primary-foreground: 0 0% 9%;
 
-    --secondary: 0 0% 12%;
+    --secondary: 0 0% 15%;
     --secondary-foreground: 60 33% 98%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 0 0% 15%;
+    --accent: 0 0% 18%;
     --accent-foreground: 60 33% 98%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 60 33% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
     --ring: 45 100% 50%;
     
-    --sidebar-background: 0 0% 10%;
+    --sidebar-background: 0 0% 13%;
     --sidebar-foreground: 0 0% 96%;
     --sidebar-primary: 45 100% 50%;
-    --sidebar-primary-foreground: 0 0% 7%;
-    --sidebar-accent: 0 0% 15%;
+    --sidebar-primary-foreground: 0 0% 9%;
+    --sidebar-accent: 0 0% 18%;
     --sidebar-accent-foreground: 0 0% 96%;
-    --sidebar-border: 0 0% 15%;
+    --sidebar-border: 0 0% 20%;
     --sidebar-ring: 45 100% 50%;
   }
 }
@@ -101,7 +103,7 @@
   }
   
   .gradient-bg {
-    @apply bg-gradient-to-r from-brand-black via-brand-offBlack to-brand-black;
+    @apply bg-gradient-to-r from-brand-black via-brand-offBlack to-brand-black dark:from-brand-gold/10 dark:via-brand-yellow/10 dark:to-brand-gold/10;
   }
 
   .section-container {
@@ -133,7 +135,7 @@
   }
   
   .glass-effect {
-    @apply bg-white/10 backdrop-blur-md border border-white/20 dark:bg-black/20 dark:border-white/10;
+    @apply bg-white/10 backdrop-blur-md border border-white/20 dark:bg-black/20 dark:border-white/10 shadow-sm;
   }
   
   .reveal-animate {
