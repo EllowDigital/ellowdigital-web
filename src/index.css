@@ -1,10 +1,11 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Light mode */
+    /* Light mode - improved contrast */
     --background: 0 0% 98%;
     --foreground: 0 0% 7%;
 
@@ -14,39 +15,39 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 7%;
 
-    --primary: 45 100% 50%;
+    --primary: 45 100% 45%;
     --primary-foreground: 0 0% 7%;
 
-    --secondary: 60 100% 96%;
+    --secondary: 45 60% 95%;
     --secondary-foreground: 0 0% 7%;
 
-    --muted: 45 14% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 45 14% 92%;
+    --muted-foreground: 0 0% 35%;
 
-    --accent: 45 100% 96%;
+    --accent: 45 100% 90%;
     --accent-foreground: 0 0% 7%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 84% 50%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 45 100% 50%;
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
+    --ring: 45 100% 45%;
 
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 0 0% 25%;
-    --sidebar-primary: 45 100% 50%;
+    --sidebar-primary: 45 100% 45%;
     --sidebar-primary-foreground: 0 0% 7%;
     --sidebar-accent: 0 0% 96%;
     --sidebar-accent-foreground: 0 0% 7%;
-    --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 45 100% 50%;
+    --sidebar-border: 0 0% 85%;
+    --sidebar-ring: 45 100% 45%;
   }
 
   .dark {
-    /* Dark mode */
+    /* Dark mode - keep existing values */
     --background: 0 0% 9%;
     --foreground: 60 33% 98%;
 
@@ -135,15 +136,15 @@
   }
   
   .glass-effect {
-    @apply bg-white/10 backdrop-blur-md border border-white/20 dark:bg-black/20 dark:border-white/10 shadow-sm;
+    @apply bg-white/70 backdrop-blur-md border border-white/50 shadow-sm dark:bg-black/20 dark:border-white/10;
   }
   
   .neo-effect {
-    @apply bg-card border-none shadow-[0.25rem_0.25rem_0.75rem_rgba(0,0,0,0.1),-0.25rem_-0.25rem_0.75rem_rgba(255,255,255,0.2)] dark:shadow-[0.25rem_0.25rem_0.75rem_rgba(0,0,0,0.7),-0.25rem_-0.25rem_0.75rem_rgba(255,255,255,0.05)];
+    @apply bg-card border border-border/50 shadow-[0.25rem_0.25rem_0.75rem_rgba(0,0,0,0.08),-0.25rem_-0.25rem_0.75rem_rgba(255,255,255,0.5)] dark:border-none dark:shadow-[0.25rem_0.25rem_0.75rem_rgba(0,0,0,0.7),-0.25rem_-0.25rem_0.75rem_rgba(255,255,255,0.05)];
   }
 
   .morph-shape {
-    @apply absolute -z-10 opacity-70 animate-blob filter blur-xl;
+    @apply absolute -z-10 opacity-70 filter blur-xl;
     animation: morph 25s linear infinite alternate;
   }
 
@@ -214,7 +215,7 @@
     position: fixed;
     width: 8px;
     height: 8px;
-    background-color: var(--brand-yellow);
+    background-color: #FFDF00;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: transform 0.1s, opacity 0.2s;
@@ -224,7 +225,7 @@
     position: fixed;
     width: 40px;
     height: 40px;
-    border: 2px solid var(--brand-yellow);
+    border: 2px solid #FFDF00;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: all 0.3s ease;
@@ -250,7 +251,7 @@
 
   .card-3d::before {
     content: '';
-    @apply absolute inset-0 z-[-1] bg-gradient-to-tr from-brand-gold/20 via-transparent to-brand-yellow/20 rounded-xl opacity-0 transition-opacity duration-300;
+    @apply absolute inset-0 z-[-1] bg-gradient-to-tr from-brand-gold/30 via-transparent to-brand-yellow/30 rounded-xl opacity-0 transition-opacity duration-300;
   }
 
   .card-3d:hover::before {
@@ -300,12 +301,12 @@
 
   .timeline-item::before {
     content: '';
-    @apply absolute w-4 h-4 bg-brand-yellow rounded-full -left-[29px] top-0;
+    @apply absolute w-4 h-4 bg-brand-gold rounded-full -left-[29px] top-0;
   }
 
   .timeline-item:not(:last-child)::after {
     content: '';
-    @apply absolute h-full w-0.5 bg-gradient-to-b from-brand-yellow to-transparent -left-[25px] top-4 z-[-1];
+    @apply absolute h-full w-0.5 bg-gradient-to-b from-brand-gold to-transparent -left-[25px] top-4 z-[-1];
   }
 
   /* Morphing blobs */

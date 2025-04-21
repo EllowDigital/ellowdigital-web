@@ -95,10 +95,10 @@ const EngagementModel = () => {
   }, []);
 
   return (
-    <section id="engagement" className="section-container py-24 relative overflow-hidden snap-start bg-muted/30 dark:bg-transparent">
+    <section id="engagement" className="section-container py-24 relative overflow-hidden snap-start bg-muted/50 dark:bg-transparent">
       {/* Background morphing shapes */}
-      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-brand-yellow/5 rounded-full blur-3xl morph-shape"></div>
-      <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-brand-gold/5 rounded-full blur-3xl morph-shape" style={{ animationDelay: '10s' }}></div>
+      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-brand-gold/10 rounded-full blur-3xl morph-shape"></div>
+      <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-brand-yellow/10 rounded-full blur-3xl morph-shape" style={{ animationDelay: '10s' }}></div>
       
       <div className="max-w-6xl mx-auto">
         <h2 ref={titleRef} className="section-title reveal-animate">Our Engagement Model</h2>
@@ -115,13 +115,13 @@ const EngagementModel = () => {
             {steps.map((step, index) => (
               <div key={index} className="relative z-10">
                 {/* Timeline node */}
-                <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-card neo-effect border-2 border-brand-yellow mb-4">
-                  <span className="text-xl font-bold text-brand-yellow">{index + 1}</span>
+                <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-card neo-effect border-2 border-brand-gold mb-4">
+                  <span className="text-xl font-bold text-brand-gold">{index + 1}</span>
                 </div>
                 
                 <div className="text-center">
                   <h4 className="text-lg font-semibold mb-2">{step.title}</h4>
-                  <p className="text-sm text-muted-foreground">{step.description}</p>
+                  <p className="text-sm text-foreground/80">{step.description}</p>
                 </div>
               </div>
             ))}
@@ -145,11 +145,11 @@ const EngagementModel = () => {
                 transform: 'translateY(20px)'
               }}
             >
-              <Card className="h-full glass-effect hover-scale tilt-effect transition-all duration-300 border border-border overflow-hidden">
+              <Card className="h-full border border-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="mb-6 flex justify-center">
-                    <div className="w-14 h-14 rounded-full flex items-center justify-center bg-gradient-to-br from-brand-gold/20 to-brand-yellow/20 backdrop-blur-sm border border-brand-yellow/30">
-                      <model.icon className="w-6 h-6 text-brand-yellow" />
+                    <div className="w-14 h-14 rounded-full flex items-center justify-center bg-gradient-to-br from-brand-gold/20 to-brand-yellow/20 border border-brand-gold/30">
+                      <model.icon className="w-6 h-6 text-brand-gold" />
                     </div>
                   </div>
                   
@@ -159,10 +159,10 @@ const EngagementModel = () => {
                   <ul className="space-y-2">
                     {model.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-start">
-                        <span className="w-5 h-5 rounded-full bg-brand-yellow/10 flex-shrink-0 flex items-center justify-center mr-2 mt-0.5">
-                          <Check className="w-3 h-3 text-brand-yellow" />
+                        <span className="w-5 h-5 rounded-full bg-brand-gold/20 flex-shrink-0 flex items-center justify-center mr-2 mt-0.5">
+                          <Check className="w-3 h-3 text-brand-gold" />
                         </span>
-                        <span className="text-sm">{feature}</span>
+                        <span className="text-sm text-foreground/90">{feature}</span>
                       </li>
                     ))}
                   </ul>
