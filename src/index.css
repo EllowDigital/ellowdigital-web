@@ -1,40 +1,31 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* --🌑 DARK MODE ONLY: Remove any light mode or theme switching variants -- */
 @layer base {
   :root {
-    /* Dark mode only - improved contrast */
     --background: #121212;
     --foreground: #F6F6F6;
-
     --card: #191919;
     --card-foreground: #FFD700;
-
     --popover: #191919;
     --popover-foreground: #FFD700;
-
     --primary: #FFD700;
     --primary-foreground: #121212;
-
     --secondary: #222222;
     --secondary-foreground: #FFD700;
-
     --muted: #353535;
     --muted-foreground: #BBBBBB;
-
     --accent: #FFD700;
     --accent-foreground: #121212;
-
     --destructive: #b91c1c;
     --destructive-foreground: #fff;
-
     --border: #222222;
     --input: #222222;
     --ring: #FFD700;
-
     --radius: 0.5rem;
-
     --sidebar-background: #191919;
     --sidebar-foreground: #FFD700;
     --sidebar-primary: #FFD700;
@@ -43,8 +34,6 @@
     --sidebar-accent-foreground: #191919;
     --sidebar-border: #353535;
     --sidebar-ring: #FFD700;
-    
-    /* Custom brand colors */
     --brand-gold: #FFD700;
     --brand-yellow: #FFDF00;
   }
@@ -54,11 +43,9 @@
   * {
     @apply border-border;
   }
-
   html {
     @apply scroll-smooth;
   }
-
   body {
     @apply bg-background text-foreground font-sans overflow-x-hidden;
   }
@@ -68,409 +55,145 @@
   .gradient-text {
     @apply bg-gradient-to-r from-brand-gold to-brand-yellow bg-clip-text text-transparent;
   }
-
   .gradient-bg {
     @apply bg-gradient-to-r from-background via-background to-background;
   }
-
   .section-container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20 lg:py-24;
   }
-
   .section-title {
     @apply text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center text-foreground;
   }
-
   .card-hover {
     @apply transition-all duration-300 hover:shadow-card-hover transform hover:-translate-y-2;
   }
-  
-  .button-3d {
-    @apply relative shadow-button-3d hover:shadow-button-3d-hover transform transition-all duration-200 hover:-translate-y-1 active:translate-y-0;
-  }
-  
   .hover-scale {
     @apply transition-transform duration-300 hover:scale-105;
   }
-  
-  .text-shadow {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  }
-  
   .glass-effect {
     @apply bg-black/30 backdrop-blur-md border border-white/10 shadow-sm;
   }
-  
   .neo-effect {
     @apply bg-card border border-border/50 shadow-[0.25rem_0.25rem_0.75rem_rgba(0,0,0,0.7),-0.25rem_-0.25rem_0.75rem_rgba(255,255,255,0.05)];
   }
-
   .morph-shape {
     @apply absolute -z-10 opacity-70 filter blur-xl;
     animation: morph 25s linear infinite alternate;
   }
-
-  .animate-blob {
-    animation: blob 7s infinite ease-in-out;
-  }
-  
   .reveal-animate {
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.6s ease-out;
   }
-  
   .reveal-animate.revealed {
     opacity: 1;
     transform: translateY(0);
   }
-
   /* Animation classes for scroll reveal */
-  .fade-up {
-    animation: fadeUp 0.6s ease-out forwards;
-  }
-
-  .fade-down {
-    animation: fadeDown 0.6s ease-out forwards;
-  }
-
-  .fade-left {
-    animation: fadeLeft 0.6s ease-out forwards;
-  }
-
-  .fade-right {
-    animation: fadeRight 0.6s ease-out forwards;
-  }
-
-  .zoom-in {
-    animation: zoomIn 0.6s ease-out forwards;
-  }
-
-  .zoom-out {
-    animation: zoomOut 0.6s ease-out forwards;
-  }
-
-  .glare {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-    background-size: 200% 200%;
-  }
-  /* 3D Card */
+  .fade-up { animation: fadeUp 0.6s ease-out forwards;}
+  .fade-down {animation: fadeDown 0.6s ease-out forwards;}
+  .fade-left {animation: fadeLeft 0.6s ease-out forwards;}
+  .fade-right {animation: fadeRight 0.6s ease-out forwards;}
+  .zoom-in {animation: zoomIn 0.6s ease-out forwards;}
+  .zoom-out {animation: zoomOut 0.6s ease-out forwards;}
   .card-3d {
     @apply relative overflow-hidden transition-all duration-500 ease-out;
     transform-style: preserve-3d;
   }
-
   .card-3d::before {
     content: '';
     @apply absolute inset-0 z-[-1] bg-gradient-to-tr from-brand-gold/30 via-transparent to-brand-yellow/30 rounded-xl opacity-0 transition-opacity duration-300;
   }
-
   .card-3d:hover::before {
     @apply opacity-100;
   }
-
-  /* Animated dividers */
   .animated-divider {
     height: 4px;
     width: 0;
     @apply bg-gradient-to-r from-brand-gold to-brand-yellow mx-auto transition-all duration-1000;
   }
-
-  .animated-divider.revealed {
-    width: 100px;
-  }
-
-  /* Floating labels for inputs */
-  .float-label-input {
-    @apply relative pt-5;
-  }
-
+  .animated-divider.revealed { width: 100px;}
+  .float-label-input { @apply relative pt-5;}
   .float-label-input input,
-  .float-label-input textarea {
-    @apply w-full px-4 py-3 bg-transparent border border-input rounded-md outline-none transition-all;
-  }
-
-  .float-label-input label {
-    @apply absolute left-4 top-8 px-1 text-muted-foreground transition-all duration-200 pointer-events-none;
-  }
-
+  .float-label-input textarea { @apply w-full px-4 py-3 bg-transparent border border-input rounded-md outline-none transition-all;}
+  .float-label-input label { @apply absolute left-4 top-8 px-1 text-muted-foreground transition-all duration-200 pointer-events-none;}
   .float-label-input input:focus ~ label,
   .float-label-input input:not(:placeholder-shown) ~ label,
   .float-label-input textarea:focus ~ label,
-  .float-label-input textarea:not(:placeholder-shown) ~ label {
-    @apply -top-0 text-xs text-brand-yellow bg-background px-2;
+  .float-label-input textarea:not(:placeholder-shown) ~ label { @apply -top-0 text-xs text-brand-yellow bg-background px-2;}
+  .timeline { @apply relative pl-8 border-l border-muted;}
+  .timeline-item { @apply relative pb-10;}
+  .timeline-item::before { content: ''; @apply absolute w-4 h-4 bg-brand-gold rounded-full -left-[29px] top-0;}
+  .timeline-item:not(:last-child)::after { content: ''; @apply absolute h-full w-0.5 bg-gradient-to-b from-brand-gold to-transparent -left-[25px] top-4 z-[-1];}
+  .animated-logo { position: relative; display: inline-block;}
+  .animated-logo span { display: inline-block; transform-origin: center; animation: logoReveal 0.5s forwards cubic-bezier(0.11, 0, 0.5, 0); opacity: 0; transform: translateY(100%);}
+  .btn-primary { @apply bg-brand-yellow hover:bg-brand-gold text-black font-medium px-4 py-2 rounded-md transition-colors duration-300;}
+  .btn-secondary { @apply bg-transparent hover:bg-brand-yellow/10 text-foreground border border-brand-yellow/20 font-medium px-4 py-2 rounded-md transition-colors duration-300;}
+  .btn-outline { @apply bg-transparent hover:bg-foreground/10 text-foreground border border-foreground/20 font-medium px-4 py-2 rounded-md transition-colors duration-300;}
+  .input-standard { @apply w-full px-4 py-2 bg-background border border-input rounded-md outline-none focus:ring-2 focus:ring-brand-yellow/50 transition-all;}
+  /* Navbar sticky improvements and glow on scroll */
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(18,18,18,0.92);
+    box-shadow: 0 4px 24px 0 rgba(255,223,0,0.04);
+    border-bottom: 1.5px solid #FFD70022;
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
   }
-
-  /* Timeline component */
-  .timeline {
-    @apply relative pl-8 border-l border-muted;
+  /* Animated background for hero section */
+  .animate-bg-blob {
+    animation: bgBlobMove 30s linear infinite alternate;
   }
-
-  .timeline-item {
-    @apply relative pb-10;
-  }
-
-  .timeline-item::before {
-    content: '';
-    @apply absolute w-4 h-4 bg-brand-gold rounded-full -left-[29px] top-0;
-  }
-
-  .timeline-item:not(:last-child)::after {
-    content: '';
-    @apply absolute h-full w-0.5 bg-gradient-to-b from-brand-gold to-transparent -left-[25px] top-4 z-[-1];
-  }
-
-  /* Morphing blobs */
-  .blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(40px);
-  }
-
-  /* Animated Logo */
-  .animated-logo {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .animated-logo span {
-    display: inline-block;
-    transform-origin: center;
-    animation: logoReveal 0.5s forwards cubic-bezier(0.11, 0, 0.5, 0);
-    opacity: 0;
-    transform: translateY(100%);
-  }
-
-  /* Responsive helpers */
-  .mobile-only {
-    @apply block sm:hidden;
-  }
-  
-  .tablet-only {
-    @apply hidden sm:block lg:hidden;
-  }
-  
-  .desktop-only {
-    @apply hidden lg:block;
-  }
-  
-  .mobile-tablet-only {
-    @apply block lg:hidden;
-  }
-  
-  .tablet-desktop-only {
-    @apply hidden sm:block;
-  }
-  
-  .btn-primary {
-    @apply bg-brand-yellow hover:bg-brand-gold text-black font-medium px-4 py-2 rounded-md transition-colors duration-300;
-  }
-
-  .btn-secondary {
-    @apply bg-transparent hover:bg-brand-yellow/10 text-foreground border border-brand-yellow/20 font-medium px-4 py-2 rounded-md transition-colors duration-300;
-  }
-
-  .btn-outline {
-    @apply bg-transparent hover:bg-foreground/10 text-foreground border border-foreground/20 font-medium px-4 py-2 rounded-md transition-colors duration-300;
-  }
-
-  .input-standard {
-    @apply w-full px-4 py-2 bg-background border border-input rounded-md outline-none focus:ring-2 focus:ring-brand-yellow/50 transition-all;
+  /* Animate CTA button glow pulse */
+  .animate-cta-glow {
+    animation: ctaGlowPulse 3.2s infinite alternate;
   }
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeLeft {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeRight {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes zoomIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes zoomOut {
-  from {
-    opacity: 0;
-    transform: scale(1.2);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
+@keyframes fadeUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+@keyframes fadeDown {from{opacity:0;transform:translateY(-30px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeLeft {from{opacity:0;transform:translateX(30px);}to{opacity:1;transform:translateX(0);}}
+@keyframes fadeRight {from{opacity:0;transform:translateX(-30px);}to{opacity:1;transform:translateX(0);}}
+@keyframes zoomIn {from{opacity:0;transform:scale(0.8);}to{opacity:1;transform:scale(1);}}
+@keyframes zoomOut {from{opacity:0;transform:scale(1.2);}to{opacity:1;transform:scale(1);}}
 @keyframes morph {
-  0% {
-    border-radius: 60% 40% 30% 70% / 60% 40% 30% 70%;
-  }
-  50% {
-    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
-  }
-  100% {
-    border-radius: 60% 40% 30% 70% / 60% 70% 40% 30%;
-  }
+  0% { border-radius: 60% 40% 30% 70% / 60% 40% 30% 70%;}
+  50%{ border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;}
+  100%{ border-radius: 60% 40% 30% 70% / 60% 70% 40% 30%;}
+}
+@keyframes bgBlobMove {
+  0% { filter: blur(2px);}
+  55% { filter: blur(11px);}
+  100% { filter: blur(6px);}
+}
+@keyframes ctaGlowPulse { 
+  0%, 100% { opacity: 0.18; filter: blur(14px);}
+  50% { opacity: 0.38; filter: blur(22px);}
 }
 
-@keyframes blob {
-  0% {
-    transform: scale(1) translate(0px, 0px);
-  }
-  33% {
-    transform: scale(1.1) translate(30px, -50px);
-  }
-  66% {
-    transform: scale(0.9) translate(-20px, 20px);
-  }
-  100% {
-    transform: scale(1) translate(0px, 0px);
-  }
-}
-
-@keyframes logoReveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ---- Ellow Preloader custom animations and colors ---- */
-:root {
-  --brand-yellow: #FFDF00;
-}
-
-/* Pulse/rotate for logo */
-@keyframes ellow-pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.08); opacity: 0.92; }
-}
-@keyframes ellow-spin {
-  0% { transform: rotate(-7deg);}
-  50% { transform: rotate(7deg);}
-  100% { transform: rotate(-7deg);}
-}
-
-/* Loader dots */
-@keyframes ellow-dot {
-  0%, 80%, 100% { transform: scale(0.85); opacity: 0.7;}
-  40% { transform: scale(1.12); opacity: 1;}
-}
-.animate-ellow-dot {
-  animation: ellow-dot 1.12s infinite both cubic-bezier(.4,0,.6,1);
-}
-.animate-ellow-dot.delay-\[150ms\] {
-  animation-delay: 150ms;
-}
-.animate-ellow-dot.delay-\[300ms\] {
-  animation-delay: 300ms;
-}
-
-/* Pulse for logo */
-.animate-ellow-pulse {
-  animation: ellow-pulse 1.3s cubic-bezier(.4,0,.6,1) infinite;
-}
-/* Spin for logo */
-.animate-ellow-spin {
-  animation: ellow-spin 2.4s linear infinite;
-}
-
-/* Fallback: gradient-text used for logo */
-.gradient-text {
-  background: linear-gradient(90deg, #FFDF00 20%, #fff 80%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Accessibility helper classes */
-.focus-visible:focus-visible {
-  @apply outline-2 outline-offset-2 outline-brand-yellow;
-}
-
-.high-contrast-text {
-  @apply text-foreground;
-}
-
-.high-contrast-bg {
-  @apply bg-background;
-}
-
-/* Media queries for responsive text */
+@keyframes logoReveal {to{opacity:1;transform:translateY(0);}}
+/* ---- Ellow Preloader custom animations --- */
+:root { --brand-yellow: #FFDF00;}
+@keyframes ellow-pulse { 0%,100%{ transform: scale(1);opacity:1;}50%{transform:scale(1.08);opacity:0.92;} }
+@keyframes ellow-spin {0%{transform:rotate(-7deg);}50%{transform:rotate(7deg);}100%{transform:rotate(-7deg);} }
+@keyframes ellow-dot {0%,80%,100%{transform:scale(0.85);opacity:0.7;}40%{transform:scale(1.12);opacity:1;} }
+.animate-ellow-dot {animation:ellow-dot 1.12s infinite both cubic-bezier(.4,0,.6,1);}
+.animate-ellow-dot.delay-\[150ms\] {animation-delay:150ms;}
+.animate-ellow-dot.delay-\[300ms\] {animation-delay:300ms;}
+.animate-ellow-pulse {animation:ellow-pulse 1.3s cubic-bezier(.4,0,.6,1) infinite;}
+.animate-ellow-spin {animation:ellow-spin 2.4s linear infinite;}
+.gradient-text { background: linear-gradient(90deg, #FFDF00 20%, #fff 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.focus-visible:focus-visible { @apply outline-2 outline-offset-2 outline-brand-yellow;}
+.high-contrast-text { @apply text-foreground;}
+.high-contrast-bg { @apply bg-background;}
+/* Mobile tweaks */
 @media (max-width: 640px) {
-  html {
-    font-size: 14px;
-  }
-  
-  .section-container {
-    @apply py-10 px-4;
-  }
-  
-  .section-title {
-    @apply text-2xl mb-4;
-  }
+  html { font-size: 14px; }
+  .section-container { @apply py-10 px-4;}
+  .section-title { @apply text-2xl mb-4;}
 }
 
-@media (min-width: 641px) and (max-width: 1023px) {
-  html {
-    font-size: 15px;
-  }
-  
-  .section-container {
-    @apply py-12 px-6;
-  }
-}
+/* Don't add any @media or classes related to light mode, only dark styling */
 
-/* ---- End Ellow Preloader ---- */

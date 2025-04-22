@@ -50,8 +50,8 @@ const WhyChooseUs = () => {
               key={index} 
               className="bg-card p-6 rounded-xl border border-border/60 shadow-sm card-hover"
             >
-              <div className="w-12 h-12 rounded-full bg-brand-purple/10 flex items-center justify-center mb-4">
-                <reason.icon className="h-6 w-6 text-brand-purple" />
+              <div className="w-12 h-12 rounded-full bg-brand-gold/10 flex items-center justify-center mb-4">
+                <reason.icon className="h-6 w-6 text-brand-gold" />
               </div>
               <h3 className="text-xl font-bold mb-2">{reason.title}</h3>
               <p className="text-muted-foreground">{reason.description}</p>
@@ -59,15 +59,15 @@ const WhyChooseUs = () => {
           ))}
         </div>
 
-        <div className="mt-16 bg-gradient-to-r from-brand-blue to-brand-purple rounded-xl p-8 text-white">
+        <div className="mt-16 bg-gradient-to-r from-brand-gold to-brand-yellow rounded-xl p-8 flex justify-center items-center">
           <div className="text-center max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4">Ready to elevate your digital presence?</h3>
-            <p className="mb-6">
+            <h3 className="text-2xl font-bold mb-4 text-black">Ready to elevate your digital presence?</h3>
+            <p className="mb-6 text-black/90">
               Let's collaborate to create something exceptional that elevates your brand and engages your audience.
             </p>
             <a 
               href="#contact" 
-              className="inline-block bg-white text-brand-purple font-medium py-2 px-6 rounded-lg hover:bg-opacity-90 transition-colors"
+              className="inline-block bg-black text-brand-yellow font-medium py-2 px-7 rounded-lg text-lg shadow hover:bg-brand-yellow hover:text-black border-2 border-black hover:border-brand-yellow transition-colors duration-200"
             >
               Let's Talk
             </a>
