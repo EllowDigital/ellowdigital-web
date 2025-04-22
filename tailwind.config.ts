@@ -78,6 +78,17 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+			screens: {
+				'xs': '475px',
+				'sm': '640px',
+				'md': '768px',
+				'lg': '1024px',
+				'xl': '1280px',
+				'2xl': '1536px',
+				'tablet': {'min': '640px', 'max': '1023px'},
+				'tablet-portrait': {'min': '640px', 'max': '767px'},
+				'tablet-landscape': {'min': '768px', 'max': '1023px'},
+			},
 			keyframes: {
 				'accordion-down': {
 					from: {
