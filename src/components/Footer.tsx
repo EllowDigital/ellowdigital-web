@@ -1,9 +1,7 @@
 import {
   Mail,
   Phone,
-  Facebook,
   Instagram,
-  Linkedin,
   Github,
 } from "lucide-react";
 import Logo from "./Logo";
@@ -165,7 +163,7 @@ const Footer = () => {
                   href="mailto:hello@ellowdigitals.com"
                   className="hover:text-brand-yellow/90 transition-colors"
                 >
-                  hello@ellowdigitals.com
+                  ellowdigitals@gmail.com
                 </a>
               </li>
               <li>
