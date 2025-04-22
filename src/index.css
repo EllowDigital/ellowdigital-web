@@ -47,7 +47,10 @@
     @apply scroll-smooth;
   }
   body {
-    @apply bg-background text-foreground font-sans overflow-x-hidden;
+    @apply bg-background text-foreground font-sans overflow-x-hidden will-change-scroll;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -65,10 +68,10 @@
     @apply text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center text-foreground;
   }
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-card-hover transform hover:-translate-y-2;
+    @apply transition-all duration-300 hover:shadow-card-hover transform hover:-translate-y-2 will-change-transform;
   }
   .hover-scale {
-    @apply transition-transform duration-300 hover:scale-105;
+    @apply transition-transform duration-300 hover:scale-105 will-change-transform;
   }
   .glass-effect {
     @apply bg-black/30 backdrop-blur-md border border-white/10 shadow-sm;
@@ -77,13 +80,14 @@
     @apply bg-card border border-border/50 shadow-[0.25rem_0.25rem_0.75rem_rgba(0,0,0,0.7),-0.25rem_-0.25rem_0.75rem_rgba(255,255,255,0.05)];
   }
   .morph-shape {
-    @apply absolute -z-10 opacity-70 filter blur-xl;
+    @apply absolute -z-10 opacity-70 filter blur-xl will-change-transform;
     animation: morph 25s linear infinite alternate;
   }
   .reveal-animate {
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.6s ease-out;
+    will-change: opacity, transform;
   }
   .reveal-animate.revealed {
     opacity: 1;
@@ -96,9 +100,16 @@
   .fade-right {animation: fadeRight 0.6s ease-out forwards;}
   .zoom-in {animation: zoomIn 0.6s ease-out forwards;}
   .zoom-out {animation: zoomOut 0.6s ease-out forwards;}
+  
+  /* Enhanced 3D effect */
+  .perspective {
+    perspective: 1000px;
+  }
+  
   .card-3d {
     @apply relative overflow-hidden transition-all duration-500 ease-out;
     transform-style: preserve-3d;
+    will-change: transform, opacity;
   }
   .card-3d::before {
     content: '';
@@ -107,12 +118,16 @@
   .card-3d:hover::before {
     @apply opacity-100;
   }
+  
+  /* Animated elements */
   .animated-divider {
     height: 4px;
     width: 0;
-    @apply bg-gradient-to-r from-brand-gold to-brand-yellow mx-auto transition-all duration-1000;
+    @apply bg-gradient-to-r from-brand-gold to-brand-yellow mx-auto transition-all duration-1000 will-change-[width];
   }
   .animated-divider.revealed { width: 100px;}
+  
+  /* Form elements */
   .float-label-input { @apply relative pt-5;}
   .float-label-input input,
   .float-label-input textarea { @apply w-full px-4 py-3 bg-transparent border border-input rounded-md outline-none transition-all;}
@@ -121,17 +136,26 @@
   .float-label-input input:not(:placeholder-shown) ~ label,
   .float-label-input textarea:focus ~ label,
   .float-label-input textarea:not(:placeholder-shown) ~ label { @apply -top-0 text-xs text-brand-yellow bg-background px-2;}
+  
+  /* Timeline component */
   .timeline { @apply relative pl-8 border-l border-muted;}
   .timeline-item { @apply relative pb-10;}
   .timeline-item::before { content: ''; @apply absolute w-4 h-4 bg-brand-gold rounded-full -left-[29px] top-0;}
   .timeline-item:not(:last-child)::after { content: ''; @apply absolute h-full w-0.5 bg-gradient-to-b from-brand-gold to-transparent -left-[25px] top-4 z-[-1];}
+  
+  /* Logo animation */
   .animated-logo { position: relative; display: inline-block;}
   .animated-logo span { display: inline-block; transform-origin: center; animation: logoReveal 0.5s forwards cubic-bezier(0.11, 0, 0.5, 0); opacity: 0; transform: translateY(100%);}
+  
+  /* Button styles */
   .btn-primary { @apply bg-brand-yellow hover:bg-brand-gold text-black font-medium px-4 py-2 rounded-md transition-colors duration-300;}
   .btn-secondary { @apply bg-transparent hover:bg-brand-yellow/10 text-foreground border border-brand-yellow/20 font-medium px-4 py-2 rounded-md transition-colors duration-300;}
   .btn-outline { @apply bg-transparent hover:bg-foreground/10 text-foreground border border-foreground/20 font-medium px-4 py-2 rounded-md transition-colors duration-300;}
+  
+  /* Input style */
   .input-standard { @apply w-full px-4 py-2 bg-background border border-input rounded-md outline-none focus:ring-2 focus:ring-brand-yellow/50 transition-all;}
-  /* Navbar sticky improvements and glow on scroll */
+  
+  /* Navbar optimizations */
   .sticky-header {
     position: sticky;
     top: 0;
@@ -141,17 +165,37 @@
     border-bottom: 1.5px solid #FFD70022;
     backdrop-filter: blur(7px);
     -webkit-backdrop-filter: blur(7px);
+    transform: translate3d(0,0,0);
+    will-change: transform, opacity;
   }
-  /* Animated background for hero section */
+  
+  /* Optimized animations */
   .animate-bg-blob {
     animation: bgBlobMove 30s linear infinite alternate;
+    will-change: filter;
   }
-  /* Animate CTA button glow pulse */
+  
   .animate-cta-glow {
     animation: ctaGlowPulse 3.2s infinite alternate;
+    will-change: opacity, filter;
+  }
+  
+  /* Float animation for 3D objects */
+  .animate-float {
+    animation: floatY 6s ease-in-out infinite;
+    will-change: transform;
+  }
+  
+  /* Typing cursor animation */
+  .typing-cursor {
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 1.06s infinite;
+    will-change: opacity;
   }
 }
 
+/* Optimized animations */
 @keyframes fadeUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
 @keyframes fadeDown {from{opacity:0;transform:translateY(-30px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeLeft {from{opacity:0;transform:translateX(30px);}to{opacity:1;transform:translateX(0);}}
@@ -172,22 +216,17 @@
   0%, 100% { opacity: 0.18; filter: blur(14px);}
   50% { opacity: 0.38; filter: blur(22px);}
 }
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
 
 @keyframes logoReveal {to{opacity:1;transform:translateY(0);}}
-/* ---- Ellow Preloader custom animations --- */
-:root { --brand-yellow: #FFDF00;}
-@keyframes ellow-pulse { 0%,100%{ transform: scale(1);opacity:1;}50%{transform:scale(1.08);opacity:0.92;} }
-@keyframes ellow-spin {0%{transform:rotate(-7deg);}50%{transform:rotate(7deg);}100%{transform:rotate(-7deg);} }
-@keyframes ellow-dot {0%,80%,100%{transform:scale(0.85);opacity:0.7;}40%{transform:scale(1.12);opacity:1;} }
-.animate-ellow-dot {animation:ellow-dot 1.12s infinite both cubic-bezier(.4,0,.6,1);}
-.animate-ellow-dot.delay-\[150ms\] {animation-delay:150ms;}
-.animate-ellow-dot.delay-\[300ms\] {animation-delay:300ms;}
-.animate-ellow-pulse {animation:ellow-pulse 1.3s cubic-bezier(.4,0,.6,1) infinite;}
-.animate-ellow-spin {animation:ellow-spin 2.4s linear infinite;}
-.gradient-text { background: linear-gradient(90deg, #FFDF00 20%, #fff 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.focus-visible:focus-visible { @apply outline-2 outline-offset-2 outline-brand-yellow;}
-.high-contrast-text { @apply text-foreground;}
-.high-contrast-bg { @apply bg-background;}
+
 /* Mobile tweaks */
 @media (max-width: 640px) {
   html { font-size: 14px; }
@@ -195,5 +234,12 @@
   .section-title { @apply text-2xl mb-4;}
 }
 
-/* Don't add any @media or classes related to light mode, only dark styling */
-
+/* Performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -14,20 +15,29 @@ import Testimonials from "@/components/Testimonials";
 import Portfolio from "@/components/Portfolio";
 import ImpactMetrics from "@/components/ImpactMetrics";
 import SmartContactForm from "@/components/SmartContactForm";
-import { initScrollRevealAnimations, init3DTiltEffect } from "@/utils/animationUtils";
+import { initScrollRevealAnimations, init3DTiltEffect, init3DCodeAnimation, initTypingAnimation } from "@/utils/animationUtils";
 import Preloader from "@/components/Preloader";
 import { Toaster } from "sonner";
 
 const Index = () => {
+  const [isInitialized, setIsInitialized] = useState(false);
+
   useEffect(() => {
     // Initialize animations when component mounts
     const cleanupScrollReveal = initScrollRevealAnimations();
     const cleanupTiltEffect = init3DTiltEffect();
+    const cleanup3DCode = init3DCodeAnimation();
+    const cleanupTyping = initTypingAnimation();
+    
+    // Set initialized state to avoid re-initializing animations
+    setIsInitialized(true);
     
     // Clean up event listeners on unmount
     return () => {
       cleanupScrollReveal();
       cleanupTiltEffect();
+      cleanup3DCode();
+      cleanupTyping();
     };
   }, []);
 

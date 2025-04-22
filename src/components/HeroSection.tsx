@@ -1,17 +1,36 @@
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { init3DCodeAnimation, initTypingAnimation } from "@/utils/animationUtils";
 
 const HeroSection = () => {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLAnchorElement>(null);
+  const codeRef = useRef<HTMLDivElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     // Sequential fade-in for hero texts
     setTimeout(() => headlineRef.current?.classList.add("opacity-100", "translate-y-0"), 150);
     setTimeout(() => taglineRef.current?.classList.add("opacity-100", "translate-y-0"), 400);
-    setTimeout(() => ctaRef.current?.classList.add("opacity-100", "scale-100"), 700);
+    setTimeout(() => {
+      ctaRef.current?.classList.add("opacity-100", "scale-100");
+      setIsLoaded(true); // Enable 3D animations after initial load
+    }, 700);
   }, []);
+  
+  useEffect(() => {
+    if (!isLoaded) return;
+    
+    // Initialize 3D animations after page load
+    const cleanup3DCode = init3DCodeAnimation();
+    const cleanupTyping = initTypingAnimation();
+    
+    return () => {
+      cleanup3DCode();
+      cleanupTyping();
+    };
+  }, [isLoaded]);
 
   return (
     <section
@@ -19,7 +38,7 @@ const HeroSection = () => {
       className="relative min-h-screen flex items-center bg-black overflow-hidden pt-24"
       style={{ zIndex: 1 }}
     >
-      {/* Animated 3D/Blob SVG Background */}
+      {/* Animated 3D/Blob SVG Background with optimized performance */}
       <div className="absolute inset-0 -z-10 animate-bg-blob">
         <svg
           width="100%"
@@ -106,40 +125,87 @@ const HeroSection = () => {
               <path d="M5 12h14"></path>
               <path d="M13 5l7 7-7 7"></path>
             </svg>
-            {/* Animated Glow */}
-            <span className="absolute -z-10 inset-0 rounded-full blur-xl opacity-40 bg-brand-yellow bg-opacity-60 animate-cta-glow" />
+            {/* Animated Glow - optimized for performance */}
+            <span className="absolute -z-10 inset-0 rounded-full blur-xl opacity-40 bg-brand-yellow bg-opacity-60 animate-cta-glow will-change-opacity" />
           </a>
         </div>
-        {/* RIGHT: illustration or showcase */}
+        
+        {/* RIGHT: 3D code animation */}
         <div className="hidden md:flex w-full md:w-1/2 justify-center">
-          <div className="relative flex flex-col items-center select-none pointer-events-none">
-            {/* Placeholder illustration - relevant to coding/design */}
-            <svg
-              width={320}
-              height={260}
-              viewBox="0 0 340 260"
-              fill="none"
-              className="drop-shadow-2xl"
-            >
-              <rect x="18" y="37" width="304" height="180" rx="22" fill="#232323" stroke="#FFD700" strokeWidth="2" />
-              <rect x="35" y="60" width="268" height="80" rx="8" fill="#191919" />
-              <rect x="60" y="98" width="110" height="12" rx="6" fill="#FFD700" />
-              <rect x="60" y="118" width="80" height="9" rx="4.5" fill="#fff" />
-              <rect x="60" y="136" width="70" height="7" rx="3.5" fill="#bbbaac" />
-              <rect x="170" y="98" width="90" height="12" rx="6" fill="#FFD700" opacity="0.4" />
-              <rect x="210" y="118" width="60" height="9" rx="4.5" fill="#fff" opacity="0.7"/>
-              <rect x="190" y="136" width="80" height="7" rx="3.5" fill="#bbbaac" opacity="0.65"/>
-              {/* Code brackets */}
-              <path d="M46 90l12 16-12 16" stroke="#FFD700" strokeWidth="3" strokeLinecap="round" fill="none"/>
-              <path d="M290 90l-12 16 12 16" stroke="#FFD700" strokeWidth="3" strokeLinecap="round" fill="none"/>
-              {/* Line at bottom */}
-              <rect x="60" y="162" width="170" height="7" rx="3.5" fill="#FFD700" opacity="0.1"/>
-            </svg>
-            <span className="mt-6 text-xs text-white/30 tracking-widest">built for innovators</span>
+          <div ref={codeRef} className="floating-code-3d select-none relative perspective mt-10 md:mt-0">
+            {/* 3D Laptop with code editor */}
+            <div className="relative w-[380px] h-[260px] transition-all duration-300">
+              {/* Laptop base */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[320px] h-[20px] bg-gradient-to-r from-[#222] to-[#333] rounded-[4px] shadow-xl"></div>
+              
+              {/* Laptop body */}
+              <div className="absolute bottom-[19px] left-1/2 -translate-x-1/2 w-[340px] h-[14px] bg-[#333] rounded-b-[10px]"></div>
+              
+              {/* Screen */}
+              <div className="absolute bottom-[32px] left-1/2 -translate-x-1/2 w-[340px] h-[220px] bg-[#222] rounded-t-[10px] overflow-hidden perspective">
+                <div className="w-full h-full bg-[#121212] p-[10px] flex flex-col">
+                  {/* Code editor header */}
+                  <div className="flex items-center gap-2 mb-2 px-2">
+                    <div className="w-3 h-3 rounded-full bg-[#FF605C]"></div>
+                    <div className="w-3 h-3 rounded-full bg-[#FFBD44]"></div>
+                    <div className="w-3 h-3 rounded-full bg-[#00CA4E]"></div>
+                    <div className="ml-auto text-xs text-white/50">script.js</div>
+                  </div>
+                  
+                  {/* Code editor body with typed text */}
+                  <div className="flex-1 bg-[#1E1E1E] rounded text-xs p-3 text-left font-mono">
+                    <div className="text-[#9CDCFE]">
+                      <span className="text-[#C586C0]">const</span> <span>createWebsite</span> <span className="text-white">=</span> <span className="text-[#DCDCAA]">(</span><span className="text-[#9CDCFE]">client</span><span className="text-[#DCDCAA]">)</span> <span className="text-white">=&gt;</span> <span className="text-[#DCDCAA]">{`{`}</span>
+                    </div>
+                    <div className="ml-4 text-[#6A9955]">// Crafting amazing digital experiences</div>
+                    <div className="ml-4">
+                      <span className="text-[#C586C0]">return</span> <span className="text-[#DCDCAA]">new</span> <span className="text-[#4EC9B0]">Promise</span><span className="text-white">(</span><span className="text-[#DCDCAA]">resolve</span> <span className="text-white">=&gt;</span> <span className="text-[#DCDCAA]">{`{`}</span>
+                    </div>
+                    <div className="ml-8">
+                      <span data-typing="const design = createDesign(client.needs);" data-typing-delay="1200" data-typing-speed="40"></span>
+                    </div>
+                    <div className="ml-8">
+                      <span data-typing="const code = buildArchitecture(design);" data-typing-delay="2500" data-typing-speed="40"></span>
+                    </div>
+                    <div className="ml-8">
+                      <span data-typing="const website = deployOptimized(code);" data-typing-delay="3800" data-typing-speed="40"></span>
+                    </div>
+                    <div className="ml-8">
+                      <span data-typing="resolve(website);" data-typing-delay="5000" data-typing-speed="40" data-typing-cursor></span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Screen reflection overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+              </div>
+            </div>
+            
+            {/* Floating tech icons */}
+            <div className="absolute -top-10 -right-6 w-12 h-12 bg-brand-yellow/10 rounded-lg flex items-center justify-center text-brand-yellow animate-float" style={{ animationDelay: '0.2s' }}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                <polyline points="13 2 13 9 20 9"></polyline>
+              </svg>
+            </div>
+            <div className="absolute top-10 -left-8 w-12 h-12 bg-brand-gold/10 rounded-lg flex items-center justify-center text-brand-gold animate-float" style={{ animationDelay: '1.5s' }}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+            </div>
+            <div className="absolute bottom-10 -right-6 w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center text-white animate-float" style={{ animationDelay: '0.8s' }}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+            </div>
           </div>
         </div>
       </div>
-      {/* Scroll down indicator */}
+      
+      {/* Scroll down indicator - optimized for performance */}
       <div className="absolute left-1/2 -translate-x-1/2 bottom-4 hidden sm:flex flex-col items-center animate-bounce">
         <span className="text-white/70 text-xs mb-1">Scroll Down</span>
         <svg className="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
