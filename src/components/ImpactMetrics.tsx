@@ -127,7 +127,7 @@ const ImpactMetrics = () => {
                 transform: 'translateY(20px)'
               }}
             >
-              <div className="text-center p-6">
+              <div className="text-center p-6 neo-effect rounded-xl card-3d">
                 <div className="mb-6 relative mx-auto">
                   <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center bg-gradient-to-br from-brand-gold/20 to-brand-yellow/20 backdrop-blur-sm border border-brand-yellow/30">
                     <metric.icon className="w-10 h-10 text-brand-yellow" />
