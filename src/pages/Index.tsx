@@ -17,6 +17,7 @@ import Portfolio from "@/components/Portfolio";
 import ImpactMetrics from "@/components/ImpactMetrics";
 import SmartContactForm from "@/components/SmartContactForm";
 import { initScrollRevealAnimations, init3DTiltEffect } from "@/utils/animationUtils";
+import Preloader from "@/components/Preloader";
 
 const Index = () => {
   useEffect(() => {
@@ -24,18 +25,17 @@ const Index = () => {
     const cleanupScrollReveal = initScrollRevealAnimations();
     const cleanupTiltEffect = init3DTiltEffect();
     
-    // Removed custom cursor initialization
-    
     // Clean up event listeners on unmount
     return () => {
       cleanupScrollReveal();
       cleanupTiltEffect();
-      // Removed custom cursor cleanup
     };
   }, []);
 
   return (
     <ThemeProvider>
+      {/* Preloader appears above all once, auto-removes when loaded */}
+      <Preloader />
       <div className="min-h-screen flex flex-col transition-colors duration-300">
         <Navbar />
         <main className="flex-grow overflow-x-hidden">
