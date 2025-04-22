@@ -83,7 +83,7 @@ const Preloader = () => {
             />
           ) : (
             <span className="text-3xl font-extrabold gradient-text drop-shadow animate-ellow-pulse select-none">
-              Ellow<span className="text-brand-gold">Digitals</span>
+              Ellow<span className="text-white">Digitals</span>
             </span>
           )}
         </div>

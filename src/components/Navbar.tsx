@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -30,7 +31,7 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/80 backdrop-blur-lg border-b"
+          ? "bg-background/90 backdrop-blur-lg border-b border-border/50"
           : "bg-transparent"
       }`}
     >
@@ -45,13 +46,13 @@ const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-sm font-medium hover:text-brand-purple transition-colors"
+                className="text-sm font-medium text-foreground hover:text-brand-yellow transition-colors"
               >
                 {link.name}
               </a>
             ))}
             <ThemeToggle />
-            <Button asChild className="bg-brand-purple hover:bg-brand-darkPurple text-white">
+            <Button asChild className="bg-brand-yellow hover:bg-brand-gold text-foreground hover:text-foreground/90">
               <a href="#contact">Get Started</a>
             </Button>
           </div>
@@ -63,6 +64,7 @@ const Navbar = () => {
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
+              className="text-foreground"
             >
               {isMobileMenuOpen ? (
                 <X className="h-6 w-6" />
@@ -75,20 +77,20 @@ const Navbar = () => {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-background border-b">
+        <div className="md:hidden bg-background border-b border-border/50">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="block px-3 py-2 text-base font-medium hover:text-brand-purple transition-colors"
+                className="block px-3 py-2 text-base font-medium text-foreground hover:text-brand-yellow transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.name}
               </a>
             ))}
             <div className="px-3 py-2">
-              <Button asChild className="bg-brand-purple hover:bg-brand-darkPurple text-white w-full">
+              <Button asChild className="bg-brand-yellow hover:bg-brand-gold text-foreground hover:text-foreground/90 w-full">
                 <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Get Started</a>
               </Button>
             </div>

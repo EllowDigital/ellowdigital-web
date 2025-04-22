@@ -1,3 +1,4 @@
+
 import { Mail, Phone, Github } from "lucide-react";
 import Logo from "./Logo";
 
@@ -5,13 +6,13 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-muted/50 border-t py-12">
+    <footer className="bg-muted/50 border-t border-border py-12">
       <div className="section-container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2 space-y-4">
             <Logo />
             <h3 className="text-2xl font-bold gradient-text">
-              Ellow<span className="text-brand-purple">Digitals</span>
+              Ellow<span className="text-foreground">Digitals</span>
             </h3>
             <p className="text-muted-foreground">
               Crafting innovative digital experiences with passion & precision.
@@ -19,19 +20,22 @@ const Footer = () => {
             <div className="flex space-x-4">
               <a
                 href="#"
-                className="w-8 h-8 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple hover:bg-brand-purple hover:text-white transition-colors"
+                className="w-8 h-8 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow hover:bg-brand-yellow hover:text-background transition-colors"
+                aria-label="Email us"
               >
                 <Mail className="h-4 w-4" />
               </a>
               <a
                 href="#"
-                className="w-8 h-8 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple hover:bg-brand-purple hover:text-white transition-colors"
+                className="w-8 h-8 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow hover:bg-brand-yellow hover:text-background transition-colors"
+                aria-label="Call us"
               >
                 <Phone className="h-4 w-4" />
               </a>
               <a
                 href="#"
-                className="w-8 h-8 rounded-full bg-brand-purple/10 flex items-center justify-center text-brand-purple hover:bg-brand-purple hover:text-white transition-colors"
+                className="w-8 h-8 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow hover:bg-brand-yellow hover:text-background transition-colors"
+                aria-label="GitHub profile"
               >
                 <Github className="h-4 w-4" />
               </a>
@@ -39,30 +43,30 @@ const Footer = () => {
           </div>
 
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold">Quick Links</h4>
+            <h4 className="text-lg font-semibold text-foreground">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#home" className="text-muted-foreground hover:text-brand-purple transition-colors">
+                <a href="#home" className="text-muted-foreground hover:text-brand-yellow transition-colors">
                   Home
                 </a>
               </li>
               <li>
-                <a href="#about" className="text-muted-foreground hover:text-brand-purple transition-colors">
+                <a href="#about" className="text-muted-foreground hover:text-brand-yellow transition-colors">
                   About
                 </a>
               </li>
               <li>
-                <a href="#services" className="text-muted-foreground hover:text-brand-purple transition-colors">
+                <a href="#services" className="text-muted-foreground hover:text-brand-yellow transition-colors">
                   Services
                 </a>
               </li>
               <li>
-                <a href="#offers" className="text-muted-foreground hover:text-brand-purple transition-colors">
+                <a href="#offers" className="text-muted-foreground hover:text-brand-yellow transition-colors">
                   Offers
                 </a>
               </li>
               <li>
-                <a href="#contact" className="text-muted-foreground hover:text-brand-purple transition-colors">
+                <a href="#contact" className="text-muted-foreground hover:text-brand-yellow transition-colors">
                   Contact
                 </a>
               </li>
@@ -70,30 +74,30 @@ const Footer = () => {
           </div>
 
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold">Services</h4>
+            <h4 className="text-lg font-semibold text-foreground">Services</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#services" className="text-muted-foreground hover:text-brand-purple transition-colors">
+                <a href="#services" className="text-muted-foreground hover:text-brand-yellow transition-colors">
                   Web Development
                 </a>
               </li>
               <li>
-                <a href="#services" className="text-muted-foreground hover:text-brand-purple transition-colors">
+                <a href="#services" className="text-muted-foreground hover:text-brand-yellow transition-colors">
                   Mobile App Development
                 </a>
               </li>
               <li>
-                <a href="#services" className="text-muted-foreground hover:text-brand-purple transition-colors">
+                <a href="#services" className="text-muted-foreground hover:text-brand-yellow transition-colors">
                   UI/UX Design
                 </a>
               </li>
               <li>
-                <a href="#services" className="text-muted-foreground hover:text-brand-purple transition-colors">
+                <a href="#services" className="text-muted-foreground hover:text-brand-yellow transition-colors">
                   Custom Software
                 </a>
               </li>
               <li>
-                <a href="#services" className="text-muted-foreground hover:text-brand-purple transition-colors">
+                <a href="#services" className="text-muted-foreground hover:text-brand-yellow transition-colors">
                   SEO & Performance
                 </a>
               </li>
@@ -106,10 +110,10 @@ const Footer = () => {
             &copy; {currentYear} EllowDigitals. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="text-sm text-muted-foreground hover:text-brand-purple transition-colors">
+            <a href="#" className="text-sm text-muted-foreground hover:text-brand-yellow transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-brand-purple transition-colors">
+            <a href="#" className="text-sm text-muted-foreground hover:text-brand-yellow transition-colors">
               Terms of Service
             </a>
           </div>

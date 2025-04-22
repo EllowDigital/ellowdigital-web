@@ -133,7 +133,7 @@ const Testimonials = () => {
                         <Quote className="w-10 h-10 text-brand-yellow/20 group-hover:text-brand-yellow/30 transition-colors duration-300" />
                       </div>
                       
-                      <p className="text-muted-foreground mb-6 line-clamp-4">{testimonial.text}</p>
+                      <p className="text-foreground mb-6 line-clamp-4">{testimonial.text}</p>
                       
                       <div className="flex items-center mt-auto pt-4 border-t border-border/30">
                         <div className="w-12 h-12 rounded-full overflow-hidden mr-4 border border-brand-gold/20 bg-brand-yellow/5">
@@ -144,7 +144,7 @@ const Testimonials = () => {
                           />
                         </div>
                         <div>
-                          <h4 className="font-semibold">{testimonial.name}</h4>
+                          <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
                           <p className="text-xs text-muted-foreground">
                             {testimonial.position}, {testimonial.company}
                           </p>
@@ -156,8 +156,8 @@ const Testimonials = () => {
               ))}
             </CarouselContent>
             <div className="flex justify-center mt-8 gap-4">
-              <CarouselPrevious className="static transform-none mx-2 bg-card hover:bg-brand-yellow/10 hover:text-brand-gold border-brand-gold/20 dark:bg-black/50" />
-              <CarouselNext className="static transform-none mx-2 bg-card hover:bg-brand-yellow/10 hover:text-brand-gold border-brand-gold/20 dark:bg-black/50" />
+              <CarouselPrevious className="static transform-none mx-2 bg-card hover:bg-brand-yellow/10 hover:text-brand-gold border-brand-gold/20 dark:bg-black/50 text-foreground" />
+              <CarouselNext className="static transform-none mx-2 bg-card hover:bg-brand-yellow/10 hover:text-brand-gold border-brand-gold/20 dark:bg-black/50 text-foreground" />
             </div>
           </Carousel>
         </div>

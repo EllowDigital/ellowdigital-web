@@ -48,7 +48,7 @@ const Logo = () => {
         ) : (
           // Fallback to styled text if image fails
           <span className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-brand-gold to-brand-yellow bg-clip-text text-transparent tracking-wider">
-            Ellow<span className="text-brand-purple">Digitals</span>
+            Ellow<span className="text-foreground">Digitals</span>
           </span>
         )}
       </div>

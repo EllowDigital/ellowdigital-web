@@ -152,7 +152,7 @@ const ImpactMetrics = () => {
                     </span>
                     <span className="text-brand-yellow ml-1">{metric.suffix}</span>
                   </h3>
-                  <p className="text-lg font-medium">{metric.label}</p>
+                  <p className="text-lg font-medium text-foreground">{metric.label}</p>
                 </div>
               </div>
             </div>
@@ -160,7 +160,7 @@ const ImpactMetrics = () => {
         </div>
         
         <div className="mt-16 text-center reveal-animate">
-          <p className="inline-block py-3 px-6 rounded-full bg-brand-yellow/10 border border-brand-yellow/20 text-sm font-medium">
+          <p className="inline-block py-3 px-6 rounded-full bg-brand-yellow/10 border border-brand-yellow/20 text-sm font-medium text-foreground">
             Delivering exceptional results since 2018
           </p>
         </div>

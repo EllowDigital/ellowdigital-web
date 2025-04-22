@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -50,7 +51,7 @@
   }
 
   .dark {
-    /* Dark mode - keep existing values */
+    /* Dark mode - improved contrast values */
     --background: 0 0% 9%;
     --foreground: 60 33% 98%;
 
@@ -110,7 +111,7 @@
   }
   
   .gradient-bg {
-    @apply bg-gradient-to-r from-brand-black via-brand-offBlack to-brand-black dark:from-brand-gold/10 dark:via-brand-yellow/10 dark:to-brand-gold/10;
+    @apply bg-gradient-to-r from-background via-background to-background dark:from-brand-gold/10 dark:via-brand-yellow/10 dark:to-brand-gold/10;
   }
 
   .section-container {
@@ -118,7 +119,7 @@
   }
 
   .section-title {
-    @apply text-3xl md:text-4xl font-bold mb-8 text-center;
+    @apply text-3xl md:text-4xl font-bold mb-8 text-center text-foreground;
   }
 
   .card-hover {
@@ -142,7 +143,7 @@
   }
   
   .glass-effect {
-    @apply bg-white/70 backdrop-blur-md border border-white/50 shadow-sm dark:bg-black/20 dark:border-white/10;
+    @apply bg-white/70 backdrop-blur-md border border-white/50 shadow-sm dark:bg-black/30 dark:border-white/10;
   }
   
   .neo-effect {
@@ -440,6 +441,19 @@
   background: linear-gradient(90deg, #FFDF00 20%, #fff 80%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* Accessibility helper classes */
+.focus-visible:focus-visible {
+  @apply outline-2 outline-offset-2 outline-brand-yellow;
+}
+
+.high-contrast-text {
+  @apply text-foreground dark:text-foreground;
+}
+
+.high-contrast-bg {
+  @apply bg-background dark:bg-background;
 }
 
 /* ---- End Ellow Preloader ---- */
