@@ -1,5 +1,5 @@
 
-import { Award, Clock, ThumbsUp, Code } from "lucide-react";
+import { Award, Clock, ThumbsUp, Users } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const metrics = [
@@ -25,7 +25,7 @@ const metrics = [
     color: "from-brand-gold to-brand-yellow"
   },
   {
-    icon: Code,
+    icon: Users,
     value: 32,
     label: "Technologies Mastered",
     suffix: "+",
