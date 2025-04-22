@@ -1,10 +1,23 @@
-
 import { useState, useRef, useEffect } from "react";
-import { Send, Check, AlertCircle, Phone, Mail, MapPin } from "lucide-react";
+import { Send, Check, AlertCircle, Phone, Mail, Facebook, Instagram, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
+// FORM VALIDATION
+function validateEmail(email: string) {
+  // Simple email regex
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 type FormStatus = "idle" | "submitting" | "success" | "error";
+
+const subjectOptions = [
+  "Web Development",
+  "Mobile App Development",
+  "UI/UX Design",
+  "SEO & Performance",
+  "Other",
+];
 
 const SmartContactForm = () => {
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
@@ -15,11 +28,10 @@ const SmartContactForm = () => {
     subject: "",
     message: ""
   });
+  const [errors, setErrors] = useState<{ [k: string]: string }>({});
   const formRef = useRef<HTMLFormElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const dividerRef = useRef<HTMLDivElement>(null);
-  const contactInfoRef = useRef<HTMLDivElement>(null);
 
+  // ScrollReveal effect, not changed
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -32,6 +44,10 @@ const SmartContactForm = () => {
       },
       { threshold: 0.1 }
     );
+
+    const titleRef = useRef<HTMLHeadingElement>(null);
+    const dividerRef = useRef<HTMLDivElement>(null);
+    const contactInfoRef = useRef<HTMLDivElement>(null);
 
     if (titleRef.current) observer.observe(titleRef.current);
     if (dividerRef.current) observer.observe(dividerRef.current);
@@ -46,13 +62,35 @@ const SmartContactForm = () => {
     };
   }, []);
 
+  // Inline validation
+  const validate = () => {
+    const errs: { [k: string]: string } = {};
+    if (!formData.name.trim()) errs.name = "Name is required.";
+    if (!formData.email.trim()) errs.email = "Email is required.";
+    else if (!validateEmail(formData.email)) errs.email = "Please enter a valid email.";
+    if (!formData.subject) errs.subject = "Please select a subject.";
+    if (!formData.message.trim()) errs.message = "Message is required.";
+    return errs;
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+
+    // Re-validate the field
+    if (errors[name]) setErrors({ ...errors, [name]: "" });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const errs = validate();
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) {
+      setFormStatus("error");
+      toast.error("Please fix the errors in the form.");
+      setTimeout(() => setFormStatus("idle"), 2000);
+      return;
+    }
     setFormStatus("submitting");
 
     // Simulate form submission
@@ -66,239 +104,186 @@ const SmartContactForm = () => {
         message: ""
       });
 
-      // Show success toast
-      toast.success("Message sent successfully! We'll get back to you soon.", {
+      toast.success("Message sent! We'll get back to you soon.", {
         position: "top-right",
-        duration: 5000,
+        duration: 4000,
       });
 
-      // Reset form status after 3 seconds
       setTimeout(() => {
         setFormStatus("idle");
-      }, 3000);
+      }, 2500);
     }, 1500);
   };
 
   return (
     <section id="contact" className="py-24 relative overflow-hidden snap-start bg-gradient-to-b from-card/30 to-background dark:from-black/20 dark:to-background">
-      {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-brand-yellow/5 rounded-full blur-3xl morph-shape"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-brand-gold/5 rounded-full blur-3xl morph-shape" style={{ animationDelay: '10s' }}></div>
+      {/* Decorative gradient blobs */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 right-1/5 w-96 h-96 bg-brand-yellow/10 rounded-full blur-3xl morph-shape"></div>
+        <div className="absolute bottom-1/4 left-1/6 w-80 h-80 bg-brand-gold/10 rounded-full blur-3xl morph-shape"></div>
       </div>
       
-      <div className="section-container max-w-6xl mx-auto relative z-10">
-        <h2 ref={titleRef} className="section-title reveal-animate">Get In Touch</h2>
-        <div ref={dividerRef} className="animated-divider reveal-animate mb-8"></div>
-        
-        <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-12 reveal-animate">
-          Ready to start your next project? Contact us today and let's create something amazing together.
+      <div className="section-container max-w-5xl mx-auto relative z-10">
+        <h2 className="section-title reveal-animate">Contact Us</h2>
+        <div className="animated-divider reveal-animate mb-8"></div>
+        <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-12 reveal-animate text-lg">
+          Let's start your project! Reach out below and our experts will reply soon.
         </p>
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Contact Form */}
-          <div className="lg:col-span-8">
-            <form 
-              ref={formRef}
-              onSubmit={handleSubmit}
-              className="space-y-6 neo-effect p-8 rounded-xl reveal-animate card-3d dark:bg-black/30"
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="float-label-input">
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder=" "
-                    required
-                    className="w-full dark:text-white dark:bg-black/30 border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20"
-                  />
-                  <label htmlFor="name" className="dark:text-white/70">Your Name</label>
-                </div>
-                
-                <div className="float-label-input">
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder=" "
-                    required
-                    className="w-full dark:text-white dark:bg-black/30 border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20"
-                  />
-                  <label htmlFor="email" className="dark:text-white/70">Email Address</label>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="float-label-input">
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder=" "
-                    className="w-full dark:text-white dark:bg-black/30 border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20"
-                  />
-                  <label htmlFor="phone" className="dark:text-white/70">Phone Number (Optional)</label>
-                </div>
-                
-                <div className="float-label-input relative">
-                  <select
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="w-full appearance-none dark:text-white dark:bg-black/30 border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20"
-                  >
-                    <option value=""></option>
-                    <option value="Web Development">Web Development</option>
-                    <option value="Mobile App Development">Mobile App Development</option>
-                    <option value="UI/UX Design">UI/UX Design</option>
-                    <option value="Other">Other</option>
-                  </select>
-                  <label htmlFor="subject" className={`${formData.subject ? 'text-xs -top-0 bg-background px-2 dark:bg-black dark:text-white/70' : 'dark:text-white/70'}`}>
-                    Subject
-                  </label>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                    <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="float-label-input">
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={5}
-                  placeholder=" "
-                  required
-                  className="resize-none w-full dark:text-white dark:bg-black/30 border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20"
-                ></textarea>
-                <label htmlFor="message" className="dark:text-white/70">Your Message</label>
-              </div>
-              
-              <Button
-                type="submit"
-                disabled={formStatus === "submitting"}
-                className={`w-full py-3 h-auto flex items-center justify-center transition-all ${
-                  formStatus === "success" 
-                    ? "bg-green-600 hover:bg-green-700 text-white" 
-                    : formStatus === "error"
-                      ? "bg-red-600 hover:bg-red-700 text-white"
-                      : "bg-gradient-to-r from-brand-gold to-brand-yellow text-black hover:opacity-90"
-                }`}
-              >
-                {formStatus === "idle" && (
-                  <>
-                    Send Message <Send className="ml-2 w-4 h-4" />
-                  </>
-                )}
-                {formStatus === "submitting" && (
-                  <span className="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                )}
-                {formStatus === "success" && (
-                  <>
-                    Message Sent! <Check className="ml-2 w-4 h-4" />
-                  </>
-                )}
-                {formStatus === "error" && (
-                  <>
-                    Error Sending <AlertCircle className="ml-2 w-4 h-4" />
-                  </>
-                )}
-              </Button>
-              
-              {formStatus === "error" && (
-                <div className="p-4 bg-red-100 border border-red-200 text-red-700 rounded-md dark:bg-red-900/30 dark:border-red-800 dark:text-red-400">
-                  There was an error sending your message. Please try again later.
-                </div>
-              )}
-            </form>
-          </div>
-          
-          {/* Contact Information */}
-          <div 
-            ref={contactInfoRef}
-            className="lg:col-span-4 reveal-animate"
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* CONTACT FORM */}
+          <form 
+            ref={formRef}
+            onSubmit={handleSubmit}
+            className="space-y-7 bg-card/70 rounded-2xl border border-border/30 shadow-lg shadow-brand-yellow/5 p-8 reveal-animate relative"
           >
-            <div className="glass-effect p-8 rounded-xl h-full border border-brand-gold/10 bg-card/50 backdrop-blur-md dark:bg-black/30">
-              <h3 className="text-xl font-semibold mb-6 gradient-text">Contact Information</h3>
-              
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <div className="w-10 h-10 rounded-full bg-brand-yellow/10 flex items-center justify-center mr-4 flex-shrink-0 border border-brand-gold/10">
-                    <Phone className="w-5 h-5 text-brand-yellow" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-medium mb-1">Phone</h4>
-                    <p className="text-muted-foreground">+1 (555) 123-4567</p>
-                  </div>
+            {/* ANIMATED SUCCESS MESSAGE */}
+            {formStatus === "success" && (
+              <div className="absolute inset-0 z-20 bg-black/70 bg-opacity-80 flex flex-col items-center justify-center rounded-2xl transition-all animate-fade-in">
+                <Check className="w-16 h-16 text-green-400 mb-2" />
+                <div className="font-extrabold text-2xl text-green-300 mb-1">Thank you!</div>
+                <p className="text-muted-foreground text-base">Your message was sent successfully.</p>
+              </div>
+            )}
+
+            {/* Fields */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label htmlFor="name" className="block font-semibold text-brand-yellow pb-1">Name</label>
+                <input
+                  id="name"
+                  name="name"
+                  placeholder="Your name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className={`rounded-xl border border-border bg-background/60 px-4 py-3 w-full text-base focus:ring-2 focus:ring-brand-yellow/60 focus:outline-none shadow transition ${errors.name ? "border-red-500" : "border-border"}`}
+                  disabled={formStatus === "submitting"}
+                  required
+                />
+                {errors.name && <div className="text-xs text-red-400 mt-1">{errors.name}</div>}
+              </div>
+              <div>
+                <label htmlFor="email" className="block font-semibold text-brand-yellow pb-1">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="you@email.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className={`rounded-xl border bg-background/60 border-border px-4 py-3 w-full text-base focus:ring-2 focus:ring-brand-yellow/60 focus:outline-none shadow transition ${errors.email ? "border-red-500" : "border-border"}`}
+                  disabled={formStatus === "submitting"}
+                  required
+                />
+                {errors.email && <div className="text-xs text-red-400 mt-1">{errors.email}</div>}
+              </div>
+              <div>
+                <label htmlFor="phone" className="block font-semibold text-brand-yellow pb-1">Phone<span className="text-muted-foreground text-xs ml-1">(Optional)</span></label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  placeholder="Your phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="rounded-xl border border-border bg-background/60 px-4 py-3 w-full text-base focus:ring-2 focus:ring-brand-yellow/60 focus:outline-none shadow transition"
+                  disabled={formStatus === "submitting"}
+                  autoComplete="tel"
+                />
+              </div>
+              <div>
+                <label htmlFor="subject" className="block font-semibold text-brand-yellow pb-1">Subject</label>
+                <select
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  className={`rounded-xl border border-border bg-background/60 px-4 py-3 w-full text-base focus:ring-2 focus:ring-brand-yellow/60 focus:outline-none shadow transition ${errors.subject ? "border-red-500" : "border-border"}`}
+                  disabled={formStatus === "submitting"}
+                  required
+                >
+                  <option value="">-- Select --</option>
+                  {subjectOptions.map(opt => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
+                </select>
+                {errors.subject && <div className="text-xs text-red-400 mt-1">{errors.subject}</div>}
+              </div>
+            </div>
+
+            {/* Message */}
+            <div>
+              <label htmlFor="message" className="block font-semibold text-brand-yellow pb-1">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Type your message..."
+                value={formData.message}
+                onChange={handleChange}
+                className={`rounded-xl border border-border bg-background/60 px-4 py-3 w-full text-base focus:ring-2 focus:ring-brand-yellow/60 focus:outline-none shadow transition resize-none min-h-[120px] ${errors.message ? "border-red-500" : "border-border"}`}
+                disabled={formStatus === "submitting"}
+                required
+              />
+              {errors.message && <div className="text-xs text-red-400 mt-1">{errors.message}</div>}
+            </div>
+
+            <Button
+              type="submit"
+              className={`w-full py-4 text-lg font-bold rounded-2xl transition-all duration-300 shadow-xl border-2 border-brand-yellow bg-gradient-to-r from-brand-yellow/80 to-brand-gold/90 hover:scale-105 hover:from-brand-yellow hover:to-brand-yellow active:scale-95 flex justify-center items-center gap-3
+                ${formStatus === "submitting" ? "bg-gray-400 pointer-events-none opacity-80" : ""}
+              `}
+              disabled={formStatus === "submitting"}
+            >
+              {formStatus === "idle" && (
+                <>
+                  Send Message <Send className="ml-1 w-6 h-6" />
+                </>
+              )}
+              {formStatus === "submitting" && (
+                <>
+                  <span className="inline-block w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  Sending...
+                </>
+              )}
+              {formStatus === "error" && (
+                <>
+                  Error <AlertCircle className="ml-1 w-6 h-6" />
+                </>
+              )}
+              {formStatus === "success" && (
+                <>
+                  Sent! <Check className="ml-1 w-6 h-6" />
+                </>
+              )}
+            </Button>
+          </form>
+
+          {/* CONTACT INFORMATION */}
+          <div className="flex flex-col justify-between h-full rounded-2xl border border-brand-yellow/10 bg-card/80 p-8 shadow-lg">
+            <div>
+              <h3 className="text-xl font-bold text-brand-yellow mb-5">Contact Information</h3>
+              <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <span className="w-10 h-10 rounded-full bg-brand-yellow/20 flex items-center justify-center"><Phone className="w-5 h-5 text-brand-yellow" /></span>
+                  <span className="font-medium text-base">+91 98765 43210</span>
                 </div>
-                
-                <div className="flex items-start">
-                  <div className="w-10 h-10 rounded-full bg-brand-yellow/10 flex items-center justify-center mr-4 flex-shrink-0 border border-brand-gold/10">
-                    <Mail className="w-5 h-5 text-brand-yellow" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-medium mb-1">Email</h4>
-                    <p className="text-muted-foreground">hello@ellowdigitals.com</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="w-10 h-10 rounded-full bg-brand-yellow/10 flex items-center justify-center mr-4 flex-shrink-0 border border-brand-gold/10">
-                    <MapPin className="w-5 h-5 text-brand-yellow" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-medium mb-1">Office</h4>
-                    <p className="text-muted-foreground">123 Innovation Street,<br />San Francisco, CA 94103</p>
-                  </div>
+                <div className="flex items-center gap-4">
+                  <span className="w-10 h-10 rounded-full bg-brand-yellow/20 flex items-center justify-center"><Mail className="w-5 h-5 text-brand-yellow" /></span>
+                  <span className="font-medium text-base">hello@ellowdigitals.com</span>
                 </div>
               </div>
-              
-              <div className="mt-10">
-                <h4 className="text-sm font-medium mb-4">Working Hours</h4>
-                <p className="text-muted-foreground mb-2">Monday - Friday: 9AM - 5PM</p>
-                <p className="text-muted-foreground">Saturday - Sunday: Closed</p>
-              </div>
-              
-              <div className="mt-10">
-                <h4 className="text-sm font-medium mb-4">Follow Us</h4>
-                <div className="flex space-x-4">
-                  <a href="#" className="w-8 h-8 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow hover:bg-brand-yellow hover:text-black transition-colors border border-brand-gold/10">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24h-1.918c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z" />
-                    </svg>
-                  </a>
-                  <a href="#" className="w-8 h-8 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow hover:bg-brand-yellow hover:text-black transition-colors border border-brand-gold/10">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z" />
-                      <path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8z" />
-                      <circle cx="18.406" cy="5.594" r="1.44" />
-                    </svg>
-                  </a>
-                  <a href="#" className="w-8 h-8 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow hover:bg-brand-yellow hover:text-black transition-colors border border-brand-gold/10">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                    </svg>
-                  </a>
-                  <a href="#" className="w-8 h-8 rounded-full bg-brand-yellow/10 flex items-center justify-center text-brand-yellow hover:bg-brand-yellow hover:text-black transition-colors border border-brand-gold/10">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                    </svg>
-                  </a>
+              <div className="mt-8">
+                <h4 className="font-semibold text-base mb-2 text-muted-foreground">Follow us</h4>
+                <div className="flex gap-3">
+                  <a href="https://facebook.com/ellowdigitals" aria-label="Facebook" className="w-8 h-8 rounded-full flex items-center justify-center bg-brand-yellow/20 hover:bg-brand-yellow hover:text-black text-brand-yellow/90 transition"><Facebook className="w-4 h-4" /></a>
+                  <a href="https://instagram.com/ellowdigitals" aria-label="Instagram" className="w-8 h-8 rounded-full flex items-center justify-center bg-brand-yellow/20 hover:bg-brand-yellow hover:text-black text-brand-yellow/90 transition"><Instagram className="w-4 h-4" /></a>
+                  <a href="https://linkedin.com/company/ellowdigitals" aria-label="LinkedIn" className="w-8 h-8 rounded-full flex items-center justify-center bg-brand-yellow/20 hover:bg-brand-yellow hover:text-black text-brand-yellow/90 transition"><Linkedin className="w-4 h-4" /></a>
                 </div>
               </div>
+            </div>
+            <div className="mt-8 text-sm text-muted-foreground">
+              <strong>Working Hours:</strong> Mon-Fri: 9am - 6pm<br />
+              <span>Saturday & Sunday: Closed</span>
             </div>
           </div>
         </div>
