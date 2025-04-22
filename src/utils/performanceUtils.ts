@@ -1,4 +1,3 @@
-
 /**
  * Performance utility functions for optimizing application loading and runtime
  */
@@ -12,20 +11,20 @@
 export const setupLazyLoading = (
   targetSelector = "img[data-src]",
   rootMargin = "200px 0px"
-): () => void => {
+): (() => void) => {
   if (!window.IntersectionObserver) {
     console.warn("IntersectionObserver not supported in this browser");
     return () => {};
   }
 
   const targets = document.querySelectorAll(targetSelector);
-  
+
   const onIntersect: IntersectionObserverCallback = (entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const img = entry.target as HTMLImageElement;
         const src = img.dataset.src;
-        
+
         if (src) {
           img.src = src;
           img.removeAttribute("data-src");
@@ -37,10 +36,10 @@ export const setupLazyLoading = (
 
   const observer = new IntersectionObserver(onIntersect, {
     rootMargin,
-    threshold: 0.1
+    threshold: 0.1,
   });
 
-  targets.forEach(target => observer.observe(target));
+  targets.forEach((target) => observer.observe(target));
 
   return () => {
     if (observer) {
@@ -54,7 +53,10 @@ export const setupLazyLoading = (
  * @param callback - Function to execute after defer
  * @param timeout - Time to defer in milliseconds
  */
-export const deferNonCritical = (callback: () => void, timeout = 1000): void => {
+export const deferNonCritical = (
+  callback: () => void,
+  timeout = 1000
+): void => {
   if (window.requestIdleCallback) {
     window.requestIdleCallback(() => callback());
   } else {
@@ -73,7 +75,7 @@ export const batchDomOperations = <T>(
 ): void => {
   // Read from the DOM first
   const data = readCallback();
-  
+
   // Then write in the next animation frame to avoid layout thrashing
   requestAnimationFrame(() => {
     writeCallback(data);
@@ -84,27 +86,27 @@ export const batchDomOperations = <T>(
  * Initializes performance monitoring
  * @returns Monitoring cleanup function
  */
-export const initPerformanceMonitoring = (): () => void => {
+export const initPerformanceMonitoring = (): (() => void) => {
   // Monitor long tasks
   const longTaskObserver = new PerformanceObserver((list) => {
     list.getEntries().forEach((entry) => {
       console.warn(`Long task detected: ${entry.duration}ms`);
     });
   });
-  
+
   try {
     longTaskObserver.observe({ entryTypes: ["longtask"] });
   } catch (e) {
     console.warn("PerformanceObserver for long tasks not supported");
   }
-  
+
   // Monitor largest contentful paint
   const lcpObserver = new PerformanceObserver((list) => {
     const entries = list.getEntries();
     const lastEntry = entries[entries.length - 1];
     console.log(`LCP: ${lastEntry.startTime}ms`);
   });
-  
+
   try {
     lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
   } catch (e) {
@@ -132,16 +134,16 @@ export const optimizedAnimation = (
   element?: HTMLElement
 ): number => {
   let animationId: number;
-  
+
   const animate = (timestamp: number) => {
     // Only run animation if element is in viewport or if no element is provided
     if (!element || isElementInViewport(element)) {
       animationCallback(timestamp);
     }
-    
+
     animationId = requestAnimationFrame(animate);
   };
-  
+
   animationId = requestAnimationFrame(animate);
   return animationId;
 };
@@ -153,7 +155,7 @@ export const optimizedAnimation = (
  */
 export const isElementInViewport = (element: HTMLElement): boolean => {
   const rect = element.getBoundingClientRect();
-  
+
   return (
     rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
     rect.left <= (window.innerWidth || document.documentElement.clientWidth) &&
@@ -166,10 +168,10 @@ export const isElementInViewport = (element: HTMLElement): boolean => {
  * Initializes all performance optimizations
  * @returns Cleanup function to remove all optimizations
  */
-export const initPerformanceOptimizations = (): () => void => {
+export const initPerformanceOptimizations = (): (() => void) => {
   const cleanupLazyLoading = setupLazyLoading();
   const cleanupPerformanceMonitoring = initPerformanceMonitoring();
-  
+
   // Initialize other optimizations as needed
   deferNonCritical(() => {
     console.log("Non-critical operations executed");

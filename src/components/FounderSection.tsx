@@ -18,27 +18,27 @@ const FounderSection = () => {
               {/* Responsive Founder Image */}
               <div className="md:w-2/5 w-full relative flex-shrink-0">
                 <img
-                  src="/placeholder.svg"
+                  src="/images/founder.jpg"
                   alt="Founder"
                   className="object-cover w-full h-56 md:h-full rounded-t-xl md:rounded-t-none md:rounded-l-xl transition-transform duration-700 hover:scale-105"
                   style={{ aspectRatio: "1/1.1", objectFit: "cover", maxHeight: "360px" }}
                 />
                 {/* Social icons */}
                 <div className="absolute bottom-3 left-3 flex gap-2">
-                  <a href="#" className="w-8 h-8 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center text-white hover:bg-brand-yellow hover:text-black transition-colors"><Mail className="h-5 w-5" /></a>
-                  <a href="#" className="w-8 h-8 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center text-white hover:bg-brand-yellow hover:text-black transition-colors"><User className="h-5 w-5" /></a>
+                  <a href="mailto:sarwanyadav6174@gmail.com" className="w-8 h-8 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center text-white hover:bg-brand-yellow hover:text-black transition-colors"><Mail className="h-5 w-5" /></a>
+                  <a href="https://sarwan.netlify.app/" className="w-8 h-8 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center text-white hover:bg-brand-yellow hover:text-black transition-colors"><User className="h-5 w-5" /></a>
                 </div>
               </div>
               {/* Content section */}
               <div className="flex-1 p-6 sm:p-8 flex flex-col gap-4">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
                   <div>
-                    <h3 className="text-2xl font-bold">John Doe</h3>
+                    <h3 className="text-2xl font-bold">Sarwan Yadav</h3>
                     <p className="text-brand-yellow">Founder & CEO</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand-yellow/10 text-brand-yellow"><Briefcase className="w-3 h-3 mr-1" /> Tech Visionary</span>
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand-yellow/10 text-brand-yellow"><Award className="w-3 h-3 mr-1" /> 10+ Yrs Exp</span>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand-yellow/10 text-brand-yellow"><Award className="w-3 h-3 mr-1" /> 1+ Yrs Exp</span>
                   </div>
                 </div>
                 <p className="text-base">

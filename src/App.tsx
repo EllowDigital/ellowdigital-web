@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -17,16 +16,16 @@ const queryClient = new QueryClient({
       staleTime: 60 * 1000, // 1 minute
       retry: 1,
       // Use network-only for first fetch, then cache
-      networkMode: "offlineFirst"
-    }
-  }
+      networkMode: "offlineFirst",
+    },
+  },
 });
 
 const App = () => {
   useEffect(() => {
     // Initialize performance optimizations
     const cleanupPerformance = initPerformanceOptimizations();
-    
+
     // Clean up on component unmount
     return () => {
       cleanupPerformance();

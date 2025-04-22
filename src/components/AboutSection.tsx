@@ -18,18 +18,18 @@ const AboutSection = () => {
             <h2 className="text-3xl md:text-4xl font-bold">
               About <span className="gradient-text">EllowDigitals</span>
             </h2>
-            
+
             <p className="text-muted-foreground text-lg">
-              EllowDigitals is a solo-powered micro-agency and digital studio specializing in crafting 
+              EllowDigitals is a solo-powered micro-agency and digital studio specializing in crafting
               high-performance websites, mobile apps, and software solutions tailored to your unique needs.
             </p>
-            
+
             <p className="text-muted-foreground text-lg">
-              With a passion for creating impactful digital experiences, I blend innovative 
-              technology with human-centered design to transform bold ideas into intuitive, 
+              With a passion for creating impactful digital experiences, I blend innovative
+              technology with human-centered design to transform bold ideas into intuitive,
               scalable, and future-proof solutions.
             </p>
-            
+
             <ul className="space-y-3 mt-6">
               {highlights.map((item, index) => (
                 <li key={index} className="flex items-center gap-3">
@@ -39,7 +39,7 @@ const AboutSection = () => {
               ))}
             </ul>
           </div>
-          
+
           <div className="relative order-1 lg:order-2">
             <div className="absolute -inset-4 bg-gradient-to-r from-brand-purple/20 to-brand-cyan/20 rounded-2xl blur-xl"></div>
             <div className="relative bg-card rounded-2xl overflow-hidden shadow-lg">
@@ -47,7 +47,7 @@ const AboutSection = () => {
                 <div className="w-20 h-1 bg-brand-purple"></div>
                 <h3 className="text-2xl font-bold">Our Mission</h3>
                 <p className="text-muted-foreground">
-                  We empower businesses through meaningful digital experiences by blending innovative 
+                  We empower businesses through meaningful digital experiences by blending innovative
                   technology, agile development, and human-centered design to deliver results that resonate.
                 </p>
                 <div className="bg-muted p-4 rounded-lg">

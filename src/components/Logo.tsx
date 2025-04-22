@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const logoImgDark = "/logo-dark.png";
+export const logoImgDark = "/logo.webp";
 const LOGO_ALT = "EllowDigitals Logo";
 
 const Logo = () => {

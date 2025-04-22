@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -15,7 +14,12 @@ import Testimonials from "@/components/Testimonials";
 import Portfolio from "@/components/Portfolio";
 import ImpactMetrics from "@/components/ImpactMetrics";
 import SmartContactForm from "@/components/SmartContactForm";
-import { initScrollRevealAnimations, init3DTiltEffect, init3DCodeAnimation, initTypingAnimation } from "@/utils/animationUtils";
+import {
+  initScrollRevealAnimations,
+  init3DTiltEffect,
+  init3DCodeAnimation,
+  initTypingAnimation,
+} from "@/utils/animationUtils";
 import Preloader from "@/components/Preloader";
 import { Toaster } from "sonner";
 
@@ -34,10 +38,10 @@ const Index = () => {
     const cleanupTiltEffect = init3DTiltEffect();
     const cleanup3DCode = init3DCodeAnimation();
     const cleanupTyping = initTypingAnimation();
-    
+
     // Set initialized state to avoid re-initializing animations
     setIsInitialized(true);
-    
+
     // Clean up event listeners on unmount
     return () => {
       clearTimeout(timer);
@@ -52,19 +56,23 @@ const Index = () => {
     <>
       {/* Enhanced Preloader with smooth transition */}
       {isLoading && <Preloader />}
-      
-      <Toaster 
-        position="top-right" 
+
+      <Toaster
+        position="top-right"
         toastOptions={{
           style: {
-            background: '#191919',
-            color: '#F6F6F6',
-            border: '1px solid #222222',
+            background: "#191919",
+            color: "#F6F6F6",
+            border: "1px solid #222222",
           },
         }}
       />
-      
-      <div className={`min-h-screen flex flex-col transition-all duration-500 bg-background text-foreground ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+
+      <div
+        className={`min-h-screen flex flex-col transition-all duration-500 bg-background text-foreground ${
+          isLoading ? "opacity-0" : "opacity-100"
+        }`}
+      >
         <Navbar />
         <main className="flex-grow overflow-x-hidden">
           <HeroSection />
