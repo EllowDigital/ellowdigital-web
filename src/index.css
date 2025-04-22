@@ -1,93 +1,48 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Light mode - improved contrast */
-    --background: 0 0% 98%;
-    --foreground: 0 0% 7%;
+    /* Dark mode only - improved contrast */
+    --background: #121212;
+    --foreground: #F6F6F6;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 7%;
+    --card: #191919;
+    --card-foreground: #FFD700;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 7%;
+    --popover: #191919;
+    --popover-foreground: #FFD700;
 
-    --primary: 45 100% 45%;
-    --primary-foreground: 0 0% 7%;
+    --primary: #FFD700;
+    --primary-foreground: #121212;
 
-    --secondary: 45 60% 95%;
-    --secondary-foreground: 0 0% 7%;
+    --secondary: #222222;
+    --secondary-foreground: #FFD700;
 
-    --muted: 45 14% 92%;
-    --muted-foreground: 0 0% 35%;
+    --muted: #353535;
+    --muted-foreground: #BBBBBB;
 
-    --accent: 45 100% 90%;
-    --accent-foreground: 0 0% 7%;
+    --accent: #FFD700;
+    --accent-foreground: #121212;
 
-    --destructive: 0 84% 50%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: #b91c1c;
+    --destructive-foreground: #fff;
 
-    --border: 0 0% 85%;
-    --input: 0 0% 85%;
-    --ring: 45 100% 45%;
+    --border: #222222;
+    --input: #222222;
+    --ring: #FFD700;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 25%;
-    --sidebar-primary: 45 100% 45%;
-    --sidebar-primary-foreground: 0 0% 7%;
-    --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 7%;
-    --sidebar-border: 0 0% 85%;
-    --sidebar-ring: 45 100% 45%;
-    
-    /* Custom brand colors */
-    --brand-gold: #FFD700;
-    --brand-yellow: #FFDF00;
-  }
-
-  .dark {
-    /* Dark mode - improved contrast values */
-    --background: 0 0% 9%;
-    --foreground: 60 33% 98%;
-
-    --card: 0 0% 11%;
-    --card-foreground: 60 33% 98%;
-
-    --popover: 0 0% 11%;
-    --popover-foreground: 60 33% 98%;
-
-    --primary: 45 100% 50%;
-    --primary-foreground: 0 0% 9%;
-
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 60 33% 98%;
-
-    --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 70%;
-
-    --accent: 0 0% 18%;
-    --accent-foreground: 60 33% 98%;
-
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 60 33% 98%;
-
-    --border: 0 0% 25%;
-    --input: 0 0% 25%;
-    --ring: 45 100% 50%;
-    
-    --sidebar-background: 0 0% 13%;
-    --sidebar-foreground: 0 0% 96%;
-    --sidebar-primary: 45 100% 50%;
-    --sidebar-primary-foreground: 0 0% 9%;
-    --sidebar-accent: 0 0% 18%;
-    --sidebar-accent-foreground: 0 0% 96%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 45 100% 50%;
+    --sidebar-background: #191919;
+    --sidebar-foreground: #FFD700;
+    --sidebar-primary: #FFD700;
+    --sidebar-primary-foreground: #191919;
+    --sidebar-accent: #FFDF00;
+    --sidebar-accent-foreground: #191919;
+    --sidebar-border: #353535;
+    --sidebar-ring: #FFD700;
     
     /* Custom brand colors */
     --brand-gold: #FFD700;
@@ -113,9 +68,9 @@
   .gradient-text {
     @apply bg-gradient-to-r from-brand-gold to-brand-yellow bg-clip-text text-transparent;
   }
-  
+
   .gradient-bg {
-    @apply bg-gradient-to-r from-background via-background to-background dark:from-brand-gold/10 dark:via-brand-yellow/10 dark:to-brand-gold/10;
+    @apply bg-gradient-to-r from-background via-background to-background;
   }
 
   .section-container {
@@ -139,19 +94,15 @@
   }
   
   .text-shadow {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .dark .text-shadow {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   }
   
   .glass-effect {
-    @apply bg-white/70 backdrop-blur-md border border-white/50 shadow-sm dark:bg-black/30 dark:border-white/10;
+    @apply bg-black/30 backdrop-blur-md border border-white/10 shadow-sm;
   }
   
   .neo-effect {
-    @apply bg-card border border-border/50 shadow-[0.25rem_0.25rem_0.75rem_rgba(0,0,0,0.08),-0.25rem_-0.25rem_0.75rem_rgba(255,255,255,0.5)] dark:border-none dark:shadow-[0.25rem_0.25rem_0.75rem_rgba(0,0,0,0.7),-0.25rem_-0.25rem_0.75rem_rgba(255,255,255,0.05)];
+    @apply bg-card border border-border/50 shadow-[0.25rem_0.25rem_0.75rem_rgba(0,0,0,0.7),-0.25rem_-0.25rem_0.75rem_rgba(255,255,255,0.05)];
   }
 
   .morph-shape {
@@ -319,6 +270,22 @@
   .tablet-desktop-only {
     @apply hidden sm:block;
   }
+  
+  .btn-primary {
+    @apply bg-brand-yellow hover:bg-brand-gold text-black font-medium px-4 py-2 rounded-md transition-colors duration-300;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent hover:bg-brand-yellow/10 text-foreground border border-brand-yellow/20 font-medium px-4 py-2 rounded-md transition-colors duration-300;
+  }
+
+  .btn-outline {
+    @apply bg-transparent hover:bg-foreground/10 text-foreground border border-foreground/20 font-medium px-4 py-2 rounded-md transition-colors duration-300;
+  }
+
+  .input-standard {
+    @apply w-full px-4 py-2 bg-background border border-input rounded-md outline-none focus:ring-2 focus:ring-brand-yellow/50 transition-all;
+  }
 }
 
 @keyframes fadeUp {
@@ -474,29 +441,11 @@
 }
 
 .high-contrast-text {
-  @apply text-foreground dark:text-foreground;
+  @apply text-foreground;
 }
 
 .high-contrast-bg {
-  @apply bg-background dark:bg-background;
-}
-
-/* Consistent button styles to fix theme conflicts */
-.btn-primary {
-  @apply bg-brand-yellow hover:bg-brand-gold text-black font-medium px-4 py-2 rounded-md transition-colors duration-300;
-}
-
-.btn-secondary {
-  @apply bg-transparent hover:bg-brand-yellow/10 text-foreground border border-brand-yellow/20 font-medium px-4 py-2 rounded-md transition-colors duration-300;
-}
-
-.btn-outline {
-  @apply bg-transparent hover:bg-foreground/10 text-foreground border border-foreground/20 font-medium px-4 py-2 rounded-md transition-colors duration-300;
-}
-
-/* Consistent input styles */
-.input-standard {
-  @apply w-full px-4 py-2 bg-background border border-input rounded-md outline-none focus:ring-2 focus:ring-brand-yellow/50 transition-all;
+  @apply bg-background;
 }
 
 /* Media queries for responsive text */

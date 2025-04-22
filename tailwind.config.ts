@@ -1,111 +1,110 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
-	darkMode: ["class"],
-	content: [
-		"./pages/**/*.{ts,tsx}",
-		"./components/**/*.{ts,tsx}",
-		"./app/**/*.{ts,tsx}",
-		"./src/**/*.{ts,tsx}",
-	],
-	prefix: "",
-	theme: {
-		container: {
-			center: true,
-			padding: '2rem',
-			screens: {
-				'2xl': '1400px'
-			}
-		},
-		extend: {
-			colors: {
-				border: 'hsl(var(--border))',
-				input: 'hsl(var(--input))',
-				ring: 'hsl(var(--ring))',
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
-				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
-				},
-				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
-				},
-				destructive: {
-					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))'
-				},
-				muted: {
-					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
-				},
-				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
-				},
-				popover: {
-					DEFAULT: 'hsl(var(--popover))',
-					foreground: 'hsl(var(--popover-foreground))'
-				},
-				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
-				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				},
-				brand: {
-          gold: '#FFDF00',       // Rich yellow/gold
-          yellow: '#FFEB3B',     // Vibrant yellow
-          softYellow: '#FFF9C4', // Soft yellow for backgrounds
-          black: '#121212',      // Rich black
-          offBlack: '#1A1A1A',   // Slightly lighter black
-          white: '#FFFFFF',      // Pure white
-          offWhite: '#F8F8F8',   // Slightly off-white
+  darkMode: false,
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
+  prefix: "",
+  theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px'
+      }
+    },
+    extend: {
+      colors: {
+        border: '#222222',
+        input: '#222222',
+        ring: '#FFD700',
+        background: '#121212',
+        foreground: '#F6F6F6',
+        primary: {
+          DEFAULT: '#FFD700',
+          foreground: '#121212'
+        },
+        secondary: {
+          DEFAULT: '#222222',
+          foreground: '#FFD700'
+        },
+        destructive: {
+          DEFAULT: '#b91c1c',
+          foreground: '#fff'
+        },
+        muted: {
+          DEFAULT: '#353535',
+          foreground: '#BBBBBB'
+        },
+        accent: {
+          DEFAULT: '#FFD700',
+          foreground: '#121212'
+        },
+        popover: {
+          DEFAULT: '#1A1A1A',
+          foreground: '#FFD700'
+        },
+        card: {
+          DEFAULT: '#191919',
+          foreground: '#FFD700'
+        },
+        sidebar: {
+          DEFAULT: '#191919',
+          foreground: '#FFD700',
+          primary: '#FFD700',
+          'primary-foreground': '#191919',
+          accent: '#FFDF00',
+          'accent-foreground': '#191919',
+          border: '#353535',
+          ring: '#FFD700'
+        },
+        brand: {
+          gold: '#FFD700',
+          yellow: '#FFDF00',
+          softYellow: '#222222',
+          black: '#121212',
+          offBlack: '#1A1A1A',
+          white: '#F8F8F8',
+          offWhite: '#EBEBEB',
         }
-			},
-			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
-			},
-			screens: {
-				'xs': '475px',
-				'sm': '640px',
-				'md': '768px',
-				'lg': '1024px',
-				'xl': '1280px',
-				'2xl': '1536px',
-				'tablet': {'min': '640px', 'max': '1023px'},
-				'tablet-portrait': {'min': '640px', 'max': '767px'},
-				'tablet-landscape': {'min': '768px', 'max': '1023px'},
-			},
-			keyframes: {
-				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
-				},
-				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
-				},
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)'
+      },
+      screens: {
+        'xs': '475px',
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px',
+        'tablet': {'min': '640px', 'max': '1023px'},
+        'tablet-portrait': {'min': '640px', 'max': '767px'},
+        'tablet-landscape': {'min': '768px', 'max': '1023px'},
+      },
+      keyframes: {
+        'accordion-down': {
+          from: {
+            height: '0'
+          },
+          to: {
+            height: 'var(--radix-accordion-content-height)'
+          }
+        },
+        'accordion-up': {
+          from: {
+            height: 'var(--radix-accordion-content-height)'
+          },
+          to: {
+            height: '0'
+          }
+        },
         'fade-in': {
           '0%': {
             opacity: '0',
@@ -142,17 +141,17 @@ export default {
           '0%': { backgroundPosition: '-500px 0' },
           '100%': { backgroundPosition: '500px 0' }
         }
-			},
-			animation: {
-				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in': 'fade-in 0.6s ease-out',
         'fade-in-right': 'fade-in-right 0.6s ease-out',
         'float': 'float 6s ease-in-out infinite',
         'pulse-subtle': 'pulse-subtle 3s ease-in-out infinite',
         'rotate-slow': 'rotate-slow 20s linear infinite',
         'shimmer': 'shimmer 2s infinite linear'
-			},
+      },
       boxShadow: {
         'elegant': '0 10px 30px -10px rgba(0, 0, 0, 0.2)',
         'card-hover': '0 20px 30px -15px rgba(0, 0, 0, 0.2)',
@@ -165,7 +164,7 @@ export default {
         'width': 'width',
         'transform': 'transform',
       },
-		}
-	},
-	plugins: [require("tailwindcss-animate")],
+    }
+  },
+  plugins: [require("tailwindcss-animate")],
 } satisfies Config;

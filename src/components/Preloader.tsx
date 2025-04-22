@@ -1,25 +1,19 @@
-
 import { useEffect, useState } from "react";
-import { useTheme } from "@/hooks/useTheme";
-import { logoImgLight, logoImgDark } from "./Logo";
+import { logoImgDark } from "./Logo";
 
 const LOGO_ALT = "EllowDigitals Logo";
 
-// Custom preloader: logo with animated pulse/fade and smooth exit
 const Preloader = () => {
-  const { theme } = useTheme();
   const [visible, setVisible] = useState(true);
-  const [hide, setHide] = useState(false); // For fade-out animation
+  const [hide, setHide] = useState(false);
   const [imgError, setImgError] = useState(false);
 
-  // If page is loaded (DOMContentLoaded + images), remove loader with fade
   useEffect(() => {
     const handleReady = () => {
       setHide(true);
-      setTimeout(() => setVisible(false), 600); // Matches fade-out animation duration
+      setTimeout(() => setVisible(false), 600);
     };
 
-    // Wait until main content has rendered, smooth UX, no forced delay
     if (document.readyState === "complete") {
       handleReady();
     } else {
@@ -30,8 +24,7 @@ const Preloader = () => {
     };
   }, []);
 
-  // Choose correct image per theme
-  const logoSrc = theme === "dark" ? logoImgDark : logoImgLight;
+  const logoSrc = logoImgDark;
 
   if (!visible) return null;
 
@@ -39,7 +32,7 @@ const Preloader = () => {
     <div
       className={`
         fixed inset-0 z-[9999] flex flex-col items-center justify-center
-        bg-black/[0.97] dark:bg-black/[0.97]
+        bg-black/[0.97]
         transition-opacity duration-600
         ${hide ? "opacity-0 pointer-events-none" : "opacity-100"}
       `}
@@ -60,7 +53,6 @@ const Preloader = () => {
           "
         >
           {!imgError ? (
-            // LOGO PULSE/ROTATE (based on user's theme, fallback to text)
             <img
               src={logoSrc}
               alt={LOGO_ALT}
@@ -69,9 +61,7 @@ const Preloader = () => {
               className={`
                 h-14 w-auto object-contain
                 animate-ellow-pulse
-                ${theme === "dark"
-                  ? "filter drop-shadow-[0_4px_18px_rgba(255,223,0,0.12)]"
-                  : "filter drop-shadow-[0_4px_15px_rgba(40,40,40,0.18)]"}
+                filter drop-shadow-[0_4px_18px_rgba(255,223,0,0.12)]
                 will-change-transform
               `}
               style={{
@@ -88,7 +78,6 @@ const Preloader = () => {
           )}
         </div>
         <div className="mt-8 flex justify-center">
-          {/* Minimal brand yellow loader dots */}
           <span className="block h-2 w-2 rounded-full bg-[--brand-yellow] mx-1 animate-ellow-dot"></span>
           <span className="block h-2 w-2 rounded-full bg-[--brand-yellow] mx-1 animate-ellow-dot delay-[150ms]"></span>
           <span className="block h-2 w-2 rounded-full bg-white mx-1 animate-ellow-dot delay-[300ms]"></span>

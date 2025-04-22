@@ -1,6 +1,4 @@
-
 import { useEffect } from "react";
-import { ThemeProvider } from "@/hooks/useTheme";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -34,11 +32,11 @@ const Index = () => {
   }, []);
 
   return (
-    <ThemeProvider>
+    <>
       {/* Preloader appears above all once, auto-removes when loaded */}
       <Preloader />
       <Toaster position="top-right" />
-      <div className="min-h-screen flex flex-col transition-colors duration-300">
+      <div className="min-h-screen flex flex-col transition-colors duration-300 bg-background text-foreground">
         <Navbar />
         <main className="flex-grow overflow-x-hidden">
           <HeroSection />
@@ -57,7 +55,7 @@ const Index = () => {
         </main>
         <Footer />
       </div>
-    </ThemeProvider>
+    </>
   );
 };
 

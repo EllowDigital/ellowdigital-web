@@ -1,7 +1,5 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 
@@ -51,14 +49,12 @@ const Navbar = () => {
                 {link.name}
               </a>
             ))}
-            <ThemeToggle />
             <Button asChild className="bg-brand-yellow hover:bg-brand-gold text-foreground hover:text-foreground/90">
               <a href="#contact">Get Started</a>
             </Button>
           </div>
 
           <div className="flex items-center md:hidden space-x-4">
-            <ThemeToggle />
             <Button
               variant="ghost"
               size="icon"
