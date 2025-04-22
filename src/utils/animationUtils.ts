@@ -1,4 +1,3 @@
-
 // Utility to handle scroll reveal animations
 export const initScrollRevealAnimations = () => {
   const observerOptions = {
@@ -131,89 +130,5 @@ export const init3DTiltEffect = () => {
       });
       element.removeEventListener('mouseleave', () => handleMouseLeave(element));
     });
-  };
-};
-
-// Initialize custom cursor
-export const initCustomCursor = () => {
-  // Remove any existing custom cursor to prevent duplicates
-  const existingCursor = document.querySelector('.custom-cursor');
-  if (existingCursor) {
-    existingCursor.parentNode?.removeChild(existingCursor);
-  }
-  
-  const cursor = document.createElement('div');
-  cursor.classList.add('custom-cursor');
-  cursor.innerHTML = `
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
-  `;
-  document.body.appendChild(cursor);
-  
-  const cursorDot = cursor.querySelector('.cursor-dot') as HTMLElement;
-  const cursorOutline = cursor.querySelector('.cursor-outline') as HTMLElement;
-  
-  if (!cursorDot || !cursorOutline) {
-    console.error('Custom cursor elements not found');
-    return () => {};
-  }
-  
-  const handleMouseMove = (e: MouseEvent) => {
-    if (cursorDot) {
-      cursorDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    }
-    
-    // Add slight delay to outline for effect
-    setTimeout(() => {
-      if (cursorOutline) {
-        cursorOutline.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-      }
-    }, 50);
-  };
-  
-  const handleMouseDown = () => {
-    cursorDot.classList.add('cursor-active');
-    cursorOutline.classList.add('cursor-active');
-  };
-  
-  const handleMouseUp = () => {
-    cursorDot.classList.remove('cursor-active');
-    cursorOutline.classList.remove('cursor-active');
-  };
-  
-  const handleMouseEnterLink = () => {
-    cursorDot.classList.add('cursor-link');
-    cursorOutline.classList.add('cursor-link');
-  };
-  
-  const handleMouseLeaveLink = () => {
-    cursorDot.classList.remove('cursor-link');
-    cursorOutline.classList.remove('cursor-link');
-  };
-  
-  document.addEventListener('mousemove', handleMouseMove);
-  document.addEventListener('mousedown', handleMouseDown);
-  document.addEventListener('mouseup', handleMouseUp);
-  
-  // Add hover effect for links and buttons
-  const links = document.querySelectorAll('a, button');
-  links.forEach(link => {
-    link.addEventListener('mouseenter', handleMouseEnterLink);
-    link.addEventListener('mouseleave', handleMouseLeaveLink);
-  });
-  
-  return () => {
-    document.removeEventListener('mousemove', handleMouseMove);
-    document.removeEventListener('mousedown', handleMouseDown);
-    document.removeEventListener('mouseup', handleMouseUp);
-    
-    links.forEach(link => {
-      link.removeEventListener('mouseenter', handleMouseEnterLink);
-      link.removeEventListener('mouseleave', handleMouseLeaveLink);
-    });
-    
-    if (cursor.parentNode) {
-      cursor.parentNode.removeChild(cursor);
-    }
   };
 };

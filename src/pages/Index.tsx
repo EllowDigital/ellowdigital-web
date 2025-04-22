@@ -16,20 +16,21 @@ import Testimonials from "@/components/Testimonials";
 import Portfolio from "@/components/Portfolio";
 import ImpactMetrics from "@/components/ImpactMetrics";
 import SmartContactForm from "@/components/SmartContactForm";
-import { initScrollRevealAnimations, init3DTiltEffect, initCustomCursor } from "@/utils/animationUtils";
+import { initScrollRevealAnimations, init3DTiltEffect } from "@/utils/animationUtils";
 
 const Index = () => {
   useEffect(() => {
     // Initialize animations when component mounts
     const cleanupScrollReveal = initScrollRevealAnimations();
     const cleanupTiltEffect = init3DTiltEffect();
-    const cleanupCustomCursor = initCustomCursor();
+    
+    // Removed custom cursor initialization
     
     // Clean up event listeners on unmount
     return () => {
       cleanupScrollReveal();
       cleanupTiltEffect();
-      cleanupCustomCursor();
+      // Removed custom cursor cleanup
     };
   }, []);
 
