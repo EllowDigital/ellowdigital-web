@@ -11,6 +11,7 @@ const testimonials = [
     position: "CEO",
     rating: 5,
     image: "/placeholder.svg",
+    projectType: "Web Application",
     text: "Working with EllowDigitals transformed our online presence completely. Their team went above and beyond to deliver a website that perfectly captures our brand identity."
   },
   {
@@ -19,6 +20,7 @@ const testimonials = [
     position: "Marketing Director",
     rating: 5,
     image: "/placeholder.svg",
+    projectType: "E-commerce Platform",
     text: "The e-commerce platform EllowDigitals built for us exceeded our expectations. Sales have increased by 40% since launch, and customer feedback has been overwhelmingly positive."
   },
   {
@@ -27,6 +29,7 @@ const testimonials = [
     position: "Product Manager",
     rating: 4,
     image: "/placeholder.svg",
+    projectType: "Learning Management System",
     text: "Their understanding of UX/UI design principles helped us create an intuitive learning platform that our users love. The team was responsive and highly professional."
   },
   {
@@ -35,6 +38,7 @@ const testimonials = [
     position: "Founder",
     rating: 5,
     image: "/placeholder.svg",
+    projectType: "Mobile Application",
     text: "As a startup founder with a tight budget, I appreciated how EllowDigitals offered flexible options while still delivering premium quality work. They truly care about their clients' success."
   },
   {
@@ -43,6 +47,7 @@ const testimonials = [
     position: "Creative Director",
     rating: 5,
     image: "/placeholder.svg",
+    projectType: "Brand Identity",
     text: "The attention to detail and creative approach to our branding project was impressive. EllowDigitals helped us stand out in a crowded market with their innovative designs."
   }
 ];
@@ -86,14 +91,20 @@ const Testimonials = () => {
   };
 
   return (
-    <section id="testimonials" className="section-container py-24 relative overflow-hidden snap-start bg-card/50 dark:bg-black/20">
-      {/* Background blobs */}
-      <div className="absolute top-1/3 right-1/3 w-96 h-96 bg-brand-yellow/5 rounded-full blur-3xl morph-shape"></div>
-      <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-brand-gold/5 rounded-full blur-3xl morph-shape" style={{ animationDelay: '5s' }}></div>
+    <section id="testimonials" className="py-24 relative overflow-hidden snap-start bg-card/30 dark:bg-black/20">
+      {/* Background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/3 right-1/3 w-96 h-96 bg-brand-yellow/5 rounded-full blur-3xl morph-shape"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-brand-gold/5 rounded-full blur-3xl morph-shape" style={{ animationDelay: '5s' }}></div>
+      </div>
       
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         <h2 ref={titleRef} className="section-title reveal-animate">Client Testimonials</h2>
-        <div ref={dividerRef} className="animated-divider reveal-animate mb-12"></div>
+        <div ref={dividerRef} className="animated-divider reveal-animate mb-8"></div>
+        
+        <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-12 reveal-animate">
+          Don't just take our word for it. Here's what our clients have to say about working with EllowDigitals.
+        </p>
         
         <div ref={carouselRef} className="reveal-animate">
           <Carousel
@@ -106,13 +117,20 @@ const Testimonials = () => {
             <CarouselContent>
               {testimonials.map((testimonial, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
-                  <Card className="h-full neo-effect card-3d transition-all duration-300 hover:shadow-lg border border-brand-yellow/10">
+                  <Card className="h-full neo-effect card-3d transition-all duration-300 hover:shadow-lg dark:bg-black/40 border border-brand-yellow/10 group">
                     <CardContent className="p-6">
+                      {/* Project Type Badge */}
+                      <div className="mb-4 -mt-1">
+                        <span className="inline-block text-xs font-medium py-1 px-3 rounded-full bg-brand-yellow/10 text-brand-yellow border border-brand-yellow/20">
+                          {testimonial.projectType}
+                        </span>
+                      </div>
+                      
                       <div className="flex justify-between items-start mb-4">
                         <div className="flex">
                           {renderStars(testimonial.rating)}
                         </div>
-                        <Quote className="w-10 h-10 text-brand-yellow/20" />
+                        <Quote className="w-10 h-10 text-brand-yellow/20 group-hover:text-brand-yellow/30 transition-colors duration-300" />
                       </div>
                       
                       <p className="text-muted-foreground mb-6 line-clamp-4">{testimonial.text}</p>
@@ -138,8 +156,8 @@ const Testimonials = () => {
               ))}
             </CarouselContent>
             <div className="flex justify-center mt-8 gap-4">
-              <CarouselPrevious className="static transform-none mx-2 bg-card border-brand-gold/20 hover:bg-brand-yellow/10 hover:text-brand-gold" />
-              <CarouselNext className="static transform-none mx-2 bg-card border-brand-gold/20 hover:bg-brand-yellow/10 hover:text-brand-gold" />
+              <CarouselPrevious className="static transform-none mx-2 bg-card hover:bg-brand-yellow/10 hover:text-brand-gold border-brand-gold/20 dark:bg-black/50" />
+              <CarouselNext className="static transform-none mx-2 bg-card hover:bg-brand-yellow/10 hover:text-brand-gold border-brand-gold/20 dark:bg-black/50" />
             </div>
           </Carousel>
         </div>

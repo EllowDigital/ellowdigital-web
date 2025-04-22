@@ -1,12 +1,12 @@
 
-import { Award, ThumbsUp, Users, Timer } from "lucide-react";
+import { Award, Clock, ThumbsUp, Code } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const metrics = [
   {
-    icon: Users,
-    value: 150,
-    label: "Happy Clients",
+    icon: Award,
+    value: 250,
+    label: "Projects Completed",
     suffix: "+",
     color: "from-brand-gold to-brand-yellow"
   },
@@ -18,16 +18,16 @@ const metrics = [
     color: "from-brand-gold to-brand-yellow"
   },
   {
-    icon: Award,
-    value: 25,
-    label: "Industry Awards",
-    suffix: "+",
+    icon: Clock,
+    value: 14,
+    label: "Average Delivery Time",
+    suffix: " days",
     color: "from-brand-gold to-brand-yellow"
   },
   {
-    icon: Timer,
-    value: 5,
-    label: "Years of Experience",
+    icon: Code,
+    value: 32,
+    label: "Technologies Mastered",
     suffix: "+",
     color: "from-brand-gold to-brand-yellow"
   }
@@ -106,14 +106,22 @@ const ImpactMetrics = () => {
     <section 
       id="impact" 
       ref={sectionRef}
-      className="py-24 relative overflow-hidden snap-start"
+      className="py-24 relative overflow-hidden snap-start bg-gradient-to-b from-background to-card/30 dark:from-background dark:to-black/30"
     >
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/5 to-brand-yellow/5 dark:from-black/20 dark:to-brand-yellow/10 backdrop-blur-3xl -z-10"></div>
+      {/* Subtle background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-1/4 right-1/4 w-96 h-96 bg-brand-yellow/5 rounded-full blur-3xl morph-shape"></div>
+        <div className="absolute bottom-0 left-1/4 w-72 h-72 bg-brand-gold/5 rounded-full blur-3xl morph-shape" style={{ animationDelay: '8s' }}></div>
+      </div>
       
-      <div className="section-container max-w-6xl mx-auto">
-        <h2 ref={titleRef} className="section-title reveal-animate">Our Impact</h2>
-        <div ref={dividerRef} className="animated-divider reveal-animate mb-20"></div>
+      <div className="section-container max-w-6xl mx-auto relative z-10">
+        <h2 ref={titleRef} className="section-title reveal-animate">Our Impact By the Numbers</h2>
+        <div ref={dividerRef} className="animated-divider reveal-animate mb-8"></div>
+        
+        <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-16 reveal-animate">
+          We're proud of the results we've achieved for our clients. These metrics showcase our 
+          commitment to excellence and delivering exceptional digital solutions.
+        </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {metrics.map((metric, index) => (
@@ -127,25 +135,34 @@ const ImpactMetrics = () => {
                 transform: 'translateY(20px)'
               }}
             >
-              <div className="text-center p-6 neo-effect rounded-xl card-3d">
+              <div className="p-6 rounded-xl card-3d relative overflow-hidden group hover:shadow-lg hover:shadow-brand-yellow/5 transition-all duration-300 bg-card dark:bg-black/30 border border-border/50 dark:border-brand-gold/10">
+                {/* Subtle gradient highlight on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 via-transparent to-brand-yellow/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
                 <div className="mb-6 relative mx-auto">
-                  <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center bg-gradient-to-br from-brand-gold/20 to-brand-yellow/20 backdrop-blur-sm border border-brand-yellow/30">
+                  <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center bg-gradient-to-br from-brand-gold/10 to-brand-yellow/10 backdrop-blur-sm border border-brand-yellow/20 group-hover:border-brand-yellow/30 transition-all duration-300">
                     <metric.icon className="w-10 h-10 text-brand-yellow" />
                   </div>
                 </div>
                 
-                <div className="relative">
-                  <h3 className="text-4xl font-bold mb-2">
+                <div className="relative text-center">
+                  <h3 className="text-4xl font-bold mb-2 flex items-center justify-center">
                     <span className="bg-gradient-to-r bg-clip-text text-transparent from-brand-gold to-brand-yellow">
                       {counts[index]}
                     </span>
-                    <span className="text-brand-yellow">{metric.suffix}</span>
+                    <span className="text-brand-yellow ml-1">{metric.suffix}</span>
                   </h3>
                   <p className="text-lg font-medium">{metric.label}</p>
                 </div>
               </div>
             </div>
           ))}
+        </div>
+        
+        <div className="mt-16 text-center reveal-animate">
+          <p className="inline-block py-3 px-6 rounded-full bg-brand-yellow/10 border border-brand-yellow/20 text-sm font-medium">
+            Delivering exceptional results since 2018
+          </p>
         </div>
       </div>
     </section>

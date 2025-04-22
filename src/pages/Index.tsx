@@ -18,6 +18,7 @@ import ImpactMetrics from "@/components/ImpactMetrics";
 import SmartContactForm from "@/components/SmartContactForm";
 import { initScrollRevealAnimations, init3DTiltEffect } from "@/utils/animationUtils";
 import Preloader from "@/components/Preloader";
+import { Toaster } from "sonner";
 
 const Index = () => {
   useEffect(() => {
@@ -36,6 +37,7 @@ const Index = () => {
     <ThemeProvider>
       {/* Preloader appears above all once, auto-removes when loaded */}
       <Preloader />
+      <Toaster position="top-right" />
       <div className="min-h-screen flex flex-col transition-colors duration-300">
         <Navbar />
         <main className="flex-grow overflow-x-hidden">

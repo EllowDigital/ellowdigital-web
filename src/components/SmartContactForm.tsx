@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Send, Check, AlertCircle, Phone, Mail, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
@@ -56,36 +57,43 @@ const SmartContactForm = () => {
 
     // Simulate form submission
     setTimeout(() => {
-      // Random success or error for demo purposes
-      const randomSuccess = Math.random() > 0.2;
-      setFormStatus(randomSuccess ? "success" : "error");
+      setFormStatus("success");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: ""
+      });
 
-      if (randomSuccess) {
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          subject: "",
-          message: ""
-        });
+      // Show success toast
+      toast.success("Message sent successfully! We'll get back to you soon.", {
+        position: "top-right",
+        duration: 5000,
+      });
 
-        // Reset form status after 3 seconds
-        setTimeout(() => {
-          setFormStatus("idle");
-        }, 3000);
-      }
+      // Reset form status after 3 seconds
+      setTimeout(() => {
+        setFormStatus("idle");
+      }, 3000);
     }, 1500);
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden snap-start bg-background">
-      {/* Background blobs */}
-      <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-brand-yellow/5 rounded-full blur-3xl morph-shape"></div>
-      <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-brand-gold/5 rounded-full blur-3xl morph-shape" style={{ animationDelay: '10s' }}></div>
+    <section id="contact" className="py-24 relative overflow-hidden snap-start bg-gradient-to-b from-card/30 to-background dark:from-black/20 dark:to-background">
+      {/* Background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-brand-yellow/5 rounded-full blur-3xl morph-shape"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-brand-gold/5 rounded-full blur-3xl morph-shape" style={{ animationDelay: '10s' }}></div>
+      </div>
       
-      <div className="section-container max-w-6xl mx-auto">
+      <div className="section-container max-w-6xl mx-auto relative z-10">
         <h2 ref={titleRef} className="section-title reveal-animate">Get In Touch</h2>
-        <div ref={dividerRef} className="animated-divider reveal-animate mb-12"></div>
+        <div ref={dividerRef} className="animated-divider reveal-animate mb-8"></div>
+        
+        <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-12 reveal-animate">
+          Ready to start your next project? Contact us today and let's create something amazing together.
+        </p>
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Contact Form */}
@@ -93,7 +101,7 @@ const SmartContactForm = () => {
             <form 
               ref={formRef}
               onSubmit={handleSubmit}
-              className="space-y-6 neo-effect p-8 rounded-xl reveal-animate card-3d"
+              className="space-y-6 neo-effect p-8 rounded-xl reveal-animate card-3d dark:bg-black/30"
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="float-label-input">
@@ -105,9 +113,9 @@ const SmartContactForm = () => {
                     onChange={handleChange}
                     placeholder=" "
                     required
-                    className="border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20"
+                    className="w-full dark:text-white dark:bg-black/30 border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20"
                   />
-                  <label htmlFor="name">Your Name</label>
+                  <label htmlFor="name" className="dark:text-white/70">Your Name</label>
                 </div>
                 
                 <div className="float-label-input">
@@ -119,9 +127,9 @@ const SmartContactForm = () => {
                     onChange={handleChange}
                     placeholder=" "
                     required
-                    className="border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20"
+                    className="w-full dark:text-white dark:bg-black/30 border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20"
                   />
-                  <label htmlFor="email">Email Address</label>
+                  <label htmlFor="email" className="dark:text-white/70">Email Address</label>
                 </div>
               </div>
               
@@ -134,27 +142,34 @@ const SmartContactForm = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder=" "
-                    className="border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20"
+                    className="w-full dark:text-white dark:bg-black/30 border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20"
                   />
-                  <label htmlFor="phone">Phone Number (Optional)</label>
+                  <label htmlFor="phone" className="dark:text-white/70">Phone Number (Optional)</label>
                 </div>
                 
-                <div className="float-label-input">
+                <div className="float-label-input relative">
                   <select
                     id="subject"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20 bg-transparent"
+                    className="w-full appearance-none dark:text-white dark:bg-black/30 border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20"
                   >
-                    <option value="">Select a subject</option>
+                    <option value=""></option>
                     <option value="Web Development">Web Development</option>
                     <option value="Mobile App Development">Mobile App Development</option>
                     <option value="UI/UX Design">UI/UX Design</option>
                     <option value="Other">Other</option>
                   </select>
-                  <label htmlFor="subject">Subject</label>
+                  <label htmlFor="subject" className={`${formData.subject ? 'text-xs -top-0 bg-background px-2 dark:bg-black dark:text-white/70' : 'dark:text-white/70'}`}>
+                    Subject
+                  </label>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </div>
                 </div>
               </div>
               
@@ -167,15 +182,15 @@ const SmartContactForm = () => {
                   rows={5}
                   placeholder=" "
                   required
-                  className="resize-none border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20"
+                  className="resize-none w-full dark:text-white dark:bg-black/30 border-brand-gold/20 focus:border-brand-gold focus:ring-brand-gold/20"
                 ></textarea>
-                <label htmlFor="message">Your Message</label>
+                <label htmlFor="message" className="dark:text-white/70">Your Message</label>
               </div>
               
               <Button
                 type="submit"
                 disabled={formStatus === "submitting"}
-                className={`w-full py-3 flex items-center justify-center transition-all ${
+                className={`w-full py-3 h-auto flex items-center justify-center transition-all ${
                   formStatus === "success" 
                     ? "bg-green-600 hover:bg-green-700 text-white" 
                     : formStatus === "error"
@@ -216,7 +231,7 @@ const SmartContactForm = () => {
             ref={contactInfoRef}
             className="lg:col-span-4 reveal-animate"
           >
-            <div className="glass-effect p-8 rounded-xl h-full border border-brand-gold/10 bg-card/50 backdrop-blur-md">
+            <div className="glass-effect p-8 rounded-xl h-full border border-brand-gold/10 bg-card/50 backdrop-blur-md dark:bg-black/30">
               <h3 className="text-xl font-semibold mb-6 gradient-text">Contact Information</h3>
               
               <div className="space-y-6">
