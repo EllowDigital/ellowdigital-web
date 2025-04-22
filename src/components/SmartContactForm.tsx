@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from "react";
 import { Send, Check, AlertCircle, Phone, Mail, Facebook, Instagram, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -29,9 +30,14 @@ const SmartContactForm = () => {
     message: ""
   });
   const [errors, setErrors] = useState<{ [k: string]: string }>({});
+  
+  // Create refs at the component level, not inside useEffect
   const formRef = useRef<HTMLFormElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const dividerRef = useRef<HTMLDivElement>(null);
+  const contactInfoRef = useRef<HTMLDivElement>(null);
 
-  // ScrollReveal effect, not changed
+  // ScrollReveal effect
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -45,10 +51,7 @@ const SmartContactForm = () => {
       { threshold: 0.1 }
     );
 
-    const titleRef = useRef<HTMLHeadingElement>(null);
-    const dividerRef = useRef<HTMLDivElement>(null);
-    const contactInfoRef = useRef<HTMLDivElement>(null);
-
+    // Use the refs defined at component level
     if (titleRef.current) observer.observe(titleRef.current);
     if (dividerRef.current) observer.observe(dividerRef.current);
     if (formRef.current) observer.observe(formRef.current);
@@ -124,8 +127,8 @@ const SmartContactForm = () => {
       </div>
       
       <div className="section-container max-w-5xl mx-auto relative z-10">
-        <h2 className="section-title reveal-animate">Contact Us</h2>
-        <div className="animated-divider reveal-animate mb-8"></div>
+        <h2 ref={titleRef} className="section-title reveal-animate">Contact Us</h2>
+        <div ref={dividerRef} className="animated-divider reveal-animate mb-8"></div>
         <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-12 reveal-animate text-lg">
           Let's start your project! Reach out below and our experts will reply soon.
         </p>
@@ -259,7 +262,7 @@ const SmartContactForm = () => {
           </form>
 
           {/* CONTACT INFORMATION */}
-          <div className="flex flex-col justify-between h-full rounded-2xl border border-brand-yellow/10 bg-card/80 p-8 shadow-lg">
+          <div ref={contactInfoRef} className="flex flex-col justify-between h-full rounded-2xl border border-brand-yellow/10 bg-card/80 p-8 shadow-lg">
             <div>
               <h3 className="text-xl font-bold text-brand-yellow mb-5">Contact Information</h3>
               <div className="space-y-4">
