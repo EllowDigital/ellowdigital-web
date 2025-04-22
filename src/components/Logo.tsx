@@ -1,49 +1,58 @@
 
-import { useEffect, useRef } from 'react';
+import { useState, useEffect } from "react";
+import { useTheme } from "@/hooks/useTheme";
+
+const LOGO_ALT = "EllowDigitals Logo";
+
+export const logoImgLight = "/logo.png"; // Place a high-res logo with transparent bg in public/logo.png
+export const logoImgDark = "/logo-dark.png"; // Place a high-res white/bright logo in public/logo-dark.png
 
 const Logo = () => {
-  const logoRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
+  // Ensure animation only after mount to avoid SSR/react hydration issues
   useEffect(() => {
-    const logoElement = logoRef.current;
-    if (!logoElement) return;
-
-    const spans = logoElement.querySelectorAll('span.animate-letter');
-    
-    spans.forEach((span, index) => {
-      (span as HTMLElement).style.animationDelay = `${index * 0.1}s`;
-    });
+    const timer = setTimeout(() => setMounted(true), 100);
+    return () => clearTimeout(timer);
   }, []);
 
+  // Choose correct image per theme
+  const logoSrc = theme === "dark" ? logoImgDark : logoImgLight;
+
   return (
-    <div className="flex items-center" ref={logoRef}>
-      <div className="animated-logo text-xl md:text-2xl font-bold flex items-center">
-        <span className="gradient-text relative">
-          {'Ellow'.split('').map((letter, index) => (
-            <span key={index} className="animate-letter inline-block" style={{
-              animationDelay: `${index * 0.1}s`,
-              opacity: 0,
-              transform: 'translateY(100%)',
-              animation: 'logoReveal 0.5s forwards cubic-bezier(0.11, 0, 0.5, 0)'
-            }}>
-              {letter}
-            </span>
-          ))}
-        </span>
-        <span className="text-foreground dark:text-brand-yellow relative">
-          {'Digitals'.split('').map((letter, index) => (
-            <span key={index} className="animate-letter inline-block" style={{
-              animationDelay: `${(index + 5) * 0.1}s`,
-              opacity: 0,
-              transform: 'translateY(100%)',
-              animation: 'logoReveal 0.5s forwards cubic-bezier(0.11, 0, 0.5, 0)'
-            }}>
-              {letter}
-            </span>
-          ))}
-        </span>
+    <a href="/" aria-label="Go to homepage" className="block outline-none focus:ring-2 focus:ring-brand-yellow rounded transition-shadow">
+      <div
+        className={`inline-flex items-center select-none overflow-hidden ${
+          mounted ? "animate-fade-in" : "opacity-0"
+        }`}
+        style={{ minHeight: 48 }} // Height for layout stability
+      >
+        {!imgError ? (
+          <img
+            src={logoSrc}
+            alt={LOGO_ALT}
+            width={160}
+            height={48}
+            className="h-12 w-auto object-contain transition duration-500 drop-shadow"
+            style={{
+              // Subtle shadow for contrast on both themes
+              filter: theme === "dark"
+                ? "drop-shadow(0px 2px 8px rgba(255,255,70,0.12))"
+                : "drop-shadow(0px 2px 10px rgba(40,40,40,0.13))",
+            }}
+            loading="eager"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          // Fallback to styled text if image fails
+          <span className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-brand-gold to-brand-yellow bg-clip-text text-transparent tracking-wider">
+            Ellow<span className="text-brand-purple">Digitals</span>
+          </span>
+        )}
       </div>
-    </div>
+    </a>
   );
 };
 
