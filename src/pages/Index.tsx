@@ -21,8 +21,14 @@ import { Toaster } from "sonner";
 
 const Index = () => {
   const [isInitialized, setIsInitialized] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Simulate content loading
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
     // Initialize animations when component mounts
     const cleanupScrollReveal = initScrollRevealAnimations();
     const cleanupTiltEffect = init3DTiltEffect();
@@ -34,6 +40,7 @@ const Index = () => {
     
     // Clean up event listeners on unmount
     return () => {
+      clearTimeout(timer);
       cleanupScrollReveal();
       cleanupTiltEffect();
       cleanup3DCode();
@@ -43,10 +50,29 @@ const Index = () => {
 
   return (
     <>
-      {/* Preloader appears above all once, auto-removes when loaded */}
-      <Preloader />
-      <Toaster position="top-right" />
-      <div className="min-h-screen flex flex-col transition-colors duration-300 bg-background text-foreground">
+      {/* Enhanced Preloader with smooth transition */}
+      {isLoading && <Preloader />}
+      
+      <Toaster 
+        position="top-right" 
+        toastOptions={{
+          style: {
+            background: '#191919',
+            color: '#F6F6F6',
+            border: '1px solid #222222',
+          },
+          success: {
+            style: {
+              background: 'rgba(25, 25, 25, 0.95)',
+              color: '#F6F6F6',
+              border: '1px solid #FFD700',
+            },
+            icon: '✓'
+          }
+        }}
+      />
+      
+      <div className={`min-h-screen flex flex-col transition-all duration-500 bg-background text-foreground ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
         <Navbar />
         <main className="flex-grow overflow-x-hidden">
           <HeroSection />

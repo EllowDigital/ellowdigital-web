@@ -52,58 +52,96 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  
+  /* Improved typography for better readability */
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+  }
+  
+  /* Enhanced focus states for accessibility */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-yellow/70;
+  }
 }
 
 @layer components {
+  /* Refined gradient text with improved contrast */
   .gradient-text {
     @apply bg-gradient-to-r from-brand-gold to-brand-yellow bg-clip-text text-transparent;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
   }
+  
   .gradient-bg {
     @apply bg-gradient-to-r from-background via-background to-background;
   }
+  
+  /* Enhanced container with proper spacing for all devices */
   .section-container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20 lg:py-24;
   }
+  
+  /* Improved section titles with subtle effects */
   .section-title {
     @apply text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center text-foreground;
+    letter-spacing: -0.02em;
   }
+  
+  /* Refined card hover effects */
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-card-hover transform hover:-translate-y-2 will-change-transform;
+    @apply transition-all duration-300 hover:shadow-card-hover transform hover:-translate-y-2 will-change-transform relative;
   }
+  .card-hover::after {
+    content: '';
+    @apply absolute inset-0 opacity-0 bg-gradient-to-t from-brand-yellow/10 to-transparent rounded-xl transition-opacity duration-300;
+  }
+  .card-hover:hover::after {
+    @apply opacity-100;
+  }
+  
+  /* Smooth scale animations */
   .hover-scale {
     @apply transition-transform duration-300 hover:scale-105 will-change-transform;
   }
+  
+  /* Enhanced glass effect with better blending */
   .glass-effect {
-    @apply bg-black/30 backdrop-blur-md border border-white/10 shadow-sm;
+    @apply bg-black/40 backdrop-blur-md border border-white/10 shadow-md;
   }
+  
+  /* Refined Neo effect with subtler shadows */
   .neo-effect {
-    @apply bg-card border border-border/50 shadow-[0.25rem_0.25rem_0.75rem_rgba(0,0,0,0.7),-0.25rem_-0.25rem_0.75rem_rgba(255,255,255,0.05)];
+    @apply bg-card border border-border/50 shadow-[0.25rem_0.25rem_1rem_rgba(0,0,0,0.8),-0.25rem_-0.25rem_1rem_rgba(255,255,255,0.03)];
   }
+  
+  /* Enhanced morphing shape effect */
   .morph-shape {
     @apply absolute -z-10 opacity-70 filter blur-xl will-change-transform;
     animation: morph 25s linear infinite alternate;
   }
+  
+  /* Improved reveal animations */
   .reveal-animate {
     opacity: 0;
     transform: translateY(20px);
-    transition: all 0.6s ease-out;
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: opacity, transform;
   }
   .reveal-animate.revealed {
     opacity: 1;
     transform: translateY(0);
   }
-  /* Animation classes for scroll reveal */
-  .fade-up { animation: fadeUp 0.6s ease-out forwards;}
-  .fade-down {animation: fadeDown 0.6s ease-out forwards;}
-  .fade-left {animation: fadeLeft 0.6s ease-out forwards;}
-  .fade-right {animation: fadeRight 0.6s ease-out forwards;}
-  .zoom-in {animation: zoomIn 0.6s ease-out forwards;}
-  .zoom-out {animation: zoomOut 0.6s ease-out forwards;}
   
-  /* Enhanced 3D effect */
+  /* Enhanced animation classes for scroll reveal */
+  .fade-up { animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;}
+  .fade-down {animation: fadeDown 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;}
+  .fade-left {animation: fadeLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;}
+  .fade-right {animation: fadeRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;}
+  .zoom-in {animation: zoomIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;}
+  .zoom-out {animation: zoomOut 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;}
+  
+  /* Improved 3D effects with smoother transitions */
   .perspective {
-    perspective: 1000px;
+    perspective: 1200px;
   }
   
   .card-3d {
@@ -113,63 +151,88 @@
   }
   .card-3d::before {
     content: '';
-    @apply absolute inset-0 z-[-1] bg-gradient-to-tr from-brand-gold/30 via-transparent to-brand-yellow/30 rounded-xl opacity-0 transition-opacity duration-300;
+    @apply absolute inset-0 z-[-1] bg-gradient-to-tr from-brand-gold/20 via-transparent to-brand-yellow/20 rounded-xl opacity-0 transition-opacity duration-500;
   }
   .card-3d:hover::before {
     @apply opacity-100;
   }
   
-  /* Animated elements */
+  /* Refined animated divider */
   .animated-divider {
     height: 4px;
     width: 0;
-    @apply bg-gradient-to-r from-brand-gold to-brand-yellow mx-auto transition-all duration-1000 will-change-[width];
+    @apply bg-gradient-to-r from-brand-gold to-brand-yellow mx-auto transition-all duration-1000 will-change-[width] rounded-full;
   }
   .animated-divider.revealed { width: 100px;}
   
-  /* Form elements */
+  /* Improved form elements */
   .float-label-input { @apply relative pt-5;}
   .float-label-input input,
-  .float-label-input textarea { @apply w-full px-4 py-3 bg-transparent border border-input rounded-md outline-none transition-all;}
+  .float-label-input textarea { 
+    @apply w-full px-4 py-3 bg-transparent border border-input rounded-md outline-none transition-all;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  }
   .float-label-input label { @apply absolute left-4 top-8 px-1 text-muted-foreground transition-all duration-200 pointer-events-none;}
   .float-label-input input:focus ~ label,
   .float-label-input input:not(:placeholder-shown) ~ label,
   .float-label-input textarea:focus ~ label,
   .float-label-input textarea:not(:placeholder-shown) ~ label { @apply -top-0 text-xs text-brand-yellow bg-background px-2;}
   
-  /* Timeline component */
+  /* Enhanced timeline component */
   .timeline { @apply relative pl-8 border-l border-muted;}
   .timeline-item { @apply relative pb-10;}
-  .timeline-item::before { content: ''; @apply absolute w-4 h-4 bg-brand-gold rounded-full -left-[29px] top-0;}
-  .timeline-item:not(:last-child)::after { content: ''; @apply absolute h-full w-0.5 bg-gradient-to-b from-brand-gold to-transparent -left-[25px] top-4 z-[-1];}
+  .timeline-item::before { 
+    content: ''; 
+    @apply absolute w-4 h-4 bg-gradient-to-r from-brand-gold to-brand-yellow rounded-full -left-[29px] top-0;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  }
+  .timeline-item:not(:last-child)::after { 
+    content: ''; 
+    @apply absolute h-full w-0.5 bg-gradient-to-b from-brand-gold to-transparent -left-[25px] top-4 z-[-1];
+  }
   
   /* Logo animation */
   .animated-logo { position: relative; display: inline-block;}
-  .animated-logo span { display: inline-block; transform-origin: center; animation: logoReveal 0.5s forwards cubic-bezier(0.11, 0, 0.5, 0); opacity: 0; transform: translateY(100%);}
+  .animated-logo span { 
+    display: inline-block; 
+    transform-origin: center; 
+    animation: logoReveal 0.5s forwards cubic-bezier(0.19, 1, 0.22, 1); 
+    opacity: 0; 
+    transform: translateY(100%);
+  }
   
-  /* Button styles */
-  .btn-primary { @apply bg-brand-yellow hover:bg-brand-gold text-black font-medium px-4 py-2 rounded-md transition-colors duration-300;}
-  .btn-secondary { @apply bg-transparent hover:bg-brand-yellow/10 text-foreground border border-brand-yellow/20 font-medium px-4 py-2 rounded-md transition-colors duration-300;}
-  .btn-outline { @apply bg-transparent hover:bg-foreground/10 text-foreground border border-foreground/20 font-medium px-4 py-2 rounded-md transition-colors duration-300;}
+  /* Enhanced button styles */
+  .btn-primary { 
+    @apply bg-brand-yellow hover:bg-brand-gold text-black font-medium px-5 py-3 rounded-md transition-all duration-300 shadow-md hover:shadow-lg;
+  }
+  .btn-secondary { 
+    @apply bg-transparent hover:bg-brand-yellow/10 text-foreground border border-brand-yellow/30 font-medium px-5 py-3 rounded-md transition-all duration-300 shadow-sm hover:shadow;
+  }
+  .btn-outline { 
+    @apply bg-transparent hover:bg-foreground/10 text-foreground border border-foreground/30 font-medium px-5 py-3 rounded-md transition-all duration-300;
+  }
   
-  /* Input style */
-  .input-standard { @apply w-full px-4 py-2 bg-background border border-input rounded-md outline-none focus:ring-2 focus:ring-brand-yellow/50 transition-all;}
+  /* Input style with subtle shadows */
+  .input-standard { 
+    @apply w-full px-4 py-3 bg-background border border-input rounded-md outline-none focus:ring-2 focus:ring-brand-yellow/50 transition-all;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  }
   
-  /* Navbar optimizations */
+  /* Navbar optimizations with blur effect */
   .sticky-header {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(18,18,18,0.92);
-    box-shadow: 0 4px 24px 0 rgba(255,223,0,0.04);
-    border-bottom: 1.5px solid #FFD70022;
-    backdrop-filter: blur(7px);
-    -webkit-backdrop-filter: blur(7px);
+    background: rgba(18,18,18,0.85);
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.15);
+    border-bottom: 1.5px solid rgba(255,215,0,0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transform: translate3d(0,0,0);
     will-change: transform, opacity;
   }
   
-  /* Optimized animations */
+  /* Enhanced animations */
   .animate-bg-blob {
     animation: bgBlobMove 30s linear infinite alternate;
     will-change: filter;
@@ -180,41 +243,77 @@
     will-change: opacity, filter;
   }
   
-  /* Float animation for 3D objects */
+  /* Enhanced float animation for 3D objects */
   .animate-float {
     animation: floatY 6s ease-in-out infinite;
     will-change: transform;
   }
   
-  /* Typing cursor animation */
+  /* Enhanced typing cursor animation */
   .typing-cursor {
     display: inline-block;
     margin-left: 2px;
     animation: blink 1.06s infinite;
     will-change: opacity;
   }
+  
+  /* New component styles */
+  .feature-card {
+    @apply relative p-6 rounded-xl border border-border/60 bg-card/80 backdrop-blur-sm hover:bg-card/90 transition-all duration-300;
+  }
+  
+  .feature-card-icon {
+    @apply w-12 h-12 rounded-lg bg-gradient-to-br from-brand-gold/20 to-brand-yellow/20 flex items-center justify-center mb-4;
+  }
+  
+  .pill-tag {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand-yellow/10 text-brand-yellow;
+  }
+  
+  .gradient-border {
+    @apply relative rounded-xl overflow-hidden p-[1px];
+    background: linear-gradient(to right, var(--brand-gold), var(--brand-yellow));
+  }
+  
+  .gradient-border-content {
+    @apply bg-card rounded-[calc(0.5rem-1px)] p-5 h-full;
+  }
+  
+  /* Enhanced tooltip style */
+  .custom-tooltip {
+    @apply absolute z-50 px-3 py-2 text-sm bg-black/90 text-white rounded-md shadow-lg border border-brand-yellow/30 backdrop-blur-sm opacity-0 invisible transition-all duration-200 -translate-y-2;
+  }
+  
+  .custom-tooltip-trigger:hover .custom-tooltip {
+    @apply opacity-100 visible translate-y-0;
+  }
+  
+  /* Scroll progress indicator */
+  .scroll-progress {
+    @apply fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-gold to-brand-yellow z-50 origin-left;
+  }
 }
 
-/* Optimized animations */
+/* Optimized and enhanced animations */
 @keyframes fadeUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
 @keyframes fadeDown {from{opacity:0;transform:translateY(-30px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeLeft {from{opacity:0;transform:translateX(30px);}to{opacity:1;transform:translateX(0);}}
 @keyframes fadeRight {from{opacity:0;transform:translateX(-30px);}to{opacity:1;transform:translateX(0);}}
-@keyframes zoomIn {from{opacity:0;transform:scale(0.8);}to{opacity:1;transform:scale(1);}}
-@keyframes zoomOut {from{opacity:0;transform:scale(1.2);}to{opacity:1;transform:scale(1);}}
+@keyframes zoomIn {from{opacity:0;transform:scale(0.85);}to{opacity:1;transform:scale(1);}}
+@keyframes zoomOut {from{opacity:0;transform:scale(1.15);}to{opacity:1;transform:scale(1);}}
 @keyframes morph {
   0% { border-radius: 60% 40% 30% 70% / 60% 40% 30% 70%;}
   50%{ border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;}
   100%{ border-radius: 60% 40% 30% 70% / 60% 70% 40% 30%;}
 }
 @keyframes bgBlobMove {
-  0% { filter: blur(2px);}
-  55% { filter: blur(11px);}
-  100% { filter: blur(6px);}
+  0% { filter: blur(5px);}
+  55% { filter: blur(15px);}
+  100% { filter: blur(8px);}
 }
 @keyframes ctaGlowPulse { 
-  0%, 100% { opacity: 0.18; filter: blur(14px);}
-  50% { opacity: 0.38; filter: blur(22px);}
+  0%, 100% { opacity: 0.25; filter: blur(15px);}
+  50% { opacity: 0.5; filter: blur(25px);}
 }
 @keyframes floatY {
   0%, 100% { transform: translateY(0px); }
@@ -227,11 +326,26 @@
 
 @keyframes logoReveal {to{opacity:1;transform:translateY(0);}}
 
-/* Mobile tweaks */
+/* Enhanced mobile tweaks */
 @media (max-width: 640px) {
   html { font-size: 14px; }
-  .section-container { @apply py-10 px-4;}
+  .section-container { @apply py-14 px-4;}
   .section-title { @apply text-2xl mb-4;}
+  
+  /* Improved mobile spacing */
+  h1 { @apply text-3xl !important; }
+  h2 { @apply text-2xl !important; }
+  
+  /* Adjust card spacing on mobile */
+  .grid { @apply gap-5 !important; }
+}
+
+/* Additional tablet optimizations */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .section-container { @apply py-16 px-6;}
+  
+  /* Tablet-specific adjustments */
+  .grid-cols-3, .grid-cols-4 { @apply grid-cols-2 !important; }
 }
 
 /* Performance optimizations */
