@@ -61,14 +61,6 @@ const Index = () => {
             color: '#F6F6F6',
             border: '1px solid #222222',
           },
-          success: {
-            style: {
-              background: 'rgba(25, 25, 25, 0.95)',
-              color: '#F6F6F6',
-              border: '1px solid #FFD700',
-            },
-            icon: '✓'
-          }
         }}
       />
       

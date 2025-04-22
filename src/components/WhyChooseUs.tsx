@@ -5,10 +5,12 @@ import {
   Clock, 
   RefreshCw, 
   MessageSquare,
-  ArrowRight
+  ArrowRight,
+  Shield
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { init3DTiltEffect } from "@/utils/animationUtils";
+import { isElementInViewport, batchDomOperations } from "@/utils/performanceUtils";
 
 const reasons = [
   {
@@ -40,24 +42,55 @@ const reasons = [
     description: "Clear, jargon-free communication with regular updates on project milestones and progress.",
     icon: MessageSquare,
     color: "from-brand-gold/70 to-brand-yellow/30"
+  },
+  {
+    title: "Enhanced Security",
+    description: "Implementation of industry-standard security practices to protect your digital assets and user data.",
+    icon: Shield,
+    color: "from-brand-gold/60 to-brand-yellow/50"
   }
 ];
 
 const WhyChooseUs = () => {
+  const sectionRef = useRef<HTMLElement>(null);
   const tiltCardsRef = useRef<HTMLDivElement>(null);
   const [activeCard, setActiveCard] = useState<number | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
   
   useEffect(() => {
-    // Add 3D tilt effect to the cards
+    // Add 3D tilt effect to the cards with performance optimization
     const cleanupTiltEffect = init3DTiltEffect();
+    
+    // Check if section is visible to optimize animations
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        batchDomOperations(
+          // Read operation
+          () => isElementInViewport(sectionRef.current as HTMLElement),
+          // Write operation
+          (visible) => {
+            if (visible && !isVisible) {
+              setIsVisible(true);
+            }
+          }
+        );
+      }
+    };
+    
+    // Initial check
+    handleScroll();
+    
+    // Add scroll listener with passive flag for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
       cleanupTiltEffect();
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [isVisible]);
 
   return (
-    <section id="why-us" className="py-24 relative overflow-hidden">
+    <section ref={sectionRef} id="why-us" className="py-24 relative overflow-hidden">
       {/* Enhanced background elements with depth */}
       <div className="absolute -z-10 top-1/4 right-1/4 w-96 h-96 bg-brand-yellow/10 rounded-full blur-3xl morph-shape opacity-80"></div>
       <div className="absolute -z-10 bottom-1/3 left-1/4 w-80 h-80 bg-brand-gold/10 rounded-full blur-3xl morph-shape opacity-80" style={{ animationDelay: '5s' }}></div>
