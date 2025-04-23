@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 const metrics = [
   {
     icon: Award,
-    value: 250,
+    value: 5,
     label: "Projects Completed",
     suffix: "+",
     color: "from-brand-gold to-brand-yellow",
@@ -44,14 +44,10 @@ const ImpactMetrics = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && !hasAnimated) {
             entry.target.classList.add("revealed");
-
-            if (entry.target === sectionRef.current && !hasAnimated) {
-              animateCounters();
-              setHasAnimated(true);
-            }
-
+            animateCounters();
+            setHasAnimated(true);
             observer.unobserve(entry.target);
           }
         });
@@ -105,7 +101,6 @@ const ImpactMetrics = () => {
       ref={sectionRef}
       className="py-16 md:py-24 relative overflow-hidden snap-start bg-gradient-to-b from-background to-card/30 dark:from-background dark:to-black/30"
     >
-      {/* Background Orbs */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-1/4 right-1/4 w-96 h-96 bg-brand-yellow/5 rounded-full blur-3xl morph-shape" />
         <div
@@ -133,12 +128,8 @@ const ImpactMetrics = () => {
             <div
               key={index}
               ref={(el) => (metricsRef.current[index] = el)}
-              className="reveal-animate"
-              style={{
-                transitionDelay: `${index * 100}ms`,
-                opacity: 0,
-                transform: "translateY(20px)",
-              }}
+              className="reveal-animate opacity-0 transform translate-y-20 transition-opacity duration-700 ease-in-out"
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
               <div className="p-4 md:p-6 rounded-xl card-3d relative overflow-hidden group hover:shadow-lg hover:shadow-brand-yellow/5 transition-all duration-300 bg-card dark:bg-black/30 border border-border/50 dark:border-brand-gold/10">
                 <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 via-transparent to-brand-yellow/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

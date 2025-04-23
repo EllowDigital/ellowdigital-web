@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Mail, Phone, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,7 @@ const ContactSection = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
     setTimeout(() => {
       setIsSubmitting(false);
@@ -40,6 +39,7 @@ const ContactSection = () => {
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Contact Info Section */}
           <div className="space-y-8">
             <h3 className="text-2xl font-bold">Get in Touch</h3>
             <p className="text-muted-foreground">
@@ -47,46 +47,35 @@ const ContactSection = () => {
             </p>
 
             <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center">
-                  <Mail className="h-5 w-5 text-brand-purple" />
+              {[
+                { icon: <Mail className="h-5 w-5 text-brand-purple" />, label: "Email", value: "contact@ellowdigitals.com" },
+                { icon: <Phone className="h-5 w-5 text-brand-purple" />, label: "Phone", value: "+91 98765 43210" },
+                { icon: <Github className="h-5 w-5 text-brand-purple" />, label: "GitHub", value: "github.com/ellowdigitals", href: "https://github.com/ellowdigitals" }
+              ].map((contact, index) => (
+                <div key={index} className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center">
+                    {contact.icon}
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">{contact.label}</p>
+                    {contact.href ? (
+                      <a href={contact.href} className="font-medium hover:text-brand-purple">
+                        {contact.value}
+                      </a>
+                    ) : (
+                      <p className="font-medium">{contact.value}</p>
+                    )}
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium">contact@ellowdigitals.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center">
-                  <Phone className="h-5 w-5 text-brand-purple" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Phone</p>
-                  <p className="font-medium">+91 98765 43210</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center">
-                  <Github className="h-5 w-5 text-brand-purple" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">GitHub</p>
-                  <a href="https://github.com/ellowdigitals" className="font-medium hover:text-brand-purple">
-                    github.com/ellowdigitals
-                  </a>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
+          {/* Contact Form Section */}
           <div className="bg-card rounded-xl border border-border/60 p-6 shadow-sm">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium">
-                  Name
-                </label>
+                <label htmlFor="name" className="text-sm font-medium">Name</label>
                 <Input
                   id="name"
                   name="name"
@@ -98,9 +87,7 @@ const ContactSection = () => {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium">
-                  Email
-                </label>
+                <label htmlFor="email" className="text-sm font-medium">Email</label>
                 <Input
                   id="email"
                   name="email"
@@ -113,9 +100,7 @@ const ContactSection = () => {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-medium">
-                  Message
-                </label>
+                <label htmlFor="message" className="text-sm font-medium">Message</label>
                 <Textarea
                   id="message"
                   name="message"

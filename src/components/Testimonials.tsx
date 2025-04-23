@@ -1,4 +1,3 @@
-
 import { Star, Quote } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useRef } from "react";
@@ -22,7 +21,8 @@ const testimonials = [
     image: "images/projects_img/project1_typeblitz.webp",
     projectType: "TypeBlitz - Boost Your Typing Skills",
     text: "Their understanding of UX/UI design principles helped us create an intuitive learning platform that our users love. The team was responsive and highly professional."
-  }, {
+  },
+  {
     name: "Nitish Yadav",
     company: "Ghatak Sports Academy India™",
     position: "Founder & CEO",

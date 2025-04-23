@@ -1,7 +1,7 @@
-
 import { Code, Smartphone, Layout, Search, Server, HeartPulse } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
+// Services Data Array
 const services = [
   {
     title: "Web Development",
@@ -41,40 +41,54 @@ const services = [
   }
 ];
 
-const ServicesSection = () => {
-  return (
-    <section id="services" className="py-24">
-      <div className="section-container">
-        <div className="text-center mb-16">
-          <h2 className="section-title">Our Services</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            From concept to deployment, we provide comprehensive digital services
-            to help your business thrive in the digital landscape.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <Card key={index} className="card-hover border border-border/60 overflow-hidden">
-              <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-brand-purple to-brand-cyan"></div>
-              <CardHeader className="pb-2">
-                <div className="text-brand-purple mb-3">
-                  <service.icon className="h-10 w-10" />
-                </div>
-                <CardTitle>{service.title}</CardTitle>
-                <CardDescription className="text-base">{service.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-xs font-medium bg-secondary py-1 px-2 rounded-full inline-block">
-                  {service.details}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+// Service Card Component
+const ServiceCard = ({ title, description, icon: Icon, details }) => (
+  <Card className="relative border border-border/60 overflow-hidden hover:shadow-lg transition-shadow">
+    {/* Gradient Bar */}
+    <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-brand-purple to-brand-cyan" />
+    {/* Card Header */}
+    <CardHeader className="pb-2">
+      <div className="text-brand-purple mb-3">
+        <Icon className="h-10 w-10" />
       </div>
-    </section>
-  );
-};
+      <CardTitle className="text-xl font-semibold">{title}</CardTitle>
+      <CardDescription className="text-base text-muted-foreground">{description}</CardDescription>
+    </CardHeader>
+    {/* Card Content */}
+    <CardContent>
+      <div className="text-xs font-medium bg-secondary py-1 px-2 rounded-full inline-block">
+        {details}
+      </div>
+    </CardContent>
+  </Card>
+);
+
+// Services Section Component
+const ServicesSection = () => (
+  <section id="services" className="py-24">
+    <div className="section-container">
+      {/* Section Header */}
+      <div className="text-center mb-16">
+        <h2 className="section-title text-4xl font-bold mb-4">Our Services</h2>
+        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          From concept to deployment, we provide comprehensive digital services to help your business thrive in the digital landscape.
+        </p>
+      </div>
+
+      {/* Service Cards Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {services.map(({ title, description, icon, details }) => (
+          <ServiceCard
+            key={title}  // Use title as unique key (ensure titles are unique)
+            title={title}
+            description={description}
+            icon={icon}
+            details={details}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+);
 
 export default ServicesSection;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const logoImgDark = "/logo.webp";
+const LOGO_IMG_DARK = "/logo.webp";
 const LOGO_ALT = "EllowDigitals Logo";
 
 const Logo = () => {
@@ -12,14 +12,12 @@ const Logo = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const logoSrc = logoImgDark;
+  const logoSrc = LOGO_IMG_DARK;
 
   return (
     <a href="/" aria-label="Go to homepage" className="block outline-none focus:ring-2 focus:ring-brand-yellow rounded transition-shadow">
       <div
-        className={`inline-flex items-center select-none overflow-hidden ${
-          mounted ? "animate-fade-in" : "opacity-0"
-        }`}
+        className={`inline-flex items-center select-none overflow-hidden ${mounted ? "animate-fade-in" : "opacity-0"}`}
         style={{ minHeight: 48 }}
       >
         {!imgError ? (
@@ -30,7 +28,7 @@ const Logo = () => {
             height={48}
             className="h-12 w-auto object-contain transition duration-500 drop-shadow"
             style={{
-              filter: "drop-shadow(0px 2px 8px rgba(255,255,70,0.12))",
+              filter: "drop-shadow(0px 2px 8px rgba(255, 255, 70, 0.12))",
             }}
             loading="eager"
             onError={() => setImgError(true)}

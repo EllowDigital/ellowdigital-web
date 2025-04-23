@@ -1,11 +1,5 @@
-
-// import { useState, useRef, useEffect } from "react";
-// import { Send, Check, AlertCircle, Phone, Mail, Facebook, Instagram, Linkedin } from "lucide-react";
-// import { Button } from "@/components/ui/button";
-// import { toast } from "sonner";
-
 import { useRef, useEffect, useState } from "react";
-import { Send, Check, AlertCircle, Phone, Mail, Facebook, Instagram, MessageCircle } from "lucide-react";
+import { Check, Phone, Mail, Facebook, Instagram, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -31,7 +25,7 @@ const SmartContactForm = () => {
     email: "",
     phone: "",
     subject: "",
-    message: ""
+    message: "",
   });
   const [errors, setErrors] = useState<{ [k: string]: string }>({});
   const formRef = useRef<HTMLFormElement>(null);
@@ -41,9 +35,9 @@ const SmartContactForm = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
+          entry.target.classList.add("revealed");
           observer.unobserve(entry.target);
         }
       });
@@ -71,21 +65,51 @@ const SmartContactForm = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) setErrors({ ...errors, [name]: "" });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     const errs = validate();
     setErrors(errs);
+
     if (Object.keys(errs).length > 0) {
-      e.preventDefault();
       setFormStatus("error");
       toast.error("Please fix the errors in the form.");
       setTimeout(() => setFormStatus("idle"), 2000);
     } else {
       setFormStatus("submitting");
-      // Allow FormSubmit to handle the actual submission
+      // Submit form data to FormSubmit
+      const formDataWithHiddenFields = {
+        ...formData,
+        _captcha: "false",
+        _next: "https://www.ellowdigitals.me/", // Redirect URL after success
+        _subject: "New Message from Contact Form",
+      };
+      const formAction = "https://formsubmit.co/ellowdigitals@gmail.com";
+
+      fetch(formAction, {
+        method: "POST",
+        body: new URLSearchParams(formDataWithHiddenFields).toString(),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      })
+        .then((response) => {
+          if (response.ok) {
+            setFormStatus("success");
+            toast.success("Message sent successfully!");
+          } else {
+            setFormStatus("error");
+            toast.error("Error sending message, please try again.");
+          }
+        })
+        .catch(() => {
+          setFormStatus("error");
+          toast.error("Error sending message, please try again.");
+        })
+        .finally(() => {
+          setTimeout(() => setFormStatus("idle"), 2000);
+        });
     }
   };
 
@@ -101,8 +125,6 @@ const SmartContactForm = () => {
           <form
             ref={formRef}
             onSubmit={handleSubmit}
-            action="https://formsubmit.co/ellowdigitals@gmail.com"
-            method="POST"
             className="space-y-7 bg-card/80 rounded-2xl border border-border/30 shadow-2xl p-8 reveal-animate relative backdrop-blur-md"
           >
             <input type="hidden" name="_captcha" value="false" />
@@ -116,7 +138,9 @@ const SmartContactForm = () => {
               </div>
             )}
 
+            {/* Form Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Name */}
               <div>
                 <label htmlFor="name" className="block font-semibold text-brand-yellow pb-1">Name</label>
                 <input
@@ -125,15 +149,13 @@ const SmartContactForm = () => {
                   placeholder="Your name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`rounded-xl border border-border bg-background/80 px-4 py-3 w-full text-base focus:ring-2 focus:ring-brand-yellow/60 focus:outline-none shadow transition placeholder:text-muted-foreground ${errors.name ? "border-red-500" : "border-border"}`}
-                  disabled={formStatus === "submitting"}
+                  className={`rounded-xl border ${errors.name ? "border-red-500" : "border-border"} px-4 py-3 w-full text-black`}
                   required
-                  autoComplete="name"
-                  aria-invalid={!!errors.name}
-                  aria-describedby="error-name"
                 />
-                {errors.name && <div id="error-name" className="text-xs text-red-400 mt-1">{errors.name}</div>}
+                {errors.name && <div className="text-xs text-red-400 mt-1">{errors.name}</div>}
               </div>
+
+              {/* Email */}
               <div>
                 <label htmlFor="email" className="block font-semibold text-brand-yellow pb-1">Email</label>
                 <input
@@ -143,17 +165,15 @@ const SmartContactForm = () => {
                   placeholder="you@email.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`rounded-xl border bg-background/80 border-border px-4 py-3 w-full text-base focus:ring-2 focus:ring-brand-yellow/60 focus:outline-none shadow transition placeholder:text-muted-foreground ${errors.email ? "border-red-500" : "border-border"}`}
-                  disabled={formStatus === "submitting"}
+                  className={`rounded-xl border ${errors.email ? "border-red-500" : "border-border"} px-4 py-3 w-full text-black`}
                   required
-                  autoComplete="email"
-                  aria-invalid={!!errors.email}
-                  aria-describedby="error-email"
                 />
-                {errors.email && <div id="error-email" className="text-xs text-red-400 mt-1">{errors.email}</div>}
+                {errors.email && <div className="text-xs text-red-400 mt-1">{errors.email}</div>}
               </div>
+
+              {/* Phone */}
               <div>
-                <label htmlFor="phone" className="block font-semibold text-brand-yellow pb-1">Phone<span className="text-muted-foreground text-xs ml-1">(Optional)</span></label>
+                <label htmlFor="phone" className="block font-semibold text-brand-yellow pb-1">Phone</label>
                 <input
                   id="phone"
                   name="phone"
@@ -161,11 +181,11 @@ const SmartContactForm = () => {
                   placeholder="Your phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="rounded-xl border border-border bg-background/80 px-4 py-3 w-full text-base focus:ring-2 focus:ring-brand-yellow/60 focus:outline-none shadow transition placeholder:text-muted-foreground"
-                  disabled={formStatus === "submitting"}
-                  autoComplete="tel"
+                  className="rounded-xl border px-4 py-3 w-full text-black"
                 />
               </div>
+
+              {/* Subject */}
               <div>
                 <label htmlFor="subject" className="block font-semibold text-brand-yellow pb-1">Subject</label>
                 <select
@@ -173,20 +193,18 @@ const SmartContactForm = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className={`rounded-xl border border-border bg-background/80 px-4 py-3 w-full text-base focus:ring-2 focus:ring-brand-yellow/60 focus:outline-none shadow transition ${errors.subject ? "border-red-500" : "border-border"}`}
-                  disabled={formStatus === "submitting"}
+                  className={`rounded-xl border ${errors.subject ? "border-red-500" : "border-border"} px-4 py-3 w-full text-black`}
                   required
-                  aria-invalid={!!errors.subject}
-                  aria-describedby="error-subject"
                 >
                   <option value="">-- Select --</option>
-                  {subjectOptions.map(opt => (
+                  {subjectOptions.map((opt) => (
                     <option key={opt} value={opt}>{opt}</option>
                   ))}
                 </select>
-                {errors.subject && <div id="error-subject" className="text-xs text-red-400 mt-1">{errors.subject}</div>}
+                {errors.subject && <div className="text-xs text-red-400 mt-1">{errors.subject}</div>}
               </div>
             </div>
+
             {/* Message */}
             <div>
               <label htmlFor="message" className="block font-semibold text-brand-yellow pb-1">Message</label>
@@ -196,34 +214,19 @@ const SmartContactForm = () => {
                 placeholder="Type your message..."
                 value={formData.message}
                 onChange={handleChange}
-                className={`rounded-xl border border-border bg-background/80 px-4 py-3 w-full text-base focus:ring-2 focus:ring-brand-yellow/60 focus:outline-none shadow transition resize-none min-h-[120px] placeholder:text-muted-foreground ${errors.message ? "border-red-500" : "border-border"}`}
-                disabled={formStatus === "submitting"}
+                className={`rounded-xl border ${errors.message ? "border-red-500" : "border-border"} px-4 py-3 w-full resize-none min-h-[120px] text-black`}
                 required
-                aria-invalid={!!errors.message}
-                aria-describedby="error-message"
               />
-              {errors.message && <div id="error-message" className="text-xs text-red-400 mt-1">{errors.message}</div>}
+              {errors.message && <div className="text-xs text-red-400 mt-1">{errors.message}</div>}
             </div>
 
             <Button
               type="submit"
-              className={`
-                w-full py-4 text-lg font-bold rounded-2xl transition-all duration-300 shadow-xl border-2 border-brand-yellow
-                bg-gradient-to-r from-brand-yellow/80 to-brand-gold/90 hover:scale-105 hover:from-brand-yellow hover:to-brand-yellow
-                active:scale-95 flex justify-center items-center gap-3
-                ${formStatus === "submitting" ? "bg-gray-400 pointer-events-none opacity-80" : ""}
-              `}
+              className={`w-full py-4 text-lg font-bold rounded-2xl transition-all duration-300 shadow-xl border-2 border-brand-yellow
+                bg-gradient-to-r from-brand-yellow/80 to-brand-gold/90 hover:scale-105 hover:from-brand-yellow hover:to-brand-gold`}
               disabled={formStatus === "submitting"}
             >
-              {formStatus === "idle" && <>Send Message <Send className="ml-1 w-6 h-6" /></>}
-              {formStatus === "submitting" && (
-                <>
-                  <span className="inline-block w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                  Sending...
-                </>
-              )}
-              {formStatus === "error" && <>Error <AlertCircle className="ml-1 w-6 h-6" /></>}
-              {formStatus === "success" && <>Sent! <Check className="ml-1 w-6 h-6" /></>}
+              {formStatus === "submitting" ? "Submitting..." : "Submit"}
             </Button>
           </form>
 
@@ -264,6 +267,5 @@ const SmartContactForm = () => {
 };
 
 export default SmartContactForm;
-
 
 

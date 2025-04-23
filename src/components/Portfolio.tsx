@@ -18,10 +18,11 @@ const projects = [
     category: "Desktop App",
     image: "/images/projects_img/project1_typeblitz.webp",
     description:
-      "Interactive financial analytics platform with real-time data visualization",
+      "TypeBlitz is an advanced typing application that helps users enhance their typing speed and accuracy through personalized exercises and real-time feedback.",
     tech: ["Python", "SQLite3"],
     link: "https://typeblitz.netlify.app/",
   },
+
   // {
   //   title: "FashionForward Mobile App",
   //   category: "Mobile App",
@@ -50,10 +51,11 @@ const projects = [
     title: "Ghatak Sports Academy India™",
     category: "Website",
     image: "/images/projects_img/project2_gsai.webp",
-    description: "Custom enterprise solution for internal communications",
+    description: "A dynamic website for Ghatak Sports Academy India™, designed to enhance communication and provide information about their sports programs, events, and academy updates.",
     tech: ["HTML", "CSS", "JavaScript"],
     link: "https://gahtakgsai.netlify.app/",
-  },
+  }
+
 ];
 
 const Portfolio = () => {
@@ -132,11 +134,10 @@ const Portfolio = () => {
           {categories.map((category, index) => (
             <button
               key={index}
-              className={`px-4 py-2 rounded-full transition-all ${
-                filter === category
-                  ? "bg-brand-yellow text-black font-medium"
-                  : "bg-card hover:bg-brand-yellow/20"
-              }`}
+              className={`px-4 py-2 rounded-full transition-all ${filter === category
+                ? "bg-brand-yellow text-black font-medium"
+                : "bg-card hover:bg-brand-yellow/20"
+                }`}
               onClick={() => setFilter(category)}
             >
               {category}
@@ -171,9 +172,8 @@ const Portfolio = () => {
 
                   {/* Hover overlay */}
                   <div
-                    className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent flex items-end justify-center p-6 transition-opacity duration-300 ${
-                      hoveredIndex === index ? "opacity-100" : "opacity-0"
-                    }`}
+                    className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent flex items-end justify-center p-6 transition-opacity duration-300 ${hoveredIndex === index ? "opacity-100" : "opacity-0"
+                      }`}
                   >
                     <Button className="bg-brand-yellow hover:bg-brand-gold text-black">
                       <a

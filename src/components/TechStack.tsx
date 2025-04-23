@@ -1,3 +1,27 @@
+import { FC, memo } from "react";
+
+// Define the type for technology items
+interface TechItemProps {
+  name: string;
+  category: string;
+}
+
+const TechItem: FC<TechItemProps> = memo(({ name, category }) => {
+  const initial = name.substring(0, 2).toUpperCase();
+
+  return (
+    <div className="flex flex-col items-center space-y-2 transition-all duration-300 hover:text-brand-purple">
+      <div className="relative group">
+        <div className="absolute -inset-2 bg-gradient-to-r from-brand-purple/20 to-brand-cyan/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur"></div>
+        <div className="relative h-16 w-16 flex items-center justify-center text-lg font-bold border-2 border-border bg-card rounded-full shadow-sm transition-all duration-300 group-hover:border-brand-purple">
+          {initial}
+        </div>
+      </div>
+      <span className="text-sm font-medium">{name}</span>
+      <span className="text-xs text-muted-foreground capitalize">{category}</span>
+    </div>
+  );
+});
 
 const technologies = [
   { name: "HTML5", category: "frontend" },
@@ -33,21 +57,7 @@ const TechStack = () => {
 
         <div className="mt-12 flex flex-wrap justify-center gap-x-12 gap-y-8">
           {technologies.map((tech, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center space-y-2 transition-all duration-300 hover:text-brand-purple"
-            >
-              <div className="relative group">
-                <div className="absolute -inset-2 bg-gradient-to-r from-brand-purple/20 to-brand-cyan/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur"></div>
-                <div className="relative h-16 w-16 flex items-center justify-center text-lg font-bold border-2 border-border bg-card rounded-full shadow-sm transition-all duration-300 group-hover:border-brand-purple">
-                  {tech.name.substring(0, 2)}
-                </div>
-              </div>
-              <span className="text-sm font-medium">{tech.name}</span>
-              <span className="text-xs text-muted-foreground capitalize">
-                {tech.category}
-              </span>
-            </div>
+            <TechItem key={index} name={tech.name} category={tech.category} />
           ))}
         </div>
       </div>

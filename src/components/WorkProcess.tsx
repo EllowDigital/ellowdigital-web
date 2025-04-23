@@ -1,4 +1,3 @@
-
 import { Users, Activity, Eye, Check } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useRef } from "react";
@@ -7,64 +6,49 @@ const processes = [
   {
     icon: Users,
     title: "Personalized Collaboration",
-    description: "Direct communication and tailored solutions for your unique needs"
+    description: "Direct communication and tailored solutions for your unique needs."
   },
   {
     icon: Activity,
     title: "Agile Methodology",
-    description: "Iterative development with flexible adaptation to changes"
+    description: "Iterative development with flexible adaptation to changes."
   },
   {
     icon: Eye,
     title: "Transparency",
-    description: "Clear communication and regular progress updates"
+    description: "Clear communication and regular progress updates."
   },
   {
     icon: Check,
     title: "Quality Delivery",
-    description: "Rigorous testing and optimization for top performance"
+    description: "Rigorous testing and optimization for top performance."
   }
 ];
 
 const WorkProcess = () => {
-  const cardsRef = useRef<HTMLDivElement[]>([]);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
 
-    if (titleRef.current) {
-      observer.observe(titleRef.current);
-    }
-
-    if (dividerRef.current) {
-      observer.observe(dividerRef.current);
-    }
-
-    cardsRef.current.forEach((card) => {
-      if (card) observer.observe(card);
+    // Observe title, divider, and cards
+    [titleRef.current, dividerRef.current, ...cardsRef.current].forEach((el) => {
+      if (el) observer.observe(el);
     });
 
     return () => {
-      if (titleRef.current) {
-        observer.unobserve(titleRef.current);
-      }
-      if (dividerRef.current) {
-        observer.unobserve(dividerRef.current);
-      }
-      cardsRef.current.forEach((card) => {
-        if (card) observer.unobserve(card);
+      // Clean up observers
+      [titleRef.current, dividerRef.current, ...cardsRef.current].forEach((el) => {
+        if (el) observer.unobserve(el);
       });
     };
   }, []);
@@ -73,27 +57,21 @@ const WorkProcess = () => {
     <section id="how-we-work" className="section-container py-24 relative overflow-hidden snap-start">
       {/* Blob background */}
       <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-brand-yellow/5 rounded-full blur-3xl morph-shape"></div>
-      
+
       <div className="max-w-6xl mx-auto">
         <h2 ref={titleRef} className="section-title reveal-animate">How We Work</h2>
         <div ref={dividerRef} className="animated-divider reveal-animate mb-16"></div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {processes.map((process, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="relative"
-              ref={(el) => {
-                if (el) cardsRef.current[index] = el;
-              }}
+              ref={(el) => el && (cardsRef.current[index] = el)}
             >
-              <Card 
-                className="h-full neo-effect card-3d tilt-effect transition-all duration-300 border border-border reveal-animate"
-                style={{ 
-                  transitionDelay: `${index * 100}ms`,
-                  opacity: 0,
-                  transform: 'translateY(20px)'
-                }}
+              <Card
+                className="h-full neo-effect card-3d tilt-effect transition-all duration-300 border border-border reveal-animate opacity-0 transform translate-y-20"
+                style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <CardContent className="p-6 text-center">
                   <div className="mb-6 relative">
