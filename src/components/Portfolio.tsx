@@ -53,7 +53,7 @@ const projects = [
     image: "/images/projects_img/project2_gsai.webp",
     description: "A dynamic website for Ghatak Sports Academy India™, designed to enhance communication and provide information about their sports programs, events, and academy updates.",
     tech: ["HTML", "CSS", "JavaScript"],
-    link: "https://gahtakgsai.netlify.app/",
+    link: "https://ghatakgsai.netlify.app/",
   }
 
 ];
