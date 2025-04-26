@@ -22,40 +22,22 @@ const projects = [
     tech: ["Python", "SQLite3"],
     link: "https://typeblitz.netlify.app/",
   },
-
-  // {
-  //   title: "FashionForward Mobile App",
-  //   category: "Mobile App",
-  //   image: "/placeholder.svg",
-  //   description: "Fashion discovery app with AR try-on features and social sharing",
-  //   tech: ["React Native", "Firebase", "ARKit", "Redux"],
-  //   link: "#"
-  // },
-  // {
-  //   title: "Global Travel Experience",
-  //   category: "UI/UX",
-  //   image: "/placeholder.svg",
-  //   description: "Complete UX redesign for a premium travel booking platform",
-  //   tech: ["Figma", "Adobe XD", "InVision", "After Effects"],
-  //   link: "#"
-  // },
-  // {
-  //   title: "ArtisanMarket",
-  //   category: "E-Commerce",
-  //   image: "/placeholder.svg",
-  //   description: "Marketplace connecting artisans with global customers",
-  //   tech: ["Next.js", "Stripe", "Sanity.io", "Vercel"],
-  //   link: "#"
-  // },
   {
     title: "Ghatak Sports Academy India™",
-    category: "Website",
+    category: "Web App",
     image: "/images/projects_img/project2_gsai.webp",
-    description: "A dynamic website for Ghatak Sports Academy India™, designed to enhance communication and provide information about their sports programs, events, and academy updates.",
-    tech: ["HTML", "CSS", "JavaScript"],
+    description: "A dynamic website built for Ghatak Sports Academy India™, aimed at improving communication and providing detailed information about their sports programs, events, and latest updates.",
+    tech: ["HTML", "CSS", "JavaScript", "React (Vite)", "TypeScript"],
     link: "https://ghatakgsai.netlify.app/",
+  },
+  {
+    title: "Sarwan Portfolio",
+    category: "Website",
+    image: "/images/projects_img/project3_sarwan.webp",
+    description: "A dynamic website for Ghatak Sports Academy India™, designed to enhance communication and provide information about their sports programs, events, and academy updates.",
+    tech: ["HTML", "CSS", "JavaScript", 'JQuery'],
+    link: "https://sarwan.netlify.app/",
   }
-
 ];
 
 const Portfolio = () => {
