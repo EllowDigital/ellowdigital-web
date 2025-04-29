@@ -1,4 +1,3 @@
-
 import { CheckCircle } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -47,9 +46,7 @@ const FeaturedOffers = () => {
           {offers.map((offer, index) => (
             <Card 
               key={index} 
-              className={`relative overflow-hidden border ${
-                offer.isPopular ? "border-brand-purple" : "border-border/60"
-              } card-hover`}
+              className={`relative overflow-hidden border ${offer.isPopular ? "border-brand-purple" : "border-border/60"} card-hover`}
             >
               {offer.isPopular && (
                 <div className="absolute top-0 right-0">
@@ -78,7 +75,7 @@ const FeaturedOffers = () => {
               </CardContent>
               
               <CardFooter>
-                <Button asChild className="w-full bg-brand-purple hover:bg-brand-darkPurple">
+                <Button asChild className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-semibold py-2 px-4 rounded-md transition-colors">
                   <a href="#contact">Get Started</a>
                 </Button>
               </CardFooter>
