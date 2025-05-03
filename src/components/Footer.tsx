@@ -13,7 +13,7 @@ const Footer = () => {
           <div className="flex items-center gap-3 mb-2">
             <Logo />
             <span className="text-2xl font-extrabold tracking-tight gradient-text">
-              Ellow<span className="text-brand-yellow">Digitals</span>
+              Ellow<span className="text-brand-yellow">Digital</span>
             </span>
           </div>
           <p className="text-muted-foreground max-w-xs text-[1rem] leading-relaxed mb-0">
@@ -36,12 +36,12 @@ const Footer = () => {
                 icon: <Phone className="w-5 h-5" />,
               },
               {
-                href: "https://instagram.com/ellowdigitals",
+                href: "https://instagram.com/ellowdigital",
                 label: "Instagram",
                 icon: <Instagram className="w-5 h-5" />,
               },
               {
-                href: "https://github.com/ellowdigitals",
+                href: "https://github.com/ellowdigital",
                 label: "Github",
                 icon: <Github className="w-5 h-5" />,
               },
@@ -82,7 +82,7 @@ const Footer = () => {
             {
               title: "Contact",
               links: [
-                { label: "ellowdigitals@gmail.com", href: "mailto:hello@ellowdigitals.com" },
+                { label: "ellowdigitals@gmail.com", href: "mailto:ellowdigitals@gmail.com" },
                 { label: "+91 89604 46756", href: "tel:+919876543210" },
                 { label: "Contact Form", href: "#contact" },
               ],
@@ -111,7 +111,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 mt-7 pt-5 border-t border-border flex flex-col md:flex-row items-center justify-between gap-3 text-muted-foreground text-sm">
         <div>
           &copy; {currentYear}{" "}
-          <span className="font-bold text-brand-yellow">EllowDigitals</span>. All Rights Reserved.
+          <span className="font-bold text-brand-yellow">EllowDigital</span>. All Rights Reserved.
         </div>
         <div className="hidden md:inline-block">|</div>
         <div className="text-brand-yellow font-semibold">

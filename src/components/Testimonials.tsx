@@ -11,27 +11,28 @@ const testimonials = [
     rating: 5,
     image: "images/nitesh.png",
     projectType: "Website Development",
-    text: "Working with EllowDigitals transformed our online presence completely. Their team went above and beyond to deliver a website that perfectly captures our brand identity."
+    text: "EllowDigital truly elevated our digital presence. Their team captured the essence of our brand and delivered a sleek, functional website that has received fantastic feedback from our users."
   },
   {
     name: "Sarwan Yadav",
-    company: "EllowDigitals",
+    company: "EllowDigital",
     position: "Founder & CEO",
     rating: 5,
     image: "images/projects_img/project1_typeblitz.webp",
     projectType: "TypeBlitz - Boost Your Typing Skills",
-    text: "Their understanding of UX/UI design principles helped us create an intuitive learning platform that our users love. The team was responsive and highly professional."
+    text: "The EllowDigital team was instrumental in shaping TypeBlitz into a user-centric platform. Their creative approach to design and deep understanding of user behavior made the final product both engaging and effective."
   },
   {
-    name: "Nitish Yadav",
-    company: "Ghatak Sports Academy India™",
-    position: "Founder & CEO",
+    name: "Anish Yadav",
+    company: "EllowDigital",
+    position: "CTO",
     rating: 5,
-    image: "images/nitesh.png",
-    projectType: "Website Development",
-    text: "Working with EllowDigitals transformed our online presence completely. Their team went above and beyond to deliver a website that perfectly captures our brand identity."
+    image: "images/projects_img/project1_typeblitz.webp",
+    projectType: "TypeBlitz - Boost Your Typing Skills",
+    text: "From a technical standpoint, working with EllowDigital was seamless. Their attention to detail and commitment to performance optimization helped us build a fast, scalable learning tool that users appreciate."
   },
 ];
+
 
 const Testimonials = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);

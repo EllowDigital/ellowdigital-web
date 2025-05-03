@@ -76,7 +76,7 @@ const Navbar = () => {
           <a href="/" className="flex items-center gap-2">
             <Logo />
             <span className="text-2xl font-bold bg-gradient-to-r from-brand-yellow to-brand-gold text-transparent bg-clip-text">
-              EllowDigitals
+              EllowDigital
             </span>
           </a>
 

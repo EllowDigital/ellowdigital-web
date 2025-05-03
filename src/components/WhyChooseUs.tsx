@@ -95,7 +95,7 @@ const WhyChooseUs = () => {
       <div className="absolute -z-10 top-2/3 right-1/3 w-64 h-64 bg-white/5 rounded-full blur-3xl morph-shape opacity-60" style={{ animationDelay: '8s' }}></div>
 
       <div className="section-container max-w-6xl mx-auto">
-        <h2 className="section-title text-4xl font-bold mb-3 reveal-animate" data-animation="fade-up">Why Choose EllowDigitals?</h2>
+        <h2 className="section-title text-4xl font-bold mb-3 reveal-animate" data-animation="fade-up">Why Choose EllowDigital?</h2>
         <div className="animated-divider reveal-animate mb-4" data-animation="zoom-in"></div>
         <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto mb-16 reveal-animate" data-animation="fade-up">
           We pride ourselves on delivering exceptional value and building lasting relationships with our clients.

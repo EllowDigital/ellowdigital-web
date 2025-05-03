@@ -16,11 +16,11 @@ const AboutSection = () => {
           {/* Left Section: Introduction */}
           <div className="space-y-6 order-2 lg:order-1">
             <h2 className="text-3xl md:text-4xl font-bold">
-              About <span className="gradient-text">EllowDigitals</span>
+              About <span className="gradient-text">EllowDigital</span>
             </h2>
 
             <p className="text-muted-foreground text-lg md:text-xl">
-              At EllowDigitals, we are a solo-powered micro-agency dedicated to delivering high-performance websites,
+              At EllowDigital, we are a solo-powered micro-agency dedicated to delivering high-performance websites,
               mobile apps, and software solutions that are tailored to your unique business needs.
             </p>
 

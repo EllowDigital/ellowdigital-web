@@ -18,7 +18,7 @@ const projects = [
     category: "Desktop App",
     image: "/images/projects_img/project1_typeblitz.webp",
     description:
-      "TypeBlitz is an advanced typing application that helps users enhance their typing speed and accuracy through personalized exercises and real-time feedback.",
+      "TypeBlitz is a feature-rich desktop application designed to improve typing speed and precision through customized drills, progress tracking, and real-time performance analysis.",
     tech: ["Python", "SQLite3"],
     link: "https://typeblitz.netlify.app/",
   },
@@ -26,7 +26,8 @@ const projects = [
     title: "Ghatak Sports Academy India™",
     category: "Web App",
     image: "/images/projects_img/project2_gsai.webp",
-    description: "A dynamic website built for Ghatak Sports Academy India™, aimed at improving communication and providing detailed information about their sports programs, events, and latest updates.",
+    description:
+      "A responsive web application developed for Ghatak Sports Academy India™, offering detailed insights into training programs, event schedules, and institutional updates.",
     tech: ["HTML", "CSS", "JavaScript", "React (Vite)", "TypeScript"],
     link: "https://ghatakgsai.netlify.app/",
   },
@@ -34,8 +35,9 @@ const projects = [
     title: "Sarwan Portfolio",
     category: "Website",
     image: "/images/projects_img/project3_sarwan.webp",
-    description: "A dynamic website for Ghatak Sports Academy India™, designed to enhance communication and provide information about their sports programs, events, and academy updates.",
-    tech: ["HTML", "CSS", "JavaScript", 'JQuery'],
+    description:
+      "A modern personal portfolio website crafted for Sarwan, showcasing professional achievements, project highlights, and a streamlined contact interface.",
+    tech: ["HTML", "CSS", "JavaScript", "JQuery"],
     link: "https://sarwan.netlify.app/",
   }
 ];
