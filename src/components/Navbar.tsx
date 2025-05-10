@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Users } from "lucide-react";
 
 const NAV_LINKS = [
   { name: "Home", href: "#home" },
@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { name: "Services", href: "#services" },
   { name: "Portfolio", href: "#portfolio" },
   { name: "Why Us", href: "#why-us" },
+  { name: "Team", href: "/team" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -62,6 +63,13 @@ const Navbar = () => {
   }, [isMobileOpen]);
 
   const handleNavClick = (href: string) => {
+    if (href.startsWith("/")) {
+      // If it's an internal page link (not a hash)
+      navigate(href);
+      setIsMobileOpen(false);
+      return;
+    }
+
     if (isHomePage) {
       // If on home page, scroll to the section
       const element = document.querySelector(href);
@@ -113,15 +121,21 @@ const Navbar = () => {
               <button
                 key={link.href}
                 onClick={() => handleNavClick(link.href)}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors ${isHomePage && activeSection === link.href.substring(1)
-                  ? "text-brand-yellow"
-                  : "text-white hover:text-brand-yellow"
-                  }`}
+                className={`relative px-4 py-2 text-sm font-medium transition-colors ${
+                  (isHomePage && activeSection === link.href.substring(1)) || 
+                  (!isHomePage && location.pathname === link.href)
+                    ? "text-brand-yellow"
+                    : "text-white hover:text-brand-yellow"
+                }`}
               >
                 {link.name}
                 <span
-                  className={`absolute left-0 bottom-0 h-0.5 bg-brand-yellow transition-all ${isHomePage && activeSection === link.href.substring(1) ? "w-full" : "w-0 group-hover:w-full"
-                    }`}
+                  className={`absolute left-0 bottom-0 h-0.5 bg-brand-yellow transition-all ${
+                    (isHomePage && activeSection === link.href.substring(1)) || 
+                    (!isHomePage && location.pathname === link.href) 
+                      ? "w-full" 
+                      : "w-0 group-hover:w-full"
+                  }`}
                 />
               </button>
             ))}
@@ -170,10 +184,12 @@ const Navbar = () => {
               <button
                 key={link.href}
                 onClick={() => handleNavClick(link.href)}
-                className={`block w-full text-center py-3 rounded-lg text-base font-medium transition-all ${isHomePage && activeSection === link.href.substring(1)
-                  ? "bg-brand-yellow/10 text-brand-yellow"
-                  : "text-white hover:bg-brand-yellow/5 hover:text-brand-yellow"
-                  }`}
+                className={`block w-full text-center py-3 rounded-lg text-base font-medium transition-all ${
+                  (isHomePage && activeSection === link.href.substring(1)) || 
+                  (!isHomePage && location.pathname === link.href)
+                    ? "bg-brand-yellow/10 text-brand-yellow"
+                    : "text-white hover:bg-brand-yellow/5 hover:text-brand-yellow"
+                }`}
               >
                 {link.name}
               </button>

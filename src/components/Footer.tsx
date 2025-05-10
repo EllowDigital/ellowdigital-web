@@ -1,5 +1,5 @@
 
-import { Mail, Phone, Instagram, Github, Shield, FileText } from "lucide-react";
+import { Mail, Phone, Instagram, Github, Shield, FileText, Users } from "lucide-react";
 import Logo from "./Logo";
 import { Link } from "react-router-dom";
 
@@ -69,6 +69,7 @@ const Footer = () => {
                 { label: "Home", href: "#home" },
                 { label: "About Us", href: "#about" },
                 { label: "Services", href: "#services" },
+                { label: "Team", href: "/team" },
                 { label: "Contact", href: "#contact" },
               ],
             },
@@ -95,12 +96,21 @@ const Footer = () => {
               <ul className="space-y-2 text-base">
                 {section.links.map((link) => (
                   <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="hover:text-brand-yellow/90 transition-colors"
-                    >
-                      {link.label}
-                    </a>
+                    {link.href.startsWith('/') ? (
+                      <Link
+                        to={link.href}
+                        className="hover:text-brand-yellow/90 transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        className="hover:text-brand-yellow/90 transition-colors"
+                      >
+                        {link.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -120,6 +130,9 @@ const Footer = () => {
           Making Digital Simple.
         </div>
         <div className="flex gap-4 mt-2 md:mt-0">
+          <Link to="/team" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
+            <Users className="w-3 h-3" /> Our Team
+          </Link>
           <Link to="/privacy-policy" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
             <Shield className="w-3 h-3" /> Privacy Policy
           </Link>

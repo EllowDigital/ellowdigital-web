@@ -1,247 +1,343 @@
-/**
- * Performance utility functions for optimizing application loading and runtime
- */
 
 /**
- * Lazy loads images as they come into the viewport with customizable thresholds and root margins.
- * Supports higher performance via IntersectionObserver.
- * @param targetSelector - CSS selector for images to lazy load.
- * @param rootMargin - Margin around the root.
- * @returns A cleanup function to disconnect the observer.
+ * Performance optimization utilities for React applications
+ * This module provides functions to optimize the performance of React applications
+ * by implementing best practices for rendering, network requests, and memory management.
  */
-export const setupLazyLoading = (
-  targetSelector = "img[data-src]",
-  rootMargin = "200px 0px"
-): (() => void) => {
-  if (!window.IntersectionObserver) {
-    console.warn("IntersectionObserver not supported in this browser");
-    return () => {};
-  }
 
-  const targets = document.querySelectorAll(targetSelector);
-  const onIntersect: IntersectionObserverCallback = (entries, observer) => {
-    entries.forEach((entry) => {
+import { useEffect, useState, useCallback } from 'react';
+
+/**
+ * Initialize all performance optimizations
+ * @returns {Function} Cleanup function to remove all listeners and optimizations
+ */
+export const initPerformanceOptimizations = () => {
+  // Apply all optimizations
+  const cleanupFns: Array<() => void> = [
+    optimizeMediaLoading(),
+    optimizeNetworkRequests(),
+    optimizeScrollPerformance(),
+    monitorMemoryUsage(),
+  ];
+
+  // Return a combined cleanup function
+  return () => {
+    cleanupFns.forEach(cleanup => cleanup());
+  };
+};
+
+/**
+ * Optimize media loading with lazy loading and priority hints
+ * @returns {Function} Cleanup function
+ */
+const optimizeMediaLoading = () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const img = entry.target as HTMLImageElement;
-        const src = img.dataset.src;
-        if (src) {
-          img.src = src;
-          img.removeAttribute("data-src");
-          observer.unobserve(img);
+        const element = entry.target;
+        
+        // Handle images
+        if (element.tagName === 'IMG') {
+          const img = element as HTMLImageElement;
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+          }
         }
+        
+        // Handle videos
+        if (element.tagName === 'VIDEO') {
+          const video = element as HTMLVideoElement;
+          if (video.dataset.src) {
+            video.src = video.dataset.src;
+            video.load();
+            video.removeAttribute('data-src');
+          }
+        }
+        
+        observer.unobserve(element);
       }
     });
-  };
-
-  const observer = new IntersectionObserver(onIntersect, {
-    rootMargin,
-    threshold: 0.1,
+  }, {
+    rootMargin: '200px', // Start loading when within 200px of viewport
   });
 
-  targets.forEach((target) => observer.observe(target));
-
-  return () => observer.disconnect();
-};
-
-/**
- * Defers non-critical JavaScript execution, optimizing for low-priority tasks.
- * @param callback - Function to execute after defer.
- * @param timeout - Time to defer in milliseconds.
- */
-export const deferNonCritical = (
-  callback: () => void,
-  timeout = 1000
-): void => {
-  if (window.requestIdleCallback) {
-    window.requestIdleCallback(() => callback());
-  } else {
-    setTimeout(callback, timeout);
-  }
-};
-
-/**
- * Prevents layout thrashing by batching DOM read/write operations, ensuring better performance.
- * @param readCallback - Function that reads from the DOM.
- * @param writeCallback - Function that writes to the DOM.
- */
-export const batchDomOperations = <T>(
-  readCallback: () => T,
-  writeCallback: (data: T) => void
-): void => {
-  const data = readCallback();
-  requestAnimationFrame(() => writeCallback(data));
-};
-
-/**
- * Initializes performance monitoring tools such as long task and largest contentful paint monitoring.
- * @returns Monitoring cleanup function.
- */
-export const initPerformanceMonitoring = (): (() => void) => {
-  const longTaskObserver = new PerformanceObserver((list) => {
-    list.getEntries().forEach((entry) => {
-      console.warn(`Long task detected: ${entry.duration}ms`);
-    });
+  // Find all media with data-src attribute
+  const lazyElements = document.querySelectorAll('img[data-src], video[data-src]');
+  lazyElements.forEach(element => {
+    observer.observe(element);
   });
 
-  const lcpObserver = new PerformanceObserver((list) => {
-    const entries = list.getEntries();
-    const lastEntry = entries[entries.length - 1];
-    console.log(`LCP: ${lastEntry.startTime}ms`);
+  // Apply priority hints to critical above-the-fold images
+  document.querySelectorAll('img.priority').forEach(img => {
+    (img as HTMLImageElement).fetchPriority = 'high';
   });
 
-  try {
-    longTaskObserver.observe({ entryTypes: ["longtask"] });
-    lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
-  } catch (e) {
-    console.warn("PerformanceObserver for long tasks or LCP not supported");
-  }
-
+  // Return cleanup function
   return () => {
-    longTaskObserver.disconnect();
-    lcpObserver.disconnect();
+    observer.disconnect();
   };
 };
 
 /**
- * Optimizes animations by checking if the element is in the viewport and using requestAnimationFrame.
- * @param animationCallback - Animation function to run.
- * @param element - DOM element to check for visibility.
- * @returns Animation ID to cancel the animation if needed.
+ * Optimize network requests with connection-aware adjustments
+ * @returns {Function} Cleanup function
  */
-export const optimizedAnimation = (
-  animationCallback: (timestamp: number) => void,
-  element?: HTMLElement
-): number => {
-  let animationId: number;
-
-  const animate = (timestamp: number) => {
-    if (!element || isElementInViewport(element)) {
-      animationCallback(timestamp);
+const optimizeNetworkRequests = () => {
+  const connectionHandler = () => {
+    // Safely check for navigator.connection
+    const connection = 'connection' in navigator ? 
+      (navigator as any).connection : null;
+    
+    if (connection) {
+      // Adjust content quality based on connection type
+      if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
+        document.body.classList.add('low-data-mode');
+        
+        // Use lower quality images
+        document.querySelectorAll('img[data-low-src]').forEach(img => {
+          const image = img as HTMLImageElement;
+          if (image.dataset.lowSrc) {
+            image.src = image.dataset.lowSrc;
+          }
+        });
+      }
     }
-
-    animationId = requestAnimationFrame(animate);
   };
 
-  animationId = requestAnimationFrame(animate);
-  return animationId;
+  // Run immediately
+  connectionHandler();
+  
+  // Add listener for connection changes if available
+  if ('connection' in navigator) {
+    const connection = (navigator as any).connection;
+    connection.addEventListener('change', connectionHandler);
+    
+    // Return cleanup function
+    return () => {
+      connection.removeEventListener('change', connectionHandler);
+    };
+  }
+  
+  return () => {}; // No-op if connection API not available
 };
 
 /**
- * Checks if an element is currently visible in the viewport to trigger animations or other actions.
- * @param element - Element to check.
- * @returns Boolean indicating if element is in viewport.
+ * Optimize scroll performance with passive listeners and throttling
+ * @returns {Function} Cleanup function
  */
-export const isElementInViewport = (element: HTMLElement): boolean => {
-  const rect = element.getBoundingClientRect();
-  return (
-    rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.left <= (window.innerWidth || document.documentElement.clientWidth) &&
-    rect.bottom >= 0 &&
-    rect.right >= 0
-  );
-};
-
-/**
- * Initializes all performance optimizations in a batch for a smoother user experience.
- * This includes lazy loading, performance monitoring, and deferred operations.
- * @returns Cleanup function to remove all optimizations.
- */
-export const initPerformanceOptimizations = (): (() => void) => {
-  const cleanupLazyLoading = setupLazyLoading();
-  const cleanupPerformanceMonitoring = initPerformanceMonitoring();
-
-  // Add additional optimizations or non-critical tasks here
-  deferNonCritical(() => {
-    console.log("Deferred non-critical operations executed");
-    // Example: Load external resources or secondary features
+const optimizeScrollPerformance = () => {
+  let ticking = false;
+  const scrollElements: HTMLElement[] = [];
+  
+  // Find all elements that react to scroll
+  document.querySelectorAll('[data-scroll-effect]').forEach(el => {
+    scrollElements.push(el as HTMLElement);
   });
 
-  return () => {
-    cleanupLazyLoading();
-    cleanupPerformanceMonitoring();
-    console.log("All performance optimizations cleaned up.");
-  };
-};
-
-/**
- * Improved network performance with adaptive image resolution
- * Loads lower resolution images based on connection type and screen size
- * @param targetSelector - CSS selector for responsive images
- * @param smallResolutionSize - Max width for small resolution
- */
-export const setupAdaptiveImages = (
-  targetSelector = "img[data-srcset]",
-  smallResolutionSize = 600
-): (() => void) => {
-  const images = document.querySelectorAll(targetSelector);
-
-  const isLowBandwidth =
-    navigator.connection?.effectiveType === "2g" ||
-    navigator.connection?.effectiveType === "3g";
-  const isSmallScreen = window.innerWidth <= smallResolutionSize;
-
-  images.forEach((img: HTMLImageElement) => {
-    const srcset = img.dataset.srcset;
-    if (srcset) {
-      const resolutions = srcset
-        .split(",")
-        .map((resolution) => resolution.trim());
-      const bestResolution = resolutions.find((res) => {
-        const [src, width] = res.split(" ");
-        return isLowBandwidth
-          ? parseInt(width) <= 600
-          : isSmallScreen
-          ? parseInt(width) <= 800
-          : true;
+  const scrollHandler = () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        
+        // Apply effects to elements based on scroll position
+        scrollElements.forEach(el => {
+          const effect = el.dataset.scrollEffect;
+          const offsetTop = el.offsetTop;
+          const viewportHeight = window.innerHeight;
+          
+          if (effect === 'parallax') {
+            const speed = parseFloat(el.dataset.parallaxSpeed || '0.5');
+            const yPos = -(scrollY * speed);
+            el.style.transform = `translate3d(0, ${yPos}px, 0)`;
+          }
+          
+          if (effect === 'fade-in') {
+            if (scrollY + viewportHeight > offsetTop) {
+              el.classList.add('visible');
+            }
+          }
+        });
+        
+        ticking = false;
       });
-
-      if (bestResolution) {
-        img.srcset = bestResolution.split(" ")[0];
-      }
+      
+      ticking = true;
     }
-  });
+  };
 
-  return () => {};
+  // Add passive scroll listener for better performance
+  window.addEventListener('scroll', scrollHandler, { passive: true });
+  
+  // Return cleanup function
+  return () => {
+    window.removeEventListener('scroll', scrollHandler);
+  };
 };
 
 /**
- * Preloads important fonts or assets to optimize rendering performance.
- * @param fontUrl - URL to the font file.
- * @param fontFamily - Font family name.
- * @param fontWeight - Optional font weight (default is "normal").
+ * Monitor memory usage and optimize DOM when necessary
+ * @returns {Function} Cleanup function
  */
-export const preloadFont = (
-  fontUrl: string,
-  fontFamily: string,
-  fontWeight: string = "normal"
-): void => {
-  const fontFace = new FontFace(fontFamily, `url(${fontUrl})`, {
-    weight: fontWeight,
-  });
-  document.fonts.add(fontFace);
-  fontFace
-    .load()
-    .then(() => {
-      console.log(`${fontFamily} font preloaded successfully.`);
-    })
-    .catch(() => {
-      console.warn(`Failed to preload ${fontFamily} font.`);
-    });
-};
-
-// Function to optimize network connection if available
-const optimizeNetworkConnection = (): void => {
-  // Check if the Navigator API and connection property are available
-  const nav = navigator as Navigator & { 
-    connection?: {
-      saveData: boolean;
-      effectiveType: string;
+const monitorMemoryUsage = () => {
+  const MEMORY_CHECK_INTERVAL = 30000; // 30 seconds
+  
+  const checkMemory = () => {
+    // Use performance memory API if available (Chrome only)
+    const performance = window.performance as any;
+    if (performance && performance.memory) {
+      const { usedJSHeapSize, jsHeapSizeLimit } = performance.memory;
+      const memoryUsageRatio = usedJSHeapSize / jsHeapSizeLimit;
+      
+      // If memory usage is high
+      if (memoryUsageRatio > 0.7) {
+        console.warn('High memory usage detected. Optimizing...');
+        
+        // Remove offscreen elements from DOM temporarily
+        purgeOffscreenElements();
+      }
     }
   };
   
-  if (nav.connection) {
-    // Log network connection information for debugging
-    console.info(`Network Connection: ${nav.connection.effectiveType}`);
-    console.info(`Data Saver Mode: ${nav.connection.saveData ? 'On' : 'Off'}`);
-  }
+  const intervalId = setInterval(checkMemory, MEMORY_CHECK_INTERVAL);
+  
+  // Return cleanup function
+  return () => {
+    clearInterval(intervalId);
+  };
 };
+
+/**
+ * Temporarily remove offscreen elements to reduce memory usage
+ */
+const purgeOffscreenElements = () => {
+  const viewport = {
+    top: window.scrollY,
+    bottom: window.scrollY + window.innerHeight,
+    buffer: 1000, // 1000px buffer zone
+  };
+  
+  // Find elements that can be purged
+  document.querySelectorAll('[data-purgeable]').forEach(el => {
+    const element = el as HTMLElement;
+    const rect = element.getBoundingClientRect();
+    const elemTop = rect.top + window.scrollY;
+    const elemBottom = rect.bottom + window.scrollY;
+    
+    // If element is far from viewport
+    if (elemBottom < viewport.top - viewport.buffer || 
+        elemTop > viewport.bottom + viewport.buffer) {
+      
+      // Store original content and replace with placeholder
+      if (!element.dataset.purged) {
+        element.dataset.purgedContent = element.innerHTML;
+        element.dataset.purged = 'true';
+        element.innerHTML = '';
+        element.style.minHeight = `${rect.height}px`;
+      }
+    } else {
+      // Restore content if element is near viewport
+      if (element.dataset.purged) {
+        if (element.dataset.purgedContent) {
+          element.innerHTML = element.dataset.purgedContent;
+        }
+        element.removeAttribute('data-purged');
+        element.removeAttribute('data-purged-content');
+        element.style.minHeight = '';
+      }
+    }
+  });
+};
+
+/**
+ * Custom hook to track component render count during development
+ * @param {string} componentName - Name of the component to track
+ * @returns {void}
+ */
+export const useRenderCount = (componentName: string): void => {
+  const [renderCount, setRenderCount] = useState(0);
+  
+  useEffect(() => {
+    setRenderCount(prev => prev + 1);
+  });
+  
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`${componentName} render count: ${renderCount}`);
+    }
+  }, [renderCount, componentName]);
+};
+
+/**
+ * Custom hook to defer expensive calculations until after paint
+ * @param {Function} callback - The expensive calculation to perform
+ * @param {Array<any>} dependencies - Dependencies array for the calculation
+ * @returns {any} The result of the calculation
+ */
+export const useDeferredCalculation = <T>(callback: () => T, dependencies: Array<any>): T | null => {
+  const [result, setResult] = useState<T | null>(null);
+  
+  useEffect(() => {
+    // Use requestIdleCallback if available, otherwise use setTimeout
+    const executeInIdle = window.requestIdleCallback || 
+      ((cb) => setTimeout(cb, 1));
+    
+    const handle = executeInIdle(() => {
+      const calculationResult = callback();
+      setResult(calculationResult);
+    });
+    
+    return () => {
+      if (window.requestIdleCallback) {
+        window.cancelIdleCallback(handle as any);
+      } else {
+        clearTimeout(handle);
+      }
+    };
+  }, dependencies); // eslint-disable-line react-hooks/exhaustive-deps
+  
+  return result;
+};
+
+/**
+ * Custom hook to throttle expensive rendering operations
+ * @param {Function} value - The value or function that might change rapidly
+ * @param {number} limit - Throttle limit in milliseconds
+ * @returns {any} Throttled value
+ */
+export const useThrottledValue = <T>(value: T, limit: number): T => {
+  const [throttledValue, setThrottledValue] = useState<T>(value);
+  const lastUpdate = useRef<number>(0);
+  const timeoutRef = useRef<number | null>(null);
+  
+  useEffect(() => {
+    const now = Date.now();
+    const timeUntilUpdate = lastUpdate.current + limit - now;
+    
+    if (timeUntilUpdate <= 0) {
+      // Update immediately if enough time has passed
+      lastUpdate.current = now;
+      setThrottledValue(value);
+    } else if (timeoutRef.current === null) {
+      // Schedule update if not already scheduled
+      timeoutRef.current = window.setTimeout(() => {
+        lastUpdate.current = Date.now();
+        setThrottledValue(value);
+        timeoutRef.current = null;
+      }, timeUntilUpdate);
+    }
+    
+    // Clean up timeout
+    return () => {
+      if (timeoutRef.current !== null) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+  }, [value, limit]);
+  
+  return throttledValue;
+};
+
+// Missing import/declaration for useRef
+import { useRef } from 'react';
