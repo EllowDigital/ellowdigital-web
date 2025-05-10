@@ -1,5 +1,7 @@
-import { Mail, Phone, Instagram, Github } from "lucide-react";
+
+import { Mail, Phone, Instagram, Github, Shield, FileText } from "lucide-react";
 import Logo from "./Logo";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -117,13 +119,13 @@ const Footer = () => {
         <div className="text-brand-yellow font-semibold">
           Making Digital Simple.
         </div>
-        <div className="flex gap-3 mt-2 md:mt-0">
-          <a href="#" className="hover:text-brand-yellow/90 text-xs sm:text-sm">
-            Privacy Policy
-          </a>
-          <a href="#" className="hover:text-brand-yellow/90 text-xs sm:text-sm">
-            Terms of Service
-          </a>
+        <div className="flex gap-4 mt-2 md:mt-0">
+          <Link to="/privacy-policy" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
+            <Shield className="w-3 h-3" /> Privacy Policy
+          </Link>
+          <Link to="/terms-of-service" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
+            <FileText className="w-3 h-3" /> Terms of Service
+          </Link>
         </div>
       </div>
     </footer>
