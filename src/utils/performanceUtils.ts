@@ -228,3 +228,20 @@ export const preloadFont = (
       console.warn(`Failed to preload ${fontFamily} font.`);
     });
 };
+
+// Function to optimize network connection if available
+const optimizeNetworkConnection = (): void => {
+  // Check if the Navigator API and connection property are available
+  const nav = navigator as Navigator & { 
+    connection?: {
+      saveData: boolean;
+      effectiveType: string;
+    }
+  };
+  
+  if (nav.connection) {
+    // Log network connection information for debugging
+    console.info(`Network Connection: ${nav.connection.effectiveType}`);
+    console.info(`Data Saver Mode: ${nav.connection.saveData ? 'On' : 'Off'}`);
+  }
+};
