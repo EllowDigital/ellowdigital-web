@@ -40,7 +40,9 @@ export * from './table';
 export * from './tabs';
 export * from './textarea';
 export * from './toast';
-export * from './toaster';
+// Fix for duplicate Toaster export
+// export * from './toaster';
+export { Toaster as ToastComponent } from './toaster';
 export * from './toggle';
 export * from './toggle-group';
 export * from './tooltip';
