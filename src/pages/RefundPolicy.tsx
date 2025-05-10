@@ -2,7 +2,7 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { FileTextMinus, FileText } from "lucide-react";
+import { FileMinus, FileText } from "lucide-react";
 
 const RefundPolicy = () => {
   return (
@@ -11,7 +11,7 @@ const RefundPolicy = () => {
       <main className="flex-grow py-20 lg:py-28">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <FileTextMinus className="w-12 h-12 mx-auto text-brand-yellow mb-4" />
+            <FileMinus className="w-12 h-12 mx-auto text-brand-yellow mb-4" />
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-brand-yellow to-brand-gold bg-clip-text text-transparent">
               Refund & Cancellation Policy
             </h1>
