@@ -97,10 +97,10 @@ const CookiesPolicy = () => {
               </p>
               <h3 className="text-xl font-semibold mb-3 mt-6">How to manage cookies in popular browsers:</h3>
               <ul className="list-disc pl-6 mb-4">
-                <li><strong>Google Chrome:</strong> Settings > Privacy and Security > Cookies and other site data</li>
-                <li><strong>Microsoft Edge:</strong> Settings > Cookies and Site Permissions > Manage and delete cookies and site data</li>
-                <li><strong>Safari:</strong> Preferences > Privacy > Cookies and website data</li>
-                <li><strong>Mozilla Firefox:</strong> Options > Privacy & Security > Cookies and Site Data</li>
+                <li><strong>Google Chrome:</strong> Settings {'->'} Privacy and Security {'->'} Cookies and other site data</li>
+                <li><strong>Microsoft Edge:</strong> Settings {'->'} Cookies and Site Permissions {'->'} Manage and delete cookies and site data</li>
+                <li><strong>Safari:</strong> Preferences {'->'} Privacy {'->'} Cookies and website data</li>
+                <li><strong>Mozilla Firefox:</strong> Options {'->'} Privacy & Security {'->'} Cookies and Site Data</li>
               </ul>
             </section>
 

@@ -1,5 +1,5 @@
 
-import { Mail, Phone, Instagram, Github, Shield, FileText, Users, Cookie, FileTextMinus } from "lucide-react";
+import { Mail, Phone, Instagram, Github, Shield, FileText, Users, Cookie, FileX } from "lucide-react";
 import Logo from "./Logo";
 import { Link } from "react-router-dom";
 
@@ -140,7 +140,7 @@ const Footer = () => {
             <FileText className="w-3 h-3" /> Terms of Service
           </Link>
           <Link to="/refund-policy" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
-            <FileTextMinus className="w-3 h-3" /> Refund Policy
+            <FileX className="w-3 h-3" /> Refund Policy
           </Link>
           <Link to="/cookies-policy" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
             <Cookie className="w-3 h-3" /> Cookies Policy
