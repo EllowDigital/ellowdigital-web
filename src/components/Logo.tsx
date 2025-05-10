@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 
 const LOGO_IMG_DARK = "/logo.webp";
@@ -15,7 +16,10 @@ const Logo = () => {
   const logoSrc = LOGO_IMG_DARK;
 
   return (
-    <a href="/" aria-label="Go to homepage" className="block outline-none focus:ring-2 focus:ring-brand-yellow rounded transition-shadow">
+    <div
+      aria-label="Company logo"
+      className="block outline-none focus:ring-2 focus:ring-brand-yellow rounded transition-shadow"
+    >
       <div
         className={`inline-flex items-center select-none overflow-hidden ${mounted ? "animate-fade-in" : "opacity-0"}`}
         style={{ minHeight: 48 }}
@@ -39,7 +43,7 @@ const Logo = () => {
           </span>
         )}
       </div>
-    </a>
+    </div>
   );
 };
 

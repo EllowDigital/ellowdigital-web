@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import Logo from "./Logo";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -147,12 +147,12 @@ const Navbar = () => {
           }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
-          <a href="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <Logo />
             <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-brand-yellow to-brand-gold text-transparent bg-clip-text">
               EllowDigital
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex gap-4 xl:gap-6 items-center">
@@ -178,19 +178,15 @@ const Navbar = () => {
                 />
               </button>
             ))}
-            <a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick("#contact");
-              }}
+            <button
+              onClick={() => handleNavClick("#contact")}
               className="px-5 py-2 bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-full shadow hover:scale-105 transition-transform"
             >
               <span className="flex items-center gap-1">
                 Get Started
                 <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform" />
               </span>
-            </a>
+            </button>
           </div>
 
           {/* Mobile Toggle Button */}
