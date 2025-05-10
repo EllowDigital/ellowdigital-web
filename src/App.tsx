@@ -13,6 +13,9 @@ import TeamPage from "./pages/TeamPage";
 import RefundPolicy from "./pages/RefundPolicy";
 import CookiesPolicy from "./pages/CookiesPolicy";
 import { initPerformanceOptimizations } from "@/utils/performanceUtils";
+import { initPerformanceMonitoring } from "@/utils/performanceMonitoring";
+import { SkipToContent } from "@/components/accessibility/SkipToContent";
+import { AxiosInterceptor } from "@/utils/axiosInterceptor";
 
 // Create and configure the React Query client with optimized settings
 const queryClient = new QueryClient({
@@ -28,8 +31,9 @@ const queryClient = new QueryClient({
 
 const App = () => {
   useEffect(() => {
-    // Initialize performance optimizations on mount
+    // Initialize performance optimizations and monitoring on mount
     const cleanupPerformance = initPerformanceOptimizations();
+    initPerformanceMonitoring();
 
     // Cleanup performance optimizations on unmount
     return () => cleanupPerformance();
@@ -39,6 +43,12 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <Router>
         <TooltipProvider>
+          {/* Accessibility skip link */}
+          <SkipToContent />
+
+          {/* API request interceptor */}
+          <AxiosInterceptor />
+
           {/* Toaster notifications */}
           <Toaster />
           <Sonner />
