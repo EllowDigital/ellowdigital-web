@@ -29,12 +29,12 @@ const trackWebVitals = () => {
 };
 
 // Report metrics to analytics
-const sendToAnalytics = (metric) => {
+const sendToAnalytics = (metric: any) => {
   // Replace with your actual analytics service
   console.log(metric);
 
   // Example: Send to analytics service
-  if (window.gtag) {
+  if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', metric.name, {
       value: Math.round(metric.value * 1000) / 1000,
       metric_id: metric.id,
@@ -59,7 +59,7 @@ const setupErrorTracking = () => {
     });
 
     // Example: Send to error tracking service
-    if (window.gtag) {
+    if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'javascript_error', {
         error_message: message,
         error_source: source,
@@ -83,7 +83,7 @@ const setupErrorTracking = () => {
     console.error('Unhandled rejection:', event.reason);
     
     // Example: Send to error tracking service
-    if (window.gtag) {
+    if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'unhandled_promise_rejection', {
         error_message: event.reason?.message || 'Unknown promise rejection',
         error_stack: event.reason?.stack,

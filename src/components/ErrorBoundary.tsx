@@ -31,7 +31,7 @@ export class ErrorBoundary extends Component<Props, State> {
     console.error("Uncaught error:", error, errorInfo);
     
     // Report to analytics if available
-    if (window.gtag) {
+    if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', 'error', {
         error_message: error.message,
         error_name: error.name,
