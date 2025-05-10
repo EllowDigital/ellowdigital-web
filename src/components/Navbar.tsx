@@ -1,4 +1,6 @@
+
 import { useState, useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 import { ChevronDown } from "lucide-react";
 
@@ -17,6 +19,9 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState("");
   const [scrollProgress, setScrollProgress] = useState(0);
   const navRef = useRef<HTMLElement>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const updateScroll = () => {
@@ -25,15 +30,17 @@ const Navbar = () => {
         (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
       );
 
-      const sections = document.querySelectorAll("section[id]");
-      const offset = window.scrollY + 100;
-      for (const section of sections) {
-        const top = section.offsetTop;
-        const height = section.offsetHeight;
-        const id = section.getAttribute("id") || "";
-        if (offset >= top && offset < top + height) {
-          setActiveSection(id);
-          break;
+      if (isHomePage) {
+        const sections = document.querySelectorAll("section[id]");
+        const offset = window.scrollY + 100;
+        for (const section of sections) {
+          const top = (section as HTMLElement).offsetTop;
+          const height = (section as HTMLElement).offsetHeight;
+          const id = section.getAttribute("id") || "";
+          if (offset >= top && offset < top + height) {
+            setActiveSection(id);
+            break;
+          }
         }
       }
     };
@@ -41,7 +48,7 @@ const Navbar = () => {
     window.addEventListener("scroll", updateScroll, { passive: true });
     updateScroll();
     return () => window.removeEventListener("scroll", updateScroll);
-  }, []);
+  }, [isHomePage]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -54,8 +61,28 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMobileOpen]);
 
+  const handleNavClick = (href: string) => {
+    if (isHomePage) {
+      // If on home page, scroll to the section
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // If on another page, navigate to home and then to section
+      navigate("/");
+      // Add a small delay to allow the home page to load before scrolling
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    }
+    setIsMobileOpen(false);
+  };
+
   const toggleMobileMenu = () => setIsMobileOpen((prev) => !prev);
-  const closeMobileMenu = () => setIsMobileOpen(false);
 
   return (
     <>
@@ -83,26 +110,28 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div className="hidden lg:flex gap-6 items-center">
             {NAV_LINKS.map((link) => (
-              <a
+              <button
                 key={link.href}
-                href={link.href}
-                onClick={closeMobileMenu}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors ${activeSection === link.href.substring(1)
+                onClick={() => handleNavClick(link.href)}
+                className={`relative px-4 py-2 text-sm font-medium transition-colors ${isHomePage && activeSection === link.href.substring(1)
                   ? "text-brand-yellow"
                   : "text-white hover:text-brand-yellow"
                   }`}
               >
                 {link.name}
                 <span
-                  className={`absolute left-0 bottom-0 h-0.5 bg-brand-yellow transition-all ${activeSection === link.href.substring(1) ? "w-full" : "w-0 group-hover:w-full"
+                  className={`absolute left-0 bottom-0 h-0.5 bg-brand-yellow transition-all ${isHomePage && activeSection === link.href.substring(1) ? "w-full" : "w-0 group-hover:w-full"
                     }`}
                 />
-              </a>
+              </button>
             ))}
             <a
               href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick("#contact");
+              }}
               className="px-6 py-2.5 bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-full shadow hover:scale-105 transition-transform"
-              onClick={closeMobileMenu}
             >
               <span className="flex items-center gap-1">
                 Get Started
@@ -138,25 +167,23 @@ const Navbar = () => {
         {isMobileOpen && (
           <div className="lg:hidden bg-black/95 border-t border-brand-yellow/10 py-4 px-2 space-y-2">
             {NAV_LINKS.map((link) => (
-              <a
+              <button
                 key={link.href}
-                href={link.href}
-                onClick={closeMobileMenu}
-                className={`block text-center py-3 rounded-lg text-base font-medium transition-all ${activeSection === link.href.substring(1)
+                onClick={() => handleNavClick(link.href)}
+                className={`block w-full text-center py-3 rounded-lg text-base font-medium transition-all ${isHomePage && activeSection === link.href.substring(1)
                   ? "bg-brand-yellow/10 text-brand-yellow"
                   : "text-white hover:bg-brand-yellow/5 hover:text-brand-yellow"
                   }`}
               >
                 {link.name}
-              </a>
+              </button>
             ))}
-            <a
-              href="#contact"
+            <button
+              onClick={() => handleNavClick("#contact")}
               className="block w-full text-center py-3 mt-2 bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-lg shadow hover:scale-[1.02] transition-transform"
-              onClick={closeMobileMenu}
             >
               Get Started
-            </a>
+            </button>
           </div>
         )}
       </nav>
