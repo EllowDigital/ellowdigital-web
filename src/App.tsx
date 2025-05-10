@@ -10,6 +10,8 @@ import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import TeamPage from "./pages/TeamPage";
+import RefundPolicy from "./pages/RefundPolicy";
+import CookiesPolicy from "./pages/CookiesPolicy";
 import { initPerformanceOptimizations } from "@/utils/performanceUtils";
 
 // Create and configure the React Query client with optimized settings
@@ -46,6 +48,8 @@ const App = () => {
             <Route path="/" element={<Index />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
+            <Route path="/cookies-policy" element={<CookiesPolicy />} />
             <Route path="/team" element={<TeamPage />} />
             {/* Add additional custom routes here */}
             <Route path="*" element={<NotFound />} />

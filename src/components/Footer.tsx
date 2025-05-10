@@ -1,5 +1,5 @@
 
-import { Mail, Phone, Instagram, Github, Shield, FileText, Users } from "lucide-react";
+import { Mail, Phone, Instagram, Github, Shield, FileText, Users, Cookie, FileTextMinus } from "lucide-react";
 import Logo from "./Logo";
 import { Link } from "react-router-dom";
 
@@ -129,7 +129,7 @@ const Footer = () => {
         <div className="text-brand-yellow font-semibold">
           Making Digital Simple.
         </div>
-        <div className="flex gap-4 mt-2 md:mt-0">
+        <div className="flex flex-wrap gap-3 md:gap-4 mt-2 md:mt-0 justify-center">
           <Link to="/team" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
             <Users className="w-3 h-3" /> Our Team
           </Link>
@@ -138,6 +138,12 @@ const Footer = () => {
           </Link>
           <Link to="/terms-of-service" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
             <FileText className="w-3 h-3" /> Terms of Service
+          </Link>
+          <Link to="/refund-policy" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
+            <FileTextMinus className="w-3 h-3" /> Refund Policy
+          </Link>
+          <Link to="/cookies-policy" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
+            <Cookie className="w-3 h-3" /> Cookies Policy
           </Link>
         </div>
       </div>
