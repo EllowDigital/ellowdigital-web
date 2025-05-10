@@ -64,6 +64,8 @@ export default defineConfig(({ mode }) => {
       alias: {
         "@": path.resolve(__dirname, "./src"),
       },
+      // Explicitly tell Vite how to handle directories
+      mainFields: ['module', 'jsnext:main', 'jsnext'],
     },
     build: {
       // Generate sourcemaps for production builds
@@ -75,8 +77,8 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks: {
             react: ['react', 'react-dom', 'react-router-dom'],
-            ui: ['@/components/ui'],
-            vendor: ['@tanstack/react-query', 'lucide-react'],
+            ui: ['@/components/ui/index'],
+            vendor: ['@tanstack/react-query', 'lucide-react', 'axios'],
           },
         },
       },
