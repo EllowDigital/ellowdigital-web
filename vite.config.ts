@@ -9,14 +9,12 @@ export default defineConfig(({ mode }) => {
 
   return {
     server: {
-      host: "::", 
-      port: 8080, 
+      host: "::",
+      port: 8080,
       strictPort: true,
+      allowedHosts: ["da7405f0-30e5-42c0-84c0-542948da552d.lovableproject.com"],
     },
-    plugins: [
-      react(),
-      isDevelopment && componentTagger(), 
-    ].filter(Boolean),
+    plugins: [react(), isDevelopment && componentTagger()].filter(Boolean),
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
