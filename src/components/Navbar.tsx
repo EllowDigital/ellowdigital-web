@@ -91,10 +91,12 @@ const Navbar = () => {
 
   // Handle navigation with smooth scroll
   const handleNavClick = (href: string) => {
+    // Always close the mobile menu first
+    setIsMobileOpen(false);
+
     if (href.startsWith("/")) {
       // If it's an internal page link (not a hash)
       navigate(href);
-      setIsMobileOpen(false);
       return;
     }
 
@@ -102,7 +104,10 @@ const Navbar = () => {
       // If on home page, scroll to the section
       const element = document.querySelector(href);
       if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+        // Add a small delay to ensure mobile menu closing animation completes
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
       }
     } else {
       // If on another page, navigate to home and then to section
@@ -113,9 +118,8 @@ const Navbar = () => {
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
         }
-      }, 100);
+      }, 300);
     }
-    setIsMobileOpen(false);
   };
 
   // Toggle mobile menu
