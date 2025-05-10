@@ -1,11 +1,10 @@
-
 /**
  * Performance optimization utilities for React applications
  * This module provides functions to optimize the performance of React applications
  * by implementing best practices for rendering, network requests, and memory management.
  */
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 
 /**
  * Initialize all performance optimizations
@@ -24,6 +23,40 @@ export const initPerformanceOptimizations = () => {
   return () => {
     cleanupFns.forEach(cleanup => cleanup());
   };
+};
+
+/**
+ * Check if an element is currently in the viewport
+ * @param {HTMLElement} element - The DOM element to check
+ * @returns {boolean} - True if the element is in the viewport
+ */
+export const isElementInViewport = (element: HTMLElement | null): boolean => {
+  if (!element) return false;
+  
+  const rect = element.getBoundingClientRect();
+  
+  return (
+    rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.bottom >= 0 &&
+    rect.left <= (window.innerWidth || document.documentElement.clientWidth) &&
+    rect.right >= 0
+  );
+};
+
+/**
+ * Batch DOM operations for better performance
+ * @param {Function} checkFn - Function that returns a value to be checked
+ * @param {Function} callback - Callback to be executed with the check result
+ */
+export const batchDomOperations = <T>(
+  checkFn: () => T,
+  callback: (result: T) => void
+): void => {
+  // Use requestAnimationFrame to batch operations in the next frame
+  requestAnimationFrame(() => {
+    const result = checkFn();
+    callback(result);
+  });
 };
 
 /**
