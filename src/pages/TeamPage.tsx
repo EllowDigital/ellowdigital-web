@@ -166,7 +166,12 @@ const TeamPage = () => {
               We're always looking for talented individuals to join our growing team. If you're passionate about creating amazing digital experiences, we'd love to hear from you.
             </p>
             <a
-              href="mailto:ellowdigitals@gmail.com"
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                // Navigate to home page and scroll to contact section
+                window.location.href = '/#contact';
+              }}
               className="px-6 py-2.5 bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-full shadow hover:scale-105 transition-transform inline-block"
             >
               Get in Touch

@@ -1,3 +1,4 @@
+
 import { CheckCircle } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -34,6 +35,10 @@ const offers = [
 ];
 
 const FeaturedOffers = () => {
+  const scrollToContact = () => {
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section id="offers" className="py-24 bg-muted/30">
       <div className="section-container">
@@ -75,8 +80,11 @@ const FeaturedOffers = () => {
               </CardContent>
               
               <CardFooter>
-                <Button asChild className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-semibold py-2 px-4 rounded-md transition-colors">
-                  <a href="#contact">Get Started</a>
+                <Button 
+                  onClick={scrollToContact}
+                  className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-semibold py-2 px-4 rounded-md transition-colors"
+                >
+                  Get Started
                 </Button>
               </CardFooter>
             </Card>

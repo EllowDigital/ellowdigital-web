@@ -1,6 +1,8 @@
+
 import { User, Mail, Briefcase, Award } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const FounderSection = () => {
   return (
@@ -63,7 +65,10 @@ const FounderSection = () => {
                   </p>
                 </div>
 
-                <Button className="mt-4 bg-brand-yellow text-black hover:bg-brand-gold w-full md:w-auto rounded-xl py-3 text-lg font-semibold shadow-lg">
+                <Button 
+                  className="mt-4 bg-brand-yellow text-black hover:bg-brand-gold w-full md:w-auto rounded-xl py-3 text-lg font-semibold shadow-lg"
+                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                >
                   Connect With Me
                 </Button>
               </div>
