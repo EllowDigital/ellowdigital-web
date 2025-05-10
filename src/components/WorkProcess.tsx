@@ -1,6 +1,8 @@
+
+import { useEffect, useRef } from "react";
+import { motion, useAnimation, useInView } from "framer-motion";
 import { Users, Activity, Eye, Check } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { useEffect, useRef } from "react";
 
 const processes = [
   {
@@ -26,74 +28,120 @@ const processes = [
 ];
 
 const WorkProcess = () => {
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const dividerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(titleRef, { once: true, amount: 0.3 });
+  const controls = useAnimation();
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
+    if (isInView) {
+      controls.start("visible");
+    }
+  }, [isInView, controls]);
 
-    // Observe title, divider, and cards
-    [titleRef.current, dividerRef.current, ...cardsRef.current].forEach((el) => {
-      if (el) observer.observe(el);
-    });
+  // Animation variants
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
 
-    return () => {
-      // Clean up observers
-      [titleRef.current, dividerRef.current, ...cardsRef.current].forEach((el) => {
-        if (el) observer.unobserve(el);
-      });
-    };
-  }, []);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1]
+      }
+    }
+  };
+
+  const titleVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
 
   return (
-    <section id="how-we-work" className="section-container py-24 relative overflow-hidden snap-start">
-      {/* Blob background */}
-      <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-brand-yellow/5 rounded-full blur-3xl morph-shape"></div>
+    <section id="how-we-work" className="section-container py-16 sm:py-20 md:py-24 relative overflow-hidden snap-start">
+      {/* Adaptive blob background */}
+      <div className="absolute top-1/3 left-1/3 w-64 sm:w-96 h-64 sm:h-96 bg-brand-yellow/5 rounded-full blur-3xl morph-shape"></div>
 
       <div className="max-w-6xl mx-auto">
-        <h2 ref={titleRef} className="section-title reveal-animate">How We Work</h2>
-        <div ref={dividerRef} className="animated-divider reveal-animate mb-16"></div>
+        <motion.div 
+          initial="hidden"
+          animate={controls}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.2
+              }
+            }
+          }}
+        >
+          <motion.h2 
+            ref={titleRef} 
+            className="section-title"
+            variants={titleVariants}
+          >
+            How We Work
+          </motion.h2>
+          
+          <motion.div 
+            className="h-1 w-24 mx-auto bg-gradient-to-r from-brand-gold to-brand-yellow rounded-full mb-12 sm:mb-16"
+            variants={titleVariants}
+          ></motion.div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          animate={controls}
+        >
           {processes.map((process, index) => (
-            <div
+            <motion.div
               key={index}
               className="relative"
-              ref={(el) => el && (cardsRef.current[index] = el)}
+              variants={itemVariants}
             >
               <Card
-                className="h-full neo-effect card-3d tilt-effect transition-all duration-300 border border-border reveal-animate opacity-0 transform translate-y-20"
-                style={{ transitionDelay: `${index * 100}ms` }}
+                className="h-full neo-effect transition-all duration-300 border border-border hover:border-brand-yellow/30"
               >
-                <CardContent className="p-6 text-center">
-                  <div className="mb-6 relative">
+                <CardContent className="p-5 sm:p-6 text-center">
+                  <div className="mb-5 sm:mb-6 relative">
                     <div className="absolute inset-0 bg-brand-yellow/10 rounded-full blur-xl"></div>
-                    <div className="relative z-10 w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-gradient-to-br from-brand-gold/20 to-brand-yellow/20 backdrop-blur-sm border border-brand-yellow/30">
-                      <process.icon className="w-8 h-8 text-brand-yellow" />
+                    <div className="relative z-10 w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-full flex items-center justify-center bg-gradient-to-br from-brand-gold/20 to-brand-yellow/20 backdrop-blur-sm border border-brand-yellow/30">
+                      <process.icon className="w-7 h-7 text-brand-yellow" />
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3">{process.title}</h3>
-                  <p className="text-muted-foreground">{process.description}</p>
+                  <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">{process.title}</h3>
+                  <p className="text-muted-foreground text-sm sm:text-base">{process.description}</p>
                 </CardContent>
               </Card>
+              
+              {/* Connection dots - responsive hidden on mobile, only between cards */}
               {index < processes.length - 1 && (
-                <div className="hidden md:block absolute top-1/2 -right-3 -translate-y-1/2 z-10">
+                <div className="hidden lg:block absolute top-1/2 -right-3 -translate-y-1/2 z-10">
                   <div className="w-6 h-6 rounded-full bg-brand-yellow/10 backdrop-blur-sm flex items-center justify-center">
                     <div className="w-2 h-2 bg-brand-yellow rounded-full"></div>
                   </div>
                 </div>
               )}
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,3 +1,4 @@
+
 import {
   UserCheck,
   Zap,
@@ -8,8 +9,7 @@ import {
   Shield
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { init3DTiltEffect } from "@/utils/animationUtils";
-import { isElementInViewport, batchDomOperations } from "@/utils/performanceUtils";
+import { motion, useAnimation, useInView } from "framer-motion";
 
 const reasons = [
   {
@@ -52,105 +52,130 @@ const reasons = [
 
 const WhyChooseUs = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const tiltCardsRef = useRef<HTMLDivElement>(null);
-  const [activeCard, setActiveCard] = useState<number | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const controls = useAnimation();
+  
+  // Staggered animation setup
   useEffect(() => {
-    // Initialize 3D tilt effect for performance
-    const cleanupTiltEffect = init3DTiltEffect();
+    if (isInView) {
+      controls.start("visible");
+    }
+  }, [isInView, controls]);
 
-    // Scroll handler for visibility check
-    const handleScroll = () => {
-      if (sectionRef.current) {
-        batchDomOperations(
-          () => isElementInViewport(sectionRef.current),
-          (visible) => {
-            if (visible && !isVisible) {
-              setIsVisible(true);
-            }
-          }
-        );
+  // Animation variants
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.1
       }
-    };
+    }
+  };
 
-    // Initial visibility check
-    handleScroll();
-
-    // Attach scroll event listener
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    // Cleanup on component unmount
-    return () => {
-      cleanupTiltEffect();
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [isVisible]);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
 
   return (
-    <section ref={sectionRef} id="why-us" className="py-24 relative overflow-hidden">
-      {/* Background elements with depth and animation */}
-      <div className="absolute -z-10 top-1/4 right-1/4 w-96 h-96 bg-brand-yellow/10 rounded-full blur-3xl morph-shape opacity-80"></div>
-      <div className="absolute -z-10 bottom-1/3 left-1/4 w-80 h-80 bg-brand-gold/10 rounded-full blur-3xl morph-shape opacity-80" style={{ animationDelay: '5s' }}></div>
-      <div className="absolute -z-10 top-2/3 right-1/3 w-64 h-64 bg-white/5 rounded-full blur-3xl morph-shape opacity-60" style={{ animationDelay: '8s' }}></div>
+    <section ref={sectionRef} id="why-us" className="py-16 sm:py-20 md:py-24 relative overflow-hidden">
+      {/* Responsive background elements with depth and animation */}
+      <div className="absolute -z-10 top-1/4 right-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-brand-yellow/10 rounded-full blur-3xl morph-shape opacity-80"></div>
+      <div className="absolute -z-10 bottom-1/3 left-1/4 w-60 sm:w-80 h-60 sm:h-80 bg-brand-gold/10 rounded-full blur-3xl morph-shape opacity-80" style={{ animationDelay: '5s' }}></div>
+      <div className="absolute -z-10 top-2/3 right-1/3 w-48 sm:w-64 h-48 sm:h-64 bg-white/5 rounded-full blur-3xl morph-shape opacity-60" style={{ animationDelay: '8s' }}></div>
 
       <div className="section-container max-w-6xl mx-auto">
-        <h2 className="section-title text-4xl font-bold mb-3 reveal-animate" data-animation="fade-up">Why Choose EllowDigital?</h2>
-        <div className="animated-divider reveal-animate mb-4" data-animation="zoom-in"></div>
-        <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto mb-16 reveal-animate" data-animation="fade-up">
-          We pride ourselves on delivering exceptional value and building lasting relationships with our clients.
-        </p>
+        <motion.div
+          initial="hidden"
+          animate={controls}
+          variants={containerVariants}
+        >
+          <motion.h2 
+            className="section-title text-3xl sm:text-4xl font-bold mb-3"
+            variants={itemVariants}
+          >
+            Why Choose EllowDigital?
+          </motion.h2>
+          
+          <motion.div 
+            className="h-1 w-24 mx-auto bg-gradient-to-r from-brand-gold to-brand-yellow rounded-full mb-4"
+            variants={itemVariants}
+          ></motion.div>
+          
+          <motion.p 
+            className="text-center text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto mb-12 sm:mb-16"
+            variants={itemVariants}
+          >
+            We pride ourselves on delivering exceptional value and building lasting relationships with our clients.
+          </motion.p>
 
-        <div ref={tiltCardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {reasons.map((reason, index) => (
-            <div
-              key={index}
-              className="tilt-effect bg-card/80 backdrop-blur-sm p-8 rounded-xl border border-border/60 shadow-lg hover:shadow-xl transition-all duration-500 card-hover reveal-animate group"
-              data-animation="fade-up"
-              style={{ transitionDelay: `${index * 100}ms` }}
-              onMouseEnter={() => setActiveCard(index)}
-              onMouseLeave={() => setActiveCard(null)}
-            >
-              {/* 3D glare effect */}
-              <div className="glare"></div>
+          <motion.div 
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8"
+            variants={containerVariants}
+          >
+            {reasons.map((reason, index) => (
+              <motion.div
+                key={index}
+                className="bg-card/80 backdrop-blur-sm p-6 sm:p-8 rounded-xl border border-border/60 shadow-lg hover:shadow-xl transition-all duration-500 group h-full flex flex-col"
+                variants={itemVariants}
+                whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+              >
+                {/* Icon container with gradient background */}
+                <div className={`w-14 h-14 rounded-full bg-gradient-to-br ${reason.color} flex items-center justify-center mb-5 sm:mb-6 transform transition-all duration-300 group-hover:scale-110`}>
+                  <reason.icon className="h-6 w-6 text-brand-gold" />
+                </div>
 
-              {/* Icon container with gradient background */}
-              <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${reason.color} flex items-center justify-center mb-6 transform transition-all duration-300 group-hover:scale-110`}>
-                <reason.icon className="h-7 w-7 text-brand-gold" />
-              </div>
+                <h3 className="text-lg sm:text-xl font-bold mb-3 text-foreground group-hover:text-brand-yellow transition-colors duration-300">{reason.title}</h3>
+                <p className="text-muted-foreground text-sm sm:text-base group-hover:text-foreground/90 transition-colors duration-300 flex-grow">{reason.description}</p>
 
-              <h3 className="text-xl font-bold mb-3 text-foreground group-hover:text-brand-yellow transition-colors duration-300">{reason.title}</h3>
-              <p className="text-muted-foreground group-hover:text-foreground/90 transition-colors duration-300">{reason.description}</p>
+                {/* Animated underline */}
+                <div className="mt-4 h-0.5 w-0 bg-brand-yellow group-hover:w-12 transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
 
-              {/* Animated underline */}
-              <div className="mt-4 h-0.5 w-0 bg-brand-yellow group-hover:w-12 transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-            </div>
-          ))}
-        </div>
-
-        {/* Call to Action Section */}
-        <div className="mt-20 bg-gradient-to-r from-brand-gold/90 to-brand-yellow/90 rounded-2xl p-10 flex flex-col md:flex-row justify-between items-center gap-8 tilt-effect reveal-animate transform hover:scale-[1.01] transition-all duration-500 shadow-xl" style={{ perspective: "1000px" }} data-animation="fade-up">
-          <div className="glare"></div>
-          <div className="text-center md:text-left max-w-2xl">
-            <h3 className="text-3xl font-bold mb-4 text-black">Ready to elevate your digital presence?</h3>
-            <p className="mb-0 text-black/90 text-lg">
+        {/* Call to Action Section with responsive design */}
+        <motion.div 
+          className="mt-16 sm:mt-20 bg-gradient-to-r from-brand-gold/90 to-brand-yellow/90 rounded-2xl p-6 sm:p-10 flex flex-col md:flex-row justify-between items-center gap-6 sm:gap-8 shadow-xl"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 30 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          whileHover={{ scale: 1.01, transition: { duration: 0.3 } }}
+        >
+          <div className="text-center md:text-left">
+            <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-black">Ready to elevate your digital presence?</h3>
+            <p className="mb-0 text-black/90 text-base sm:text-lg">
               Let's collaborate to create something exceptional that elevates your brand and engages your audience.
             </p>
           </div>
-          <a
+          <motion.a
             href="#contact"
-            className="inline-block relative overflow-hidden bg-black text-brand-yellow font-medium py-4 px-8 rounded-lg text-lg shadow-lg hover:shadow-xl transition-all duration-300 group"
+            className="inline-block relative overflow-hidden bg-black text-brand-yellow font-medium py-3 px-6 sm:py-4 sm:px-8 rounded-lg text-base sm:text-lg shadow-lg group"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={(e) => {
+              e.preventDefault();
+              document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+            }}
           >
             <span className="relative z-10 flex items-center group-hover:translate-x-1 transition-transform">
               Let's Talk
-              <ArrowRight className="w-5 h-5 ml-2 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 opacity-0 group-hover:opacity-100 transition-all duration-300" />
             </span>
 
             {/* 3D glow effect on hover */}
             <span className="absolute inset-0 bg-gradient-to-r from-black to-black/90 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-105"></span>
             <span className="absolute -inset-1 bg-gradient-to-r from-brand-gold/20 to-brand-yellow/20 blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg"></span>
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
       </div>
     </section>
   );

@@ -72,15 +72,17 @@ export default defineConfig(({ mode }) => {
       sourcemap: false,
       // Minify output
       minify: 'terser',
-      // Code splitting strategy
+      // Fix for Node.js module externalization in browser
       rollupOptions: {
         output: {
           manualChunks: {
             react: ['react', 'react-dom', 'react-router-dom'],
             ui: ['@/components/ui/index'],
-            vendor: ['@tanstack/react-query', 'lucide-react', 'axios'],
+            vendor: ['@tanstack/react-query', 'lucide-react', 'framer-motion'],
           },
         },
+        // Prevent Node.js module externalization warnings
+        external: [],
       },
       // Chunk size warnings
       chunkSizeWarningLimit: 1000,
@@ -88,6 +90,15 @@ export default defineConfig(({ mode }) => {
     preview: {
       port: 8080,
       strictPort: true,
+    },
+    // Fix for Node.js module externalization warnings
+    optimizeDeps: {
+      esbuildOptions: {
+        // Node.js global to browser globalThis
+        define: {
+          global: 'globalThis',
+        },
+      },
     },
   };
 });

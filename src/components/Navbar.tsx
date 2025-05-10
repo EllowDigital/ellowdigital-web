@@ -2,7 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
-import { ChevronDown, Users } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_LINKS = [
   { name: "Home", href: "#home" },
@@ -34,23 +35,45 @@ const Navbar = () => {
       if (isHomePage) {
         const sections = document.querySelectorAll("section[id]");
         const offset = window.scrollY + 100;
+        
+        // Find active section
+        let activeId = "";
         for (const section of sections) {
           const top = (section as HTMLElement).offsetTop;
           const height = (section as HTMLElement).offsetHeight;
           const id = section.getAttribute("id") || "";
           if (offset >= top && offset < top + height) {
-            setActiveSection(id);
+            activeId = id;
             break;
           }
+        }
+        
+        // Only update if different to prevent unnecessary renders
+        if (activeId !== activeSection) {
+          setActiveSection(activeId);
         }
       }
     };
 
-    window.addEventListener("scroll", updateScroll, { passive: true });
-    updateScroll();
-    return () => window.removeEventListener("scroll", updateScroll);
-  }, [isHomePage]);
+    // Throttle scroll event for better performance
+    let ticking = false;
+    const handleScrollThrottled = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
 
+    window.addEventListener("scroll", handleScrollThrottled, { passive: true });
+    updateScroll();
+    
+    return () => window.removeEventListener("scroll", handleScrollThrottled);
+  }, [isHomePage, activeSection]);
+
+  // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (isMobileOpen && navRef.current && !navRef.current.contains(e.target as Node)) {
@@ -58,10 +81,15 @@ const Navbar = () => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    // Close mobile menu when route changes
+    if (isMobileOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMobileOpen]);
 
+  // Handle navigation with smooth scroll
   const handleNavClick = (href: string) => {
     if (href.startsWith("/")) {
       // If it's an internal page link (not a hash)
@@ -90,14 +118,25 @@ const Navbar = () => {
     setIsMobileOpen(false);
   };
 
+  // Toggle mobile menu
   const toggleMobileMenu = () => setIsMobileOpen((prev) => !prev);
+
+  // Animation variants
+  const mobileMenuVariants = {
+    hidden: { opacity: 0, height: 0 },
+    visible: { opacity: 1, height: 'auto' },
+    exit: { opacity: 0, height: 0 }
+  };
 
   return (
     <>
       {/* Scroll Indicator */}
-      <div
+      <motion.div
         className="fixed top-0 left-0 h-1 bg-brand-yellow z-50"
         style={{ width: `${scrollProgress}%` }}
+        initial={{ width: 0 }}
+        animate={{ width: `${scrollProgress}%` }}
+        transition={{ ease: "linear" }}
       />
 
       <nav
@@ -107,21 +146,21 @@ const Navbar = () => {
           : "bg-black/70 backdrop-blur-md"
           }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
           <a href="/" className="flex items-center gap-2">
             <Logo />
-            <span className="text-2xl font-bold bg-gradient-to-r from-brand-yellow to-brand-gold text-transparent bg-clip-text">
+            <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-brand-yellow to-brand-gold text-transparent bg-clip-text">
               EllowDigital
             </span>
           </a>
 
           {/* Desktop Menu */}
-          <div className="hidden lg:flex gap-6 items-center">
+          <div className="hidden lg:flex gap-4 xl:gap-6 items-center">
             {NAV_LINKS.map((link) => (
               <button
                 key={link.href}
                 onClick={() => handleNavClick(link.href)}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors ${
+                className={`relative px-3 xl:px-4 py-2 text-sm font-medium transition-colors ${
                   (isHomePage && activeSection === link.href.substring(1)) || 
                   (!isHomePage && location.pathname === link.href)
                     ? "text-brand-yellow"
@@ -145,7 +184,7 @@ const Navbar = () => {
                 e.preventDefault();
                 handleNavClick("#contact");
               }}
-              className="px-6 py-2.5 bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-full shadow hover:scale-105 transition-transform"
+              className="px-5 py-2 bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-full shadow hover:scale-105 transition-transform"
             >
               <span className="flex items-center gap-1">
                 Get Started
@@ -159,49 +198,54 @@ const Navbar = () => {
             className="lg:hidden text-brand-yellow p-2"
             onClick={toggleMobileMenu}
             aria-label="Toggle mobile menu"
+            aria-expanded={isMobileOpen}
           >
-            <div className="space-y-1">
-              <span
-                className={`block h-0.5 w-6 bg-brand-yellow transform transition duration-300 ${isMobileOpen ? "rotate-45 translate-y-1.5" : ""
-                  }`}
-              />
-              <span
-                className={`block h-0.5 w-6 bg-brand-yellow transition-opacity duration-300 ${isMobileOpen ? "opacity-0" : "opacity-100"
-                  }`}
-              />
-              <span
-                className={`block h-0.5 w-6 bg-brand-yellow transform transition duration-300 ${isMobileOpen ? "-rotate-45 -translate-y-1.5" : ""
-                  }`}
-              />
-            </div>
+            {isMobileOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
           </button>
         </div>
 
-        {/* Mobile Menu Panel */}
-        {isMobileOpen && (
-          <div className="lg:hidden bg-black/95 border-t border-brand-yellow/10 py-4 px-2 space-y-2">
-            {NAV_LINKS.map((link) => (
-              <button
-                key={link.href}
-                onClick={() => handleNavClick(link.href)}
-                className={`block w-full text-center py-3 rounded-lg text-base font-medium transition-all ${
-                  (isHomePage && activeSection === link.href.substring(1)) || 
-                  (!isHomePage && location.pathname === link.href)
-                    ? "bg-brand-yellow/10 text-brand-yellow"
-                    : "text-white hover:bg-brand-yellow/5 hover:text-brand-yellow"
-                }`}
-              >
-                {link.name}
-              </button>
-            ))}
-            <button
-              onClick={() => handleNavClick("#contact")}
-              className="block w-full text-center py-3 mt-2 bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-lg shadow hover:scale-[1.02] transition-transform"
+        {/* Mobile Menu Panel with AnimatePresence for smoother transitions */}
+        <AnimatePresence>
+          {isMobileOpen && (
+            <motion.div
+              className="lg:hidden bg-black/95 border-t border-brand-yellow/10 py-2 px-2 space-y-1 overflow-hidden"
+              variants={mobileMenuVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              transition={{ duration: 0.2 }}
             >
-              Get Started
-            </button>
-          </div>
-        )}
+              {NAV_LINKS.map((link) => (
+                <motion.button
+                  key={link.href}
+                  onClick={() => handleNavClick(link.href)}
+                  className={`block w-full text-center py-3 px-4 rounded-lg text-base font-medium transition-all ${
+                    (isHomePage && activeSection === link.href.substring(1)) || 
+                    (!isHomePage && location.pathname === link.href)
+                      ? "bg-brand-yellow/10 text-brand-yellow"
+                      : "text-white hover:bg-brand-yellow/5 hover:text-brand-yellow"
+                  }`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {link.name}
+                </motion.button>
+              ))}
+              <motion.button
+                onClick={() => handleNavClick("#contact")}
+                className="block w-full text-center py-3 mt-2 bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-lg shadow"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Get Started
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
     </>
   );

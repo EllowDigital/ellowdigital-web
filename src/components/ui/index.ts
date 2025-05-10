@@ -41,7 +41,6 @@ export * from './tabs';
 export * from './textarea';
 export * from './toast';
 // Fix for duplicate Toaster export
-// export * from './toaster';
 export { Toaster as ToastComponent } from './toaster';
 export * from './toggle';
 export * from './toggle-group';
