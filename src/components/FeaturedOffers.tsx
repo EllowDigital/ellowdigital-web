@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 
 const offers = [
   {
-    title: "Static Website Package",
-    price: "₹1599",
-    description: "Perfect for portfolios, startups, and small businesses.",
+    title: "Indian Business Website",
+    price: "₹15,999",
+    description: "Perfect for Indian businesses looking to establish a digital presence.",
     features: [
       "Fully responsive design",
-      "SEO optimization",
+      "SEO optimization for Indian market",
       "Contact form integration",
       "Social media links",
       "Fast loading times",
@@ -20,13 +20,13 @@ const offers = [
   },
   {
     title: "School CS Projects",
-    price: "Contact for pricing",
-    description: "Expert-crafted projects to help students score high.",
+    price: "Starting at ₹4,999",
+    description: "Expert-crafted projects to help Indian students score high.",
     features: [
-      "Class 12 computer science projects",
-      "Well-documented code",
-      "Fast delivery",
-      "Live support",
+      "Class 12 CBSE computer science projects",
+      "Well-documented code with Hindi comments",
+      "Fast delivery within India",
+      "Live support in Hindi/English",
       "Report preparation",
       "Project demonstration help"
     ],
@@ -40,40 +40,52 @@ const FeaturedOffers = () => {
   };
 
   return (
-    <section id="offers" className="py-24 bg-muted/30">
+    <section id="offers" className="py-24 bg-gradient-to-b from-muted/10 to-muted/30">
       <div className="section-container">
         <h2 className="section-title">Featured Offers</h2>
         <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto mb-16">
-          Special packages designed to meet specific needs with exceptional value.
+          Special packages designed to meet specific needs of Indian businesses with exceptional value.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {offers.map((offer, index) => (
             <Card 
               key={index} 
-              className={`relative overflow-hidden border ${offer.isPopular ? "border-brand-purple" : "border-border/60"} card-hover`}
+              className={`relative overflow-hidden border ${
+                offer.isPopular ? "border-orange-500" : "border-border/60"
+              } hover:shadow-xl transition-all duration-500`}
             >
               {offer.isPopular && (
-                <div className="absolute top-0 right-0">
-                  <div className="bg-brand-purple text-white text-xs font-medium py-1 px-3 rounded-bl-lg">
-                    Popular
-                  </div>
+                <div className="absolute -right-12 top-6 rotate-45 bg-gradient-to-r from-orange-500 to-green-500 text-white text-xs font-medium py-1 px-10 shadow-md">
+                  Popular
                 </div>
               )}
               
+              <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-orange-500 to-green-500"></div>
+              
               <CardHeader>
-                <CardTitle>{offer.title}</CardTitle>
+                <CardTitle className="flex items-center">
+                  {offer.title}
+                  {offer.isPopular && (
+                    <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-orange-500 text-white">
+                      Best Value
+                    </span>
+                  )}
+                </CardTitle>
                 <CardDescription className="text-base">{offer.description}</CardDescription>
               </CardHeader>
               
               <CardContent className="space-y-6">
-                <div className="text-3xl font-bold">{offer.price}</div>
+                <div className="flex items-baseline">
+                  <div className="text-3xl font-bold">{offer.price}</div>
+                  <div className="ml-2 text-sm text-muted-foreground">{index === 0 ? "/website" : ""}</div>
+                </div>
                 
-                <ul className="space-y-2">
+                <ul className="space-y-3">
                   {offer.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <CheckCircle className="h-5 w-5 text-brand-purple shrink-0 mt-0.5" />
-                      <span className="text-sm">{feature}</span>
+                      <CheckCircle className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
+                      <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -82,13 +94,22 @@ const FeaturedOffers = () => {
               <CardFooter>
                 <Button 
                   onClick={scrollToContact}
-                  className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-semibold py-2 px-4 rounded-md transition-colors"
+                  className="w-full bg-gradient-to-r from-orange-500 to-green-600 hover:from-orange-600 hover:to-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors"
                 >
                   Get Started
                 </Button>
               </CardFooter>
             </Card>
           ))}
+        </div>
+        
+        <div className="mt-12 text-center">
+          <p className="text-sm text-muted-foreground">
+            All prices are in Indian Rupees (₹). GST applicable as per government regulations.
+          </p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Serving clients across India including Delhi, Mumbai, Bangalore, Chennai, Kolkata and more.
+          </p>
         </div>
       </div>
     </section>

@@ -1,13 +1,14 @@
 
-/* Root Container with enhanced variables */
+/* Root Container with enhanced variables for India theme */
 :root {
-  --primary-color: #FFD700;
-  --secondary-color: #FFDF00;
+  --primary-color: #FF7517; /* Orange */
+  --secondary-color: #046A38; /* Green */
   --accent-color: #F5F5F5;
   --text-muted: #999;
   --transition-duration: 300ms;
   --animation-duration: 20s;
-  --glow-color: rgba(255, 215, 0, 0.15);
+  --orange-glow: rgba(255, 117, 23, 0.15);
+  --green-glow: rgba(4, 106, 56, 0.15);
 }
 
 #root {
@@ -82,7 +83,7 @@
 /* Enhanced hover effect on links */
 .read-the-docs:hover {
   color: var(--primary-color);
-  text-shadow: 0 0 8px var(--glow-color);
+  text-shadow: 0 0 8px var(--orange-glow);
 }
 
 /* Custom animations for professional effects */
@@ -105,24 +106,31 @@
 }
 
 /* Professional decorative elements */
-.gold-gradient {
-  background: linear-gradient(135deg, #FFD700 0%, #FFC000 100%);
+.indian-gradient {
+  background: linear-gradient(135deg, #FF7517 0%, #046A38 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.card-gold-border {
+.tiranga-gradient {
+  background: linear-gradient(90deg, #FF9933, #FFFFFF, #138808);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-indian-border {
   position: relative;
 }
 
-.card-gold-border::after {
+.card-indian-border::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 0.75em;
   padding: 1px;
-  background: linear-gradient(135deg, #FFD700 0%, #FFC000 100%);
+  background: linear-gradient(135deg, #FF7517 0%, #046A38 100%);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -148,6 +156,32 @@
   width: 1px;
   height: auto;
   background: linear-gradient(0deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+/* Tricolor divider - Indian flag colors */
+.tricolor-divider {
+  display: flex;
+  width: 100%;
+  height: 3px;
+  margin: 1rem 0;
+}
+
+.tricolor-divider .saffron {
+  background-color: #FF9933;
+  height: 100%;
+  width: 33.33%;
+}
+
+.tricolor-divider .white {
+  background-color: #FFFFFF;
+  height: 100%;
+  width: 33.33%;
+}
+
+.tricolor-divider .green {
+  background-color: #138808;
+  height: 100%;
+  width: 33.33%;
 }
 
 /* Enhanced Responsive Design */
@@ -206,23 +240,23 @@ img {
 :focus {
   outline: 2px solid var(--primary-color);
   outline-offset: 3px;
-  box-shadow: 0 0 0 4px var(--glow-color);
+  box-shadow: 0 0 0 4px var(--orange-glow);
 }
 
-/* Professional button styles */
-.btn-professional {
+/* Professional button styles with Indian theme */
+.btn-indian {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #FFD700 0%, #FFDF00 100%);
-  color: #000;
+  background: linear-gradient(135deg, #FF7517 0%, #046A38 100%);
+  color: #FFF;
   font-weight: 600;
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
-  box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 4px 10px rgba(255, 117, 23, 0.3);
   transition: all 0.3s ease;
 }
 
-.btn-professional::before {
+.btn-indian::before {
   content: '';
   position: absolute;
   top: 0;
@@ -233,21 +267,37 @@ img {
   transition: all 0.6s ease;
 }
 
-.btn-professional:hover {
+.btn-indian:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(255, 215, 0, 0.4);
+  box-shadow: 0 6px 15px rgba(255, 117, 23, 0.4);
 }
 
-.btn-professional:hover::before {
+.btn-indian:hover::before {
   left: 100%;
 }
 
-/* Professional badge styling */
-.badge-pro {
+/* Indian cultural motif decoration */
+.indian-pattern {
+  position: relative;
+  overflow: hidden;
+}
+
+.indian-pattern::before {
+  content: '';
+  position: absolute;
+  height: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='16' viewBox='0 0 60 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 8C8.33333 6 16.6667 4 25 4C33.3333 4 41.6667 6 50 8C58.3333 10 66.6667 12 75 12' stroke='%23FF7517' stroke-width='0.5' fill='none'/%3E%3C/svg%3E");
+  width: 100%;
+  opacity: 0.2;
+  bottom: 0;
+}
+
+/* Badge for Indian celebration days */
+.indian-badge {
   display: inline-flex;
   align-items: center;
-  background: linear-gradient(135deg, #FFD700 0%, #FFDF00 100%);
-  color: #000;
+  background: linear-gradient(135deg, #FF9933 0%, #138808 100%);
+  color: #FFF;
   font-weight: 600;
   font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
@@ -296,4 +346,33 @@ img {
 @keyframes skeleton-loading {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
+}
+
+/* Additional Animations */
+@keyframes shimmer {
+  0% { background-position: -100% 0; }
+  100% { background-position: 100% 0; }
+}
+
+.shimmer-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-effect::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+  pointer-events: none;
 }

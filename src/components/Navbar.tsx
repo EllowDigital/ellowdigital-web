@@ -2,7 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import Logo from "./Logo";
-import { ChevronDown, Menu, X, Globe, Search, Award, Zap } from "lucide-react";
+import SearchModal from "./SearchModal";
+import { ChevronDown, Menu, X, Globe, Search, Award, Zap, MapPin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_LINKS = [
@@ -20,10 +21,25 @@ const Navbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === "/";
+
+  // Keyboard shortcut for search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ctrl+K or Cmd+K to open search
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   useEffect(() => {
     const updateScroll = () => {
@@ -107,7 +123,7 @@ const Navbar = () => {
         // Add a small delay to ensure mobile menu closing animation completes
         setTimeout(() => {
           element.scrollIntoView({ behavior: "smooth" });
-        }, 100);
+        }, 150);
       }
     } else {
       // If on another page, navigate to home and then to section
@@ -141,9 +157,9 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Enhanced Scroll Indicator with gradient */}
+      {/* Enhanced Scroll Indicator with tricolor gradient */}
       <motion.div
-        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-brand-gold via-brand-yellow to-brand-gold z-50"
+        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-orange-500 via-white to-green-600 z-50"
         style={{ width: `${scrollProgress}%` }}
         initial={{ width: 0 }}
         animate={{ width: `${scrollProgress}%` }}
@@ -153,20 +169,20 @@ const Navbar = () => {
       <nav
         ref={navRef}
         className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${isScrolled
-          ? "bg-black/90 shadow-md backdrop-blur-xl border-b border-brand-yellow/10"
+          ? "bg-black/90 shadow-md backdrop-blur-xl border-b border-orange-500/10"
           : "bg-black/70 backdrop-blur-md"
           }`}
       >
         {/* Decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div 
-            className="absolute -top-10 -right-10 w-20 h-20 bg-brand-yellow/5 rounded-full blur-xl"
+            className="absolute -top-10 -right-10 w-20 h-20 bg-orange-500/5 rounded-full blur-xl"
             initial="initial"
             animate="animate"
             variants={decorVariants}
           />
           <motion.div 
-            className="absolute -bottom-12 left-1/4 w-24 h-24 bg-brand-gold/5 rounded-full blur-xl"
+            className="absolute -bottom-12 left-1/4 w-24 h-24 bg-green-500/5 rounded-full blur-xl"
             initial="initial"
             animate="animate"
             variants={decorVariants}
@@ -177,13 +193,18 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between relative">
           <Link to="/" className="flex items-center gap-2 z-10">
             <Logo />
-            <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-brand-yellow to-brand-gold text-transparent bg-clip-text">
-              EllowDigital
-            </span>
+            <div className="flex flex-col text-left">
+              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-orange-500 to-green-500 text-transparent bg-clip-text">
+                EllowDigital
+              </span>
+              <span className="text-xs text-muted-foreground -mt-1">
+                Digital Excellence, Indian Brilliance
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Menu with enhanced styling */}
-          <div className="hidden lg:flex gap-4 xl:gap-6 items-center">
+          <div className="hidden lg:flex gap-4 xl:gap-5 items-center">
             {NAV_LINKS.map((link) => (
               <button
                 key={link.href}
@@ -191,13 +212,13 @@ const Navbar = () => {
                 className={`relative px-3 xl:px-4 py-2 text-sm font-medium transition-all duration-300 ${
                   (isHomePage && activeSection === link.href.substring(1)) || 
                   (!isHomePage && location.pathname === link.href)
-                    ? "text-brand-yellow"
-                    : "text-white hover:text-brand-yellow"
+                    ? "text-orange-500"
+                    : "text-white hover:text-orange-400"
                 } group`}
               >
                 {link.name}
                 <span
-                  className={`absolute left-0 bottom-0 h-0.5 bg-gradient-to-r from-brand-gold to-brand-yellow transition-all duration-300 ${
+                  className={`absolute left-0 bottom-0 h-0.5 bg-gradient-to-r from-orange-500 to-green-500 transition-all duration-300 ${
                     (isHomePage && activeSection === link.href.substring(1)) || 
                     (!isHomePage && location.pathname === link.href) 
                       ? "w-full" 
@@ -208,24 +229,24 @@ const Navbar = () => {
             ))}
 
             {/* Enhanced Action Buttons */}
-            <div className="flex items-center gap-2 ml-2">
+            <div className="flex items-center gap-3 ml-2">
               <button
                 className="p-2 rounded-full hover:bg-white/10 transition-all duration-300"
                 aria-label="Search"
+                onClick={() => setIsSearchOpen(true)}
               >
-                <Search className="w-4 h-4 text-white/80 hover:text-brand-yellow" />
+                <Search className="w-4 h-4 text-white/80 hover:text-orange-500" />
               </button>
-              <button
-                className="p-2 rounded-full hover:bg-white/10 transition-all duration-300"
-                aria-label="Global"
-              >
-                <Globe className="w-4 h-4 text-white/80 hover:text-brand-yellow" />
-              </button>
+              
+              <div className="flex items-center text-xs text-white/70">
+                <MapPin className="w-3 h-3 mr-1 text-green-500" />
+                <span>India</span>
+              </div>
             </div>
 
             <button
               onClick={() => handleNavClick("#contact")}
-              className="group relative px-5 py-2 overflow-hidden bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-full shadow hover:shadow-lg transition-all duration-300"
+              className="group relative px-5 py-2 overflow-hidden bg-gradient-to-r from-orange-500 to-green-600 text-white font-bold rounded-full shadow hover:shadow-lg transition-all duration-300"
             >
               <span className="relative z-10 flex items-center">
                 Get Started
@@ -237,12 +258,12 @@ const Navbar = () => {
 
           {/* Mobile Toggle Button with enhanced styling */}
           <button
-            className="lg:hidden text-brand-yellow p-2 relative"
+            className="lg:hidden text-orange-500 p-2 relative"
             onClick={toggleMobileMenu}
             aria-label="Toggle mobile menu"
             aria-expanded={isMobileOpen}
           >
-            <div className="absolute -inset-1 bg-brand-yellow/10 rounded-full blur-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+            <div className="absolute -inset-1 bg-orange-500/10 rounded-full blur-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
             {isMobileOpen ? (
               <X className="h-6 w-6" />
             ) : (
@@ -255,7 +276,7 @@ const Navbar = () => {
         <AnimatePresence>
           {isMobileOpen && (
             <motion.div
-              className="lg:hidden bg-gradient-to-b from-black/95 to-black/90 border-t border-brand-yellow/10 py-2 px-2 space-y-1 overflow-hidden"
+              className="lg:hidden bg-gradient-to-b from-black/95 to-black/90 border-t border-orange-500/10 py-2 px-2 space-y-1 overflow-hidden"
               variants={mobileMenuVariants}
               initial="hidden"
               animate="visible"
@@ -269,8 +290,8 @@ const Navbar = () => {
                   className={`block w-full text-center py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 ${
                     (isHomePage && activeSection === link.href.substring(1)) || 
                     (!isHomePage && location.pathname === link.href)
-                      ? "bg-brand-yellow/10 text-brand-yellow"
-                      : "text-white hover:bg-brand-yellow/5 hover:text-brand-yellow"
+                      ? "bg-orange-500/10 text-orange-500"
+                      : "text-white hover:bg-orange-500/5 hover:text-orange-400"
                   }`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -278,9 +299,24 @@ const Navbar = () => {
                   {link.name}
                 </motion.button>
               ))}
+              
+              {/* Search button for mobile */}
+              <motion.button
+                onClick={() => {
+                  setIsMobileOpen(false);
+                  setIsSearchOpen(true);
+                }}
+                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-base font-medium text-white hover:bg-white/5"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Search className="w-4 h-4" />
+                <span>Search</span>
+              </motion.button>
+              
               <motion.button
                 onClick={() => handleNavClick("#contact")}
-                className="block w-full text-center py-3 mt-2 bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-lg shadow"
+                className="block w-full text-center py-3 mt-2 bg-gradient-to-r from-orange-500 to-green-600 text-white font-bold rounded-lg shadow"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -293,21 +329,24 @@ const Navbar = () => {
                   className="flex items-center gap-2 text-white/70 text-sm"
                   whileHover={{ scale: 1.05 }}
                 >
-                  <Award className="w-4 h-4 text-brand-yellow" />
-                  <span>Award Winning</span>
+                  <Award className="w-4 h-4 text-orange-500" />
+                  <span>Indian Excellence</span>
                 </motion.div>
                 <motion.div
                   className="flex items-center gap-2 text-white/70 text-sm"
                   whileHover={{ scale: 1.05 }}
                 >
-                  <Zap className="w-4 h-4 text-brand-yellow" />
-                  <span>Fast Response</span>
+                  <Zap className="w-4 h-4 text-green-500" />
+                  <span>24/7 Support</span>
                 </motion.div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </nav>
+
+      {/* Search Modal */}
+      <SearchModal open={isSearchOpen} onOpenChange={setIsSearchOpen} />
     </>
   );
 };

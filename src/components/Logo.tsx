@@ -18,7 +18,7 @@ const Logo = () => {
   return (
     <div
       aria-label="Company logo"
-      className="block outline-none focus:ring-2 focus:ring-brand-yellow rounded transition-shadow"
+      className="block outline-none focus:ring-2 focus:ring-brand-orange rounded transition-shadow"
     >
       <div
         className={`inline-flex items-center select-none overflow-hidden ${mounted ? "animate-fade-in" : "opacity-0"}`}
@@ -33,16 +33,17 @@ const Logo = () => {
               height={48}
               className="h-12 w-auto object-contain transition duration-500"
               style={{
-                filter: "drop-shadow(0px 2px 8px rgba(255, 215, 0, 0.2))",
+                filter: "drop-shadow(0px 2px 8px rgba(255, 117, 26, 0.3))",
               }}
               loading="eager"
               onError={() => setImgError(true)}
             />
-            <div className="absolute -inset-1 bg-brand-yellow/10 rounded-full blur-md -z-10"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-orange-500/20 to-green-500/20 rounded-full blur-md -z-10"></div>
           </div>
         ) : (
-          <span className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-brand-gold to-brand-yellow bg-clip-text text-transparent tracking-wider">
+          <span className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-orange-500 to-green-500 bg-clip-text text-transparent tracking-wider">
             Ellow<span className="text-foreground">Digital</span>
+            <span className="text-xs align-top text-orange-500 ml-1">India</span>
           </span>
         )}
       </div>

@@ -35,10 +35,10 @@ export default defineConfig(({ mode }) => {
         registerType: 'autoUpdate',
         includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
         manifest: {
-          name: 'EllowDigital',
+          name: 'EllowDigital India',
           short_name: 'EllowDigital',
-          description: 'Digital transformation services for businesses',
-          theme_color: '#ffd700',
+          description: 'Digital transformation services for businesses in India',
+          theme_color: '#FF7517',
           icons: [
             {
               src: '/favicon/android-chrome-192x192.png',
@@ -64,15 +64,11 @@ export default defineConfig(({ mode }) => {
       alias: {
         "@": path.resolve(__dirname, "./src"),
       },
-      // Explicitly tell Vite how to handle directories
       mainFields: ['module', 'jsnext:main', 'jsnext'],
     },
     build: {
-      // Generate sourcemaps for production builds
       sourcemap: false,
-      // Minify output
       minify: 'terser',
-      // Fix for Node.js module externalization in browser
       rollupOptions: {
         output: {
           manualChunks: {
@@ -81,20 +77,20 @@ export default defineConfig(({ mode }) => {
             vendor: ['@tanstack/react-query', 'lucide-react', 'framer-motion'],
           },
         },
-        // Prevent Node.js module externalization warnings
-        external: [],
+        // Explicitly mark problematic Node.js modules as external to avoid warnings
+        external: [
+          'http', 'https', 'url', 'path', 'stream', 'util', 'crypto', 'os', 
+          'zlib', 'events', 'assert', 'tty', 'fs'
+        ],
       },
-      // Chunk size warnings
       chunkSizeWarningLimit: 1000,
     },
     preview: {
       port: 8080,
       strictPort: true,
     },
-    // Fix for Node.js module externalization warnings
     optimizeDeps: {
       esbuildOptions: {
-        // Node.js global to browser globalThis
         define: {
           global: 'globalThis',
         },
