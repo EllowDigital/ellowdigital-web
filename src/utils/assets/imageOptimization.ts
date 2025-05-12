@@ -4,172 +4,110 @@
  */
 
 /**
- * Dynamically loads images based on viewport size and device capabilities
+ * Sets up lazy loading for images using IntersectionObserver
  */
 export const optimizeImageLoading = () => {
-  if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
-    return () => {}; // No-op for SSR or unsupported browsers
+  if (typeof window === 'undefined') return () => {};
+
+  // Check if IntersectionObserver is available
+  if (!('IntersectionObserver' in window)) {
+    console.warn('IntersectionObserver not supported in this browser');
+    return () => {};
   }
-  
-  // Create observer for lazy loading
+
+  // Create an observer for lazy loading images
   const imageObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const image = entry.target as HTMLImageElement;
+          const img = entry.target as HTMLImageElement;
           
-          // Handle srcset for responsive images
-          if (image.dataset.srcset) {
-            image.srcset = image.dataset.srcset;
-            image.removeAttribute('data-srcset');
+          // Replace data-src with src when image comes into view
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            imageObserver.unobserve(img);
           }
-          
-          // Handle regular src
-          if (image.dataset.src) {
-            // Use a tiny timeout to prevent layout shifts
-            setTimeout(() => {
-              image.src = image.dataset.src!;
-              image.removeAttribute('data-src');
-            }, 10);
-          }
-          
-          // Handle background images
-          if (image.dataset.bgSrc) {
-            image.style.backgroundImage = `url(${image.dataset.bgSrc})`;
-            image.removeAttribute('data-bg-src');
-          }
-          
-          imageObserver.unobserve(image);
         }
       });
     },
     {
-      rootMargin: '200px 0px', // Start loading before visible
-      threshold: 0.01, // Trigger when just 1% visible
+      rootMargin: '200px 0px', // Start loading images 200px before they come into view
+      threshold: 0.01, // Trigger when even a small part of the image is visible
     }
   );
-  
-  // Set up observers
-  const setupLazyLoading = () => {
-    // Images with src
-    document.querySelectorAll('img[data-src]').forEach((img) => {
-      imageObserver.observe(img);
-    });
-    
-    // Images with srcset
-    document.querySelectorAll('img[data-srcset]').forEach((img) => {
-      imageObserver.observe(img);
-    });
-    
-    // Elements with background images
-    document.querySelectorAll('[data-bg-src]').forEach((el) => {
-      imageObserver.observe(el);
-    });
-  };
-  
-  // Run initially and add a mutation observer to handle dynamically added content
-  setupLazyLoading();
-  
-  // Set up mutation observer for dynamic content
-  const mutationObserver = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.addedNodes.length) {
-        setupLazyLoading();
-      }
-    });
+
+  // Observe all images with data-src attribute
+  const lazyImages = document.querySelectorAll('img[data-src]');
+  lazyImages.forEach((img) => {
+    imageObserver.observe(img);
   });
-  
-  mutationObserver.observe(document.body, {
-    childList: true,
-    subtree: true,
-  });
-  
+
+  // Add 'loading=lazy' attribute to all images that support it
+  if ('loading' in HTMLImageElement.prototype) {
+    document.querySelectorAll('img:not([loading])').forEach((img) => {
+      img.loading = 'lazy';
+    });
+  }
+
   // Return cleanup function
   return () => {
-    imageObserver.disconnect();
-    mutationObserver.disconnect();
+    if (lazyImages) {
+      lazyImages.forEach((img) => {
+        imageObserver.unobserve(img);
+      });
+    }
   };
 };
 
 /**
- * Check for broken images and replace with fallbacks
+ * Handles broken image placeholders
  */
 export const handleBrokenImages = () => {
   if (typeof window === 'undefined') return () => {};
   
-  const fallbackImageUrl = '/placeholder.svg';
-  
-  const errorHandler = (event: Event) => {
+  // Set fallback for broken images
+  const handleError = (event: Event) => {
     const img = event.target as HTMLImageElement;
+    const defaultImage = '/placeholder.svg';
     
-    // Only handle if not already using fallback
-    if (img.src !== fallbackImageUrl && !img.classList.contains('no-fallback')) {
-      console.warn(`Image failed to load: ${img.src}`);
-      img.src = fallbackImageUrl;
-      
-      // Add class to indicate fallback was applied
-      img.classList.add('image-fallback-applied');
-      
-      // Add title with original source for debugging
-      img.title = `Original source: ${img.getAttribute('data-original-src') || 'Unknown'}`;
+    // Prevent infinite loop if fallback image also fails
+    if (img.src !== defaultImage) {
+      img.src = defaultImage;
+      img.alt = 'Image not found';
+      img.classList.add('broken-image');
     }
   };
-  
-  // Store original sources for debugging and add error handlers
+
+  // Add error handler to all images
   document.querySelectorAll('img').forEach((img) => {
-    // Store original source if not already stored
-    if (!img.getAttribute('data-original-src') && img.src) {
-      img.setAttribute('data-original-src', img.src);
-    }
-    
-    // Add error handler
-    img.addEventListener('error', errorHandler);
+    img.addEventListener('error', handleError);
   });
   
-  // Add a mutation observer to handle dynamically added images
+  // Add error handler to new images as they're added to the DOM
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
-      if (mutation.addedNodes.length) {
-        mutation.addedNodes.forEach((node) => {
-          if (node.nodeType === 1) { // Element node
-            const element = node as Element;
-            
-            if (element.tagName === 'IMG') {
-              // Store original source
-              const img = element as HTMLImageElement;
-              if (!img.getAttribute('data-original-src') && img.src) {
-                img.setAttribute('data-original-src', img.src);
-              }
-              
-              // Add error handler
-              img.addEventListener('error', errorHandler);
-            }
-            
-            // Check for nested images
-            element.querySelectorAll('img').forEach((img) => {
-              if (!img.getAttribute('data-original-src') && img.src) {
-                img.setAttribute('data-original-src', img.src);
-              }
-              
-              img.addEventListener('error', errorHandler);
-            });
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          const element = node as Element;
+          if (element.tagName === 'IMG') {
+            element.addEventListener('error', handleError);
           }
-        });
-      }
+          element.querySelectorAll('img').forEach((img) => {
+            img.addEventListener('error', handleError);
+          });
+        }
+      });
     });
   });
   
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-  });
+  observer.observe(document.body, { childList: true, subtree: true });
   
+  // Return cleanup function
   return () => {
-    // Clean up by removing all error handlers
-    document.querySelectorAll('img').forEach((img) => {
-      img.removeEventListener('error', errorHandler);
-    });
-    
     observer.disconnect();
+    document.querySelectorAll('img').forEach((img) => {
+      img.removeEventListener('error', handleError);
+    });
   };
 };

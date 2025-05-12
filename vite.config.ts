@@ -77,11 +77,6 @@ export default defineConfig(({ mode }) => {
             vendor: ['@tanstack/react-query', 'lucide-react', 'framer-motion'],
           },
         },
-        // Explicitly mark problematic Node.js modules as external to avoid warnings
-        external: [
-          'http', 'https', 'url', 'path', 'stream', 'util', 'crypto', 'os', 
-          'zlib', 'events', 'assert', 'tty', 'fs'
-        ],
       },
       chunkSizeWarningLimit: 1000,
     },
