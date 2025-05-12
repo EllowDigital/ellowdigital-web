@@ -1,4 +1,3 @@
-
 /**
  * Link validation utility to check for broken links and security issues
  */
@@ -8,6 +7,12 @@ type LinkIssue = {
   element: HTMLAnchorElement;
   type: 'security' | 'external' | 'fragment' | 'tracking';
   description: string;
+};
+
+// Define validation options type to include consoleOutput
+type ValidationOptions = {
+  autoFix: boolean;
+  consoleOutput: boolean;
 };
 
 /**
@@ -152,8 +157,8 @@ export const createLinkValidator = () => {
     });
   };
   
-  // Main validation function
-  const validateLinks = (options = { autoFix: false, consoleOutput: true }) => {
+  // Main validation function - update to require consoleOutput parameter
+  const validateLinks = (options: ValidationOptions = { autoFix: false, consoleOutput: true }) => {
     if (typeof window === 'undefined') return { issues: [] };
     
     // Reset issues
@@ -197,8 +202,9 @@ export const createLinkValidator = () => {
 
 /**
  * Run link validation when the page is fully loaded
+ * Update to use the ValidationOptions type for the options parameter
  */
-export const validateLinksAfterLoad = (options = { autoFix: false }) => {
+export const validateLinksAfterLoad = (options: ValidationOptions = { autoFix: false, consoleOutput: true }) => {
   if (typeof window === 'undefined') return () => {};
   
   const validator = createLinkValidator();
