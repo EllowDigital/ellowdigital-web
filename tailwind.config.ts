@@ -1,8 +1,10 @@
 import type { Config } from "tailwindcss";
 
-const config: Config = {
-  darkMode: "class", // Use class-based dark mode
+export default {
+  // Disable dark mode
+  darkMode: "class",
 
+  // Paths to all of the template files that Tailwind should scan for class names
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -10,17 +12,20 @@ const config: Config = {
     "./src/**/*.{ts,tsx}",
   ],
 
+  // Prefix for utility classes (empty in this case)
   prefix: "",
 
+  // Tailwind theme customization
   theme: {
     container: {
-      center: true,
-      padding: "2rem",
+      center: true, // Centers the container
+      padding: "2rem", // Adds padding to the container
       screens: {
-        "2xl": "1400px",
+        "2xl": "1400px", // Sets container max width for '2xl' screen size
       },
     },
     extend: {
+      // Custom colors for various UI elements
       colors: {
         border: "#222222",
         input: "#222222",
@@ -28,7 +33,7 @@ const config: Config = {
         background: "#121212",
         foreground: "#F6F6F6",
         primary: {
-          DEFAULT: "#FFD700",
+          DEFAULT: "#FFD700", // Main accent color
           foreground: "#121212",
         },
         secondary: {
@@ -37,7 +42,7 @@ const config: Config = {
         },
         destructive: {
           DEFAULT: "#b91c1c",
-          foreground: "#ffffff",
+          foreground: "#fff",
         },
         muted: {
           DEFAULT: "#353535",
@@ -68,7 +73,7 @@ const config: Config = {
         brand: {
           gold: "#FFD700",
           yellow: "#FFDF00",
-          softYellow: "#FFF8DC",
+          softYellow: "#222222",
           black: "#121212",
           offBlack: "#1A1A1A",
           white: "#F8F8F8",
@@ -76,12 +81,14 @@ const config: Config = {
         },
       },
 
+      // Custom border radii values
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "var(--radius)", // Large border radius
+        md: "calc(var(--radius) - 2px)", // Medium border radius
+        sm: "calc(var(--radius) - 4px)", // Small border radius
       },
 
+      // Custom breakpoints for responsive design
       screens: {
         xs: "475px",
         sm: "640px",
@@ -94,6 +101,7 @@ const config: Config = {
         "tablet-landscape": { min: "768px", max: "1023px" },
       },
 
+      // Custom keyframes for animations
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -129,6 +137,7 @@ const config: Config = {
         },
       },
 
+      // Custom animations for transitions
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
@@ -140,6 +149,7 @@ const config: Config = {
         shimmer: "shimmer 2s infinite linear",
       },
 
+      // Custom box shadows for UI elements
       boxShadow: {
         elegant: "0 10px 30px -10px rgba(0, 0, 0, 0.2)",
         "card-hover": "0 20px 30px -15px rgba(0, 0, 0, 0.2)",
@@ -149,6 +159,7 @@ const config: Config = {
           "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 -2px 0 0 rgba(255, 255, 255, 0.15) inset, 0 2px 0 0 rgba(0, 0, 0, 0.1) inset",
       },
 
+      // Custom transition properties
       transitionProperty: {
         height: "height",
         spacing: "margin, padding",
@@ -158,7 +169,6 @@ const config: Config = {
     },
   },
 
+  // Plugins for additional functionality (e.g., animations)
   plugins: [require("tailwindcss-animate")],
-};
-
-export default config;
+} satisfies Config;

@@ -6,33 +6,29 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    ignores: ["dist"], // Exclude build output directory
+    ignores: ["dist"],  // Ignore files in the 'dist' directory
   },
   {
-    files: ["**/*.{ts,tsx}"], // Target TypeScript and TSX files
     extends: [
-      js.configs.recommended,         // ESLint base recommended rules
-      ...tseslint.configs.recommended // TypeScript-specific recommended rules
+      js.configs.recommended,  // Use ESLint's recommended rules
+      ...tseslint.configs.recommended,  // Add TypeScript recommended rules
     ],
+    files: ["**/*.{ts,tsx}"],  // Apply to TypeScript and TSX files
     languageOptions: {
-      ecmaVersion: 2020,             // ECMAScript 2020 syntax support
-      globals: globals.browser       // Enable browser-specific globals
+      ecmaVersion: 2020,  // Use ECMAScript 2020 syntax
+      globals: globals.browser,  // Define browser globals
     },
     plugins: {
-      "react-hooks": reactHooks,     // React hooks rules
-      "react-refresh": reactRefresh  // Fast refresh development rules
+      "react-hooks": reactHooks,  // React Hooks linting plugin
+      "react-refresh": reactRefresh,  // React Fast Refresh plugin
     },
     rules: {
-      ...reactHooks.configs.recommended.rules, // Enforce best practices for hooks
-
-      // Warn if components are not exported correctly for React Fast Refresh
+      ...reactHooks.configs.recommended.rules,  // Use recommended React hooks rules
       "react-refresh/only-export-components": [
-        "warn",
-        { allowConstantExport: true }
+        "warn",  // Warn on non-component exports
+        { allowConstantExport: true },  // Allow constant exports
       ],
-
-      // Disable no-unused-vars since TypeScript already checks this
-      "@typescript-eslint/no-unused-vars": "off"
-    }
+      "@typescript-eslint/no-unused-vars": "off",  // Disable unused variable checks for TypeScript
+    },
   }
 );
