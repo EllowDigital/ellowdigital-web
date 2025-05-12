@@ -23,53 +23,53 @@ const TeamPage = () => {
   const teamMembers = [
     {
       id: 1,
-      name: "Nitesh Kumar",
+      name: "Sarwan Yadav",
       role: "Founder & Lead Developer",
-      image: "/images/nitesh.png",
-      bio: "Nitesh is the founder of EllowDigital with over 8 years of experience in web development and digital marketing. He's passionate about creating innovative digital solutions that help businesses grow.",
+      image: "/images/founder.jpg",
+      bio: "Sarwan is the founder of EllowDigital with over 2 years of experience in web development and digital marketing. He's passionate about creating innovative digital solutions that help businesses grow.",
       specialties: ["Full-stack Development", "UI/UX Design", "Project Management"],
       social: {
-        linkedin: "https://linkedin.com/in/niteshkumar",
-        github: "https://github.com/ellowdigital",
-        twitter: "https://twitter.com/ellowdigital",
+        linkedin: "https://linkedin.com/in/sarwan6174",
+        github: "https://github.com/devsarwan",
+        twitter: "https://twitter.com/devsarwan",
       },
     },
-    {
-      id: 2,
-      name: "Aisha Patel",
-      role: "Senior UI/UX Designer",
-      image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=500&q=80",
-      bio: "Aisha brings 5 years of experience in creating beautiful, intuitive interfaces. Her designs focus on enhancing user experience while maintaining brand consistency.",
-      specialties: ["User Interface Design", "Prototyping", "User Research"],
-      social: {
-        linkedin: "https://linkedin.com/in/example",
-        dribbble: "https://dribbble.com/example",
-      },
-    },
-    {
-      id: 3,
-      name: "David Chen",
-      role: "Backend Developer",
-      image: "https://images.unsplash.com/photo-1500673922987-e212871fec22?auto=format&fit=crop&w=500&q=80",
-      bio: "David specializes in building robust backend systems and APIs. With expertise in Node.js, Express, and database optimization, he ensures our applications perform flawlessly.",
-      specialties: ["Backend Architecture", "API Development", "Database Design"],
-      social: {
-        linkedin: "https://linkedin.com/in/example",
-        github: "https://github.com/example",
-      },
-    },
-    {
-      id: 4,
-      name: "Sarah Johnson",
-      role: "Marketing Specialist",
-      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=500&q=80",
-      bio: "Sarah handles our digital marketing strategies. She's an expert in social media marketing, content creation, and SEO optimization to help our clients reach their target audience.",
-      specialties: ["Digital Marketing", "Social Media", "SEO/SEM"],
-      social: {
-        linkedin: "https://linkedin.com/in/example",
-        twitter: "https://twitter.com/example",
-      },
-    },
+    // {
+    //   id: 2,
+    //   name: "Aisha Patel",
+    //   role: "Senior UI/UX Designer",
+    //   image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=500&q=80",
+    //   bio: "Aisha brings 5 years of experience in creating beautiful, intuitive interfaces. Her designs focus on enhancing user experience while maintaining brand consistency.",
+    //   specialties: ["User Interface Design", "Prototyping", "User Research"],
+    //   social: {
+    //     linkedin: "https://linkedin.com/in/example",
+    //     dribbble: "https://dribbble.com/example",
+    //   },
+    // },
+    // {
+    //   id: 3,
+    //   name: "David Chen",
+    //   role: "Backend Developer",
+    //   image: "https://images.unsplash.com/photo-1500673922987-e212871fec22?auto=format&fit=crop&w=500&q=80",
+    //   bio: "David specializes in building robust backend systems and APIs. With expertise in Node.js, Express, and database optimization, he ensures our applications perform flawlessly.",
+    //   specialties: ["Backend Architecture", "API Development", "Database Design"],
+    //   social: {
+    //     linkedin: "https://linkedin.com/in/example",
+    //     github: "https://github.com/example",
+    //   },
+    // },
+    // {
+    //   id: 4,
+    //   name: "Sarah Johnson",
+    //   role: "Marketing Specialist",
+    //   image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=500&q=80",
+    //   bio: "Sarah handles our digital marketing strategies. She's an expert in social media marketing, content creation, and SEO optimization to help our clients reach their target audience.",
+    //   specialties: ["Digital Marketing", "Social Media", "SEO/SEM"],
+    //   social: {
+    //     linkedin: "https://linkedin.com/in/example",
+    //     twitter: "https://twitter.com/example",
+    //   },
+    // },
   ];
 
   return (

@@ -1,9 +1,8 @@
-
 /**
  * Performance monitoring and optimization utilities
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 // Constants for performance thresholds
 const RENDER_THRESHOLD_MS = 16; // ~60fps
@@ -14,36 +13,42 @@ const LONG_TASK_THRESHOLD_MS = 50;
  */
 export const initializePerformanceMonitoring = () => {
   // Only run in production
-  if (process.env.NODE_ENV !== 'production') return;
+  if (process.env.NODE_ENV !== "production") return;
 
-  // Monitor long tasks
-  if ('PerformanceObserver' in window) {
+  // Monitor long tasks (tasks longer than LONG_TASK_THRESHOLD_MS)
+  if ("PerformanceObserver" in window) {
     try {
       const observer = new PerformanceObserver((list) => {
-        for (const entry of list.getEntries()) {
-          // Only log critical performance issues
+        list.getEntries().forEach((entry) => {
+          // Log critical performance issues (tasks taking more than 2x the threshold)
           if (entry.duration > LONG_TASK_THRESHOLD_MS * 2) {
-            console.warn('Critical performance issue detected:', {
+            console.warn("Critical performance issue detected:", {
               duration: `${Math.round(entry.duration)}ms`,
-              name: entry.name
+              name: entry.name,
             });
           }
-        }
+        });
       });
-      
-      observer.observe({ entryTypes: ['longtask'] });
-    } catch (e) {
+
+      observer.observe({ entryTypes: ["longtask"] });
+    } catch (error) {
       // Silent fail for unsupported browsers
+      console.error("PerformanceObserver not supported:", error);
     }
   }
 
   // Light-weight page load metrics
-  window.addEventListener('load', () => {
+  window.addEventListener("load", () => {
     setTimeout(() => {
-      if ('performance' in window) {
-        const pageNavigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+      if ("performance" in window) {
+        const pageNavigation = performance.getEntriesByType(
+          "navigation"
+        )[0] as PerformanceNavigationTiming;
         if (pageNavigation) {
-          console.info('Page loaded in:', `${Math.round(pageNavigation.loadEventEnd - pageNavigation.startTime)}ms`);
+          console.info(
+            "Page loaded in:",
+            `${Math.round(pageNavigation.loadEventEnd - pageNavigation.startTime)}ms`
+          );
         }
       }
     }, 0);
@@ -55,17 +60,19 @@ export const initializePerformanceMonitoring = () => {
  * @param componentName Name of the component being monitored
  */
 export const useRenderPerformance = (componentName: string) => {
-  const renderStart = useRef<number>();
-  
-  if (process.env.NODE_ENV === 'development') {
+  const renderStart = useRef<number | undefined>(undefined);
+
+  // Monitor render time only in development mode
+  if (process.env.NODE_ENV === "development") {
     renderStart.current = performance.now();
-    
-    // Use layout effect to measure render time
+
     useEffect(() => {
       if (renderStart.current) {
         const renderTime = performance.now() - renderStart.current;
         if (renderTime > RENDER_THRESHOLD_MS) {
-          console.warn(`Slow render detected in ${componentName}: ${Math.round(renderTime)}ms`);
+          console.warn(
+            `Slow render detected in ${componentName}: ${Math.round(renderTime)}ms`
+          );
         }
       }
     });
@@ -77,20 +84,27 @@ export const useRenderPerformance = (componentName: string) => {
  * @param callback Function to be executed
  * @param deps Dependency array for the effect
  */
-export const useDeferredEffect = (callback: () => void | (() => void), deps: React.DependencyList = []) => {
+export const useDeferredEffect = (
+  callback: () => void | (() => void),
+  deps: React.DependencyList = []
+) => {
   useEffect(() => {
-    // Use requestIdleCallback to run during browser idle time
-    if (typeof requestIdleCallback !== 'undefined') {
-      const handle = requestIdleCallback(() => {
-        return callback();
-      });
-      return () => cancelIdleCallback(handle);
-    } else {
-      // Fallback for browsers without requestIdleCallback
-      const timeoutId = setTimeout(callback, 1);
-      return () => clearTimeout(timeoutId);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Use requestIdleCallback if available, otherwise fallback to setTimeout
+    const callbackFn =
+      typeof requestIdleCallback !== "undefined"
+        ? () => requestIdleCallback(callback)
+        : () => setTimeout(callback, 1);
+
+    callbackFn();
+
+    // Cleanup function in case of any side effects
+    return () => {
+      if (typeof cancelIdleCallback !== "undefined") {
+        cancelIdleCallback(callbackFn);
+      } else {
+        clearTimeout(callbackFn);
+      }
+    };
   }, deps);
 };
 
@@ -105,16 +119,20 @@ export const useInView = (options = {}) => {
   useEffect(() => {
     if (!ref) return;
 
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsInView(entry.isIntersecting);
-    }, {
-      threshold: 0.1,
-      rootMargin: '100px',
-      ...options
-    });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "100px",
+        ...options,
+      }
+    );
 
     observer.observe(ref);
 
+    // Cleanup the observer on unmount
     return () => {
       observer.disconnect();
     };
@@ -132,41 +150,41 @@ export const useInView = (options = {}) => {
 export const optimizeImage = (
   imageElement: HTMLImageElement,
   src: string,
-  placeholder: string = '/placeholder.svg'
+  placeholder: string = "/placeholder.svg"
 ) => {
-  // Set placeholder immediately
+  // Set placeholder immediately for a smoother user experience
   imageElement.src = placeholder;
-  
+
   // Create new image object to preload
   const img = new Image();
-  
-  // When image loads, swap it in
+
+  // When image loads, replace the src with the actual image
   img.onload = () => {
     imageElement.src = src;
-    imageElement.classList.add('loaded');
+    imageElement.classList.add("loaded");
   };
-  
-  // Handle errors
+
+  // Handle errors by reverting to placeholder image
   img.onerror = () => {
     console.error(`Failed to load image: ${src}`);
     imageElement.src = placeholder;
   };
-  
+
   // Start loading the real image
   img.src = src;
 };
 
-// Simplified performance debugging tool
-if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+// Simplified performance debugging tool for development
+if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
   (window as any).__PERFORMANCE_MONITOR__ = {
     getMetrics: () => {
-      if ('performance' in window) {
+      if ("performance" in window) {
         return {
-          navigation: performance.getEntriesByType('navigation'),
-          resources: performance.getEntriesByType('resource').slice(0, 10)
+          navigation: performance.getEntriesByType("navigation"),
+          resources: performance.getEntriesByType("resource").slice(0, 10),
         };
       }
-      return 'Performance API not available';
-    }
+      return "Performance API not available";
+    },
   };
 }

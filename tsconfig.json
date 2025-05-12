@@ -1,19 +1,24 @@
 {
   "files": [],
   "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+    { "path": "./tsconfig.app.json" },  // Reference to app-specific TypeScript config
+    { "path": "./tsconfig.node.json" }  // Reference to Node-specific TypeScript config
   ],
   "compilerOptions": {
+    // Base directory for resolving non-relative module imports
     "baseUrl": ".",
+
+    // Alias configuration for module resolution
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"]  // Resolves "@" to the ./src/ folder
     },
-    "noImplicitAny": false,
-    "noUnusedParameters": false,
-    "skipLibCheck": true,
-    "allowJs": true,
-    "noUnusedLocals": false,
-    "strictNullChecks": false
+
+    // TypeScript compiler options
+    "noImplicitAny": false,             // Allow implicit 'any' type (for flexibility)
+    "noUnusedParameters": false,        // Allow unused function parameters
+    "skipLibCheck": true,               // Skip type checking of declaration files for faster compilation
+    "allowJs": true,                    // Allow JavaScript files to be compiled by TypeScript
+    "noUnusedLocals": false,            // Allow unused local variables
+    "strictNullChecks": false           // Disable strict null checks (useful for relaxed type safety)
   }
 }

@@ -1,6 +1,5 @@
-
 /**
- * Performance optimization utilities for React applications
+ * Performance optimization utilities for React applications.
  * This module provides functions to optimize the performance of React applications
  * by implementing best practices for rendering, network requests, and memory management.
  */
@@ -13,11 +12,13 @@ import { monitorMemoryUsage } from './performance/memoryUtils';
 import { useRenderCount, useDeferredCalculation, useThrottledValue } from './performance/reactPerformanceHooks';
 
 /**
- * Initialize all performance optimizations
- * @returns {Function} Cleanup function to remove all listeners and optimizations
+ * Initialize all performance optimizations.
+ * This function applies optimizations for media loading, network requests,
+ * scroll performance, and memory management.
+ * @returns {Function} Cleanup function to remove all listeners and optimizations.
  */
 export const initPerformanceOptimizations = () => {
-  // Apply all optimizations
+  // Array of cleanup functions for each applied optimization
   const cleanupFns: Array<() => void> = [
     optimizeMediaLoading(),
     optimizeNetworkRequests(),
@@ -31,19 +32,19 @@ export const initPerformanceOptimizations = () => {
   };
 };
 
-// Re-export all utilities for backward compatibility
+// Re-export all utilities for backward compatibility and easier access
 export {
   isElementInViewport,
   batchDomOperations,
-  // DOM utils
+  // DOM utilities
   optimizeMediaLoading,
-  // Network utils
+  // Network utilities
   optimizeNetworkRequests,
-  // Scroll utils
+  // Scroll utilities
   optimizeScrollPerformance,
-  // Memory utils
+  // Memory utilities
   monitorMemoryUsage,
-  // React hooks
+  // React performance hooks
   useRenderCount,
   useDeferredCalculation,
   useThrottledValue

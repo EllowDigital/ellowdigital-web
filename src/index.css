@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -59,19 +58,36 @@
   }
 
   /* Enhanced typography for readability across devices */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply tracking-tight font-bold;
     line-height: 1.2;
   }
 
-  h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
-  h2 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
-  h3 { font-size: clamp(1.25rem, 3vw, 2rem); }
-  h4 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
-  h5 { font-size: clamp(1rem, 2vw, 1.25rem); }
-  h6 { font-size: clamp(0.9rem, 1.5vw, 1.1rem); }
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+  h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  h3 {
+    font-size: clamp(1.25rem, 3vw, 2rem);
+  }
+  h4 {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  }
+  h5 {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+  }
+  h6 {
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  }
 
-  p { 
+  p {
     margin-bottom: 1rem;
     max-width: 70ch; /* Optimal reading width */
     line-height: 1.6;
@@ -83,7 +99,7 @@
   }
 
   /* Improve touch target size for better mobile experience */
-  button, 
+  button,
   a,
   [role="button"] {
     min-height: 44px; /* Minimum touch target size */
@@ -126,8 +142,9 @@
 
   /* Soft glow effect for highlighted elements */
   .soft-glow {
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.15),
-                0 0 30px rgba(255, 215, 0, 0.05);
+    box-shadow:
+      0 0 15px rgba(255, 215, 0, 0.15),
+      0 0 30px rgba(255, 215, 0, 0.05);
   }
 
   /* Section container with proper spacing and improved responsive design */
@@ -147,7 +164,7 @@
   .section-title-decorated {
     @apply section-title relative inline-flex flex-col items-center;
   }
-  
+
   .section-title-decorated::after {
     content: "";
     @apply h-1 w-16 bg-gradient-to-r from-brand-gold to-brand-yellow rounded-full mt-4;
@@ -157,12 +174,12 @@
   .card-hover {
     @apply transition-all duration-500 hover:shadow-card-hover transform hover:-translate-y-2 relative;
   }
-  
+
   .card-hover::after {
     content: "";
     @apply absolute inset-0 opacity-0 bg-gradient-to-t from-brand-yellow/10 to-transparent rounded-xl transition-opacity duration-300;
   }
-  
+
   .card-hover:hover::after {
     @apply opacity-100;
   }
@@ -171,13 +188,13 @@
   .card-border-glow {
     @apply relative;
   }
-  
+
   .card-border-glow::before {
     content: "";
     @apply absolute -inset-0.5 rounded-xl opacity-0 bg-gradient-to-tr from-brand-gold via-brand-yellow to-brand-gold blur-sm transition-opacity duration-300;
     z-index: -1;
   }
-  
+
   .card-border-glow:hover::before {
     @apply opacity-70;
   }
@@ -186,7 +203,7 @@
   .hover-scale {
     @apply transition-transform duration-300 hover:scale-105;
   }
-  
+
   .hover-scale-sm {
     @apply transition-transform duration-300 hover:scale-[1.03];
   }
@@ -205,11 +222,11 @@
   .badge {
     @apply inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-medium;
   }
-  
+
   .badge-primary {
     @apply badge bg-brand-yellow/20 text-brand-yellow border border-brand-yellow/30;
   }
-  
+
   .badge-outline {
     @apply badge border border-white/20 text-white/70;
   }
@@ -235,7 +252,7 @@
   .decoration-dot {
     @apply w-2 h-2 rounded-full bg-brand-yellow;
   }
-  
+
   .decoration-line {
     @apply h-px bg-gradient-to-r from-transparent via-brand-yellow/30 to-transparent;
   }
@@ -253,7 +270,7 @@
     flex-wrap: wrap;
     gap: clamp(1rem, 3vw, 2rem);
   }
-  
+
   .flex-responsive > * {
     flex: 1 1 clamp(min(100%, 20rem), 30%, 100%);
   }
@@ -263,7 +280,7 @@
     @apply relative overflow-hidden bg-brand-yellow hover:bg-brand-gold text-black font-medium px-5 py-3 rounded-md transition-all duration-500 shadow-md hover:shadow-lg;
     min-height: 48px;
   }
-  
+
   .btn-primary::after {
     content: "";
     @apply absolute inset-0 bg-white/20 translate-y-full hover:translate-y-0 transition-transform duration-500;
@@ -273,7 +290,7 @@
     @apply relative overflow-hidden bg-transparent hover:bg-brand-yellow/10 text-foreground border border-brand-yellow/30 font-medium px-5 py-3 rounded-md transition-all duration-300 shadow-sm hover:shadow;
     min-height: 48px;
   }
-  
+
   .btn-secondary::before {
     content: "";
     @apply absolute inset-0 bg-brand-yellow/5 scale-x-0 hover:scale-x-100 transition-transform duration-500;
@@ -284,7 +301,7 @@
     @apply relative overflow-hidden bg-transparent hover:bg-foreground/10 text-foreground border border-foreground/30 font-medium px-5 py-3 rounded-md transition-all duration-300;
     min-height: 48px;
   }
-  
+
   .btn-outline::after {
     content: "";
     @apply absolute bottom-0 left-0 right-0 h-px bg-foreground/30 scale-x-0 hover:scale-x-100 transition-transform duration-500;
@@ -296,7 +313,7 @@
     @apply relative overflow-hidden bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold px-6 py-3 rounded-md transition-all duration-300 shadow-lg hover:shadow-xl;
     min-height: 48px;
   }
-  
+
   .btn-gradient::before {
     content: "";
     @apply absolute inset-0 bg-white/20 scale-x-0 hover:scale-x-100 transition-transform duration-500;
@@ -329,7 +346,7 @@
     height: 100%;
     object-fit: cover;
   }
-  
+
   /* Professional dividers */
   .divider-gradient {
     @apply h-px w-full bg-gradient-to-r from-transparent via-brand-yellow/30 to-transparent my-8;
@@ -338,25 +355,48 @@
 
 /* --🌑 ENHANCED ANIMATIONS -- */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeDown {
-  from { opacity: 0; transform: translateY(-30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes morph {
-  0% { border-radius: 60% 40% 30% 70% / 60% 40% 30% 70%; }
-  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-  100% { border-radius: 60% 40% 30% 70% / 60% 70% 40% 30%; }
+  0% {
+    border-radius: 60% 40% 30% 70% / 60% 40% 30% 70%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 70% 40% 30%;
+  }
 }
 
 /* Improved loading animation for better UX during transitions */
 @keyframes pulse-loading {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 0.3; }
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }
 
 .loading-pulse {
@@ -365,15 +405,21 @@
 
 /* Professional shimmer effect */
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .shimmer-effect {
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(255, 215, 0, 0.1) 50%, 
-    transparent 100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 215, 0, 0.1) 50%,
+    transparent 100%
+  );
   background-size: 200% 100%;
   animation: shimmer 2s infinite linear;
 }
@@ -382,25 +428,25 @@
 
 /* Mobile-first approach with enhanced custom breakpoints */
 @media (max-width: 640px) {
-  .section-container { 
+  .section-container {
     padding-block: clamp(2rem, 8vh, 4rem);
     padding-inline: clamp(1rem, 5vw, 2rem);
   }
-  .grid { 
-    gap: clamp(0.75rem, 4vw, 1.25rem) !important; 
+  .grid {
+    gap: clamp(0.75rem, 4vw, 1.25rem) !important;
   }
 }
 
 /* Small mobile devices */
 @media (max-width: 375px) {
-  html { 
-    font-size: 14px; 
+  html {
+    font-size: 14px;
   }
-  
+
   .xs-stack {
     flex-direction: column !important;
   }
-  
+
   .xs-full {
     width: 100% !important;
   }
@@ -427,7 +473,7 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  
+
   .animate-none-safe {
     animation: none !important;
     transition: none !important;
@@ -440,11 +486,11 @@
     background: white !important;
     color: black !important;
   }
-  
+
   .no-print {
     display: none !important;
   }
-  
+
   a {
     text-decoration: underline;
   }

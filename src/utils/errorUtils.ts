@@ -1,22 +1,16 @@
-
-/**
- * Error handling utilities for enhanced error management
- * This module provides consistent error handling across the application
- */
-
 import { toast } from "sonner";
 
-// Error types for better categorization
+// Error types for categorizing different error scenarios
 export enum ErrorType {
   NETWORK = "network",
   VALIDATION = "validation",
   AUTHORIZATION = "authorization",
   SERVER = "server",
   CLIENT = "client",
-  UNKNOWN = "unknown"
+  UNKNOWN = "unknown",
 }
 
-// Error with additional context
+// Enhanced error interface with additional context
 export interface EnhancedError extends Error {
   type?: ErrorType;
   context?: Record<string, any>;
@@ -42,17 +36,17 @@ export const createError = (
 /**
  * Handle errors with appropriate UI feedback
  * @param error The error to handle
- * @param silent If true, don't show UI notification
+ * @param silent If true, suppress UI notifications
  */
 export const handleError = (error: any, silent = false): void => {
   const enhancedError = normalizeError(error);
   
-  // Only log errors in development
+  // Log errors in development for debugging
   if (process.env.NODE_ENV === 'development') {
     console.error("Error caught:", enhancedError);
   }
   
-  // Show user-friendly notification unless silent
+  // Show user-friendly toast notifications unless silent is true
   if (!silent) {
     const message = getUserFriendlyMessage(enhancedError);
     toast.error(message, {
@@ -65,18 +59,18 @@ export const handleError = (error: any, silent = false): void => {
 };
 
 /**
- * Convert any error into a standardized format
+ * Normalize any error into a standardized format
  */
 const normalizeError = (error: any): EnhancedError => {
   if (error instanceof Error) {
-    // Already an Error object
+    // If error is already an instance of Error, enhance it
     const enhancedError = error as EnhancedError;
     if (!enhancedError.type) {
       enhancedError.type = determineErrorType(error);
     }
     return enhancedError;
   } else if (typeof error === "string") {
-    // Convert string to error
+    // If error is a string, create an error from it
     return createError(error);
   } else {
     // Handle unknown error format
@@ -89,40 +83,36 @@ const normalizeError = (error: any): EnhancedError => {
 };
 
 /**
- * Determine error type from error object
+ * Determine the type of the error based on its properties
  */
 const determineErrorType = (error: any): ErrorType => {
-  // Network errors
   if (error.message?.includes("Network") || 
       error.message?.includes("fetch") || 
       error.message?.includes("connection") ||
       error.name === "AbortError") {
     return ErrorType.NETWORK;
   }
-  
-  // Auth errors
+
   if (error.status === 401 || error.status === 403 || 
       error.message?.includes("unauthorized") || 
       error.message?.includes("permission")) {
     return ErrorType.AUTHORIZATION;
   }
-  
-  // Validation errors
+
   if (error.status === 400 || error.message?.includes("validation")) {
     return ErrorType.VALIDATION;
   }
-  
-  // Server errors
+
   if ((error.status && error.status >= 500) || 
       error.message?.includes("server")) {
     return ErrorType.SERVER;
   }
-  
+
   return ErrorType.UNKNOWN;
 };
 
 /**
- * Get user-friendly error message
+ * Get a user-friendly error message based on the error type
  */
 const getUserFriendlyMessage = (error: EnhancedError): string => {
   const defaultMessages: Record<ErrorType, string> = {
@@ -133,16 +123,16 @@ const getUserFriendlyMessage = (error: EnhancedError): string => {
     [ErrorType.CLIENT]: "An error occurred in the application",
     [ErrorType.UNKNOWN]: "Something went wrong"
   };
-  
-  // Use error message if available, otherwise use default
+
+  // Return the custom error message or default message based on type
   return error.message || defaultMessages[error.type || ErrorType.UNKNOWN];
 };
 
 /**
  * Try to execute a function and handle any errors
- * @param fn Function to execute
- * @param errorHandler Custom error handler (optional)
- * @returns Result of the function or undefined if error
+ * @param fn The function to execute
+ * @param errorHandler Optional custom error handler
+ * @returns Result of the function or undefined if an error occurs
  */
 export const tryCatch = async <T>(
   fn: () => Promise<T>,
@@ -178,7 +168,7 @@ export const withErrorHandling = <T extends (...args: any[]) => any>(
           handleError(error);
         });
       }
-      
+
       return result;
     } catch (error) {
       handleError(error);

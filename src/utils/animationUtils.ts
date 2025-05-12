@@ -13,12 +13,14 @@ export const initScrollRevealAnimations = () => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("revealed");
+
         // Add custom animation class based on data attribute
         const animationType = entry.target.getAttribute("data-animation");
         if (animationType) {
           entry.target.classList.add(animationType);
         }
-        observer.unobserve(entry.target);
+
+        observer.unobserve(entry.target); // Stop observing once revealed
       }
     });
   };
@@ -27,36 +29,21 @@ export const initScrollRevealAnimations = () => {
 
   // Observe all elements with the 'reveal-animate' class
   const elementsToAnimate = document.querySelectorAll(".reveal-animate");
-  elementsToAnimate.forEach((element) => {
-    observer.observe(element);
-  });
+  elementsToAnimate.forEach((element) => observer.observe(element));
 
-  // Add parallax effect for background elements
+  // Parallax effect for background elements
   const parallaxElements = document.querySelectorAll(".parallax");
 
   const handleParallax = () => {
     const scrollTop = window.scrollY;
-
     parallaxElements.forEach((element) => {
       const speed = element.getAttribute("data-speed") || "0.5";
       const yPos = -(scrollTop * parseFloat(speed));
-      element.setAttribute("style", `transform: translate3d(0, ${yPos}px, 0)`);
+      element.style.transform = `translate3d(0, ${yPos}px, 0)`;
     });
   };
 
-  // Add morphing shapes animation with unique delays
-  const morphElements = document.querySelectorAll(".morph-shape");
-
-  morphElements.forEach((element) => {
-    const randomDelay = Math.random() * 10;
-    const randomDuration = 20 + Math.random() * 10;
-    element.setAttribute(
-      "style",
-      `animation-delay: ${randomDelay}s; animation-duration: ${randomDuration}s`
-    );
-  });
-
-  // Optimize scroll handler with requestAnimationFrame for better performance
+  // Optimized scroll handler using requestAnimationFrame
   let ticking = false;
   const optimizedHandleParallax = () => {
     if (!ticking) {
@@ -70,11 +57,10 @@ export const initScrollRevealAnimations = () => {
 
   window.addEventListener("scroll", optimizedHandleParallax, { passive: true });
 
+  // Return cleanup function to remove listeners
   return () => {
     window.removeEventListener("scroll", optimizedHandleParallax);
-    elementsToAnimate.forEach((element) => {
-      observer.unobserve(element);
-    });
+    elementsToAnimate.forEach((element) => observer.unobserve(element));
   };
 };
 
@@ -84,7 +70,6 @@ export const init3DTiltEffect = () => {
 
   const handleMouseMove = (e: MouseEvent, element: Element) => {
     const { left, top, width, height } = element.getBoundingClientRect();
-
     const x = (e.clientX - left) / width;
     const y = (e.clientY - top) / height;
 
@@ -94,65 +79,45 @@ export const init3DTiltEffect = () => {
     const glarePosition = `${x * 100}% ${y * 100}%`;
 
     // Use transform3d for hardware acceleration and add subtle scale
-    element.setAttribute(
-      "style",
-      `transform: perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.01, 1.01, 1.01) translateZ(0);
-       transition: transform 0.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-       will-change: transform;`
-    );
+    element.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.01, 1.01, 1.01) translateZ(0)`;
+    element.style.transition =
+      "transform 0.2s cubic-bezier(0.17, 0.67, 0.83, 0.67)";
+    element.style.willChange = "transform";
 
     // Enhanced glare effect
     const glareElement = element.querySelector(".glare");
     if (glareElement) {
-      glareElement.setAttribute(
-        "style",
-        `position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-         background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%); 
-         z-index: 1; opacity: 0.6; transition: opacity 0.3s ease-out, transform 0.2s ease-out; pointer-events: none; 
-         background-size: 200% 200%; background-position: ${glarePosition};
-         transform: rotate(${tiltY * 0.5}deg);
-         will-change: background-position, transform, opacity;`
-      );
+      glareElement.style.backgroundPosition = glarePosition;
+      glareElement.style.transform = `rotate(${tiltY * 0.5}deg)`;
     }
   };
 
   const handleMouseLeave = (element: Element) => {
-    // Smoother transition back to original position
-    element.setAttribute(
-      "style",
-      "transform: perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1) translateZ(0); transition: transform 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);"
-    );
+    element.style.transform =
+      "perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1) translateZ(0)";
+    element.style.transition =
+      "transform 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67)";
 
-    // Reset glare with fade out
+    // Reset glare effect
     const glareElement = element.querySelector(".glare");
     if (glareElement) {
-      glareElement.setAttribute(
-        "style",
-        "position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease-out;"
-      );
+      glareElement.style.opacity = "0";
+      glareElement.style.transition = "opacity 0.5s ease-out";
     }
   };
 
-  // Optimize performance with passive event listeners
+  // Attach events for each tilt element
   const attachEvents = (element: Element) => {
-    // Add glare element if it doesn't exist
     if (!element.querySelector(".glare")) {
       const glare = document.createElement("div");
       glare.classList.add("glare");
-      glare.setAttribute(
-        "style",
-        "position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%); z-index: 1; opacity: 0; transition: opacity 0.3s ease-out; pointer-events: none; background-size: 200% 200%;"
-      );
+      glare.style.opacity = "0";
+      glare.style.transition = "opacity 0.3s ease-out";
+      glare.style.pointerEvents = "none";
       element.appendChild(glare);
     }
 
-    // Using event delegation for better performance
-    const mouseMoveHandler = (e: Event) => {
-      if (e instanceof MouseEvent) {
-        handleMouseMove(e, element);
-      }
-    };
-
+    const mouseMoveHandler = (e: MouseEvent) => handleMouseMove(e, element);
     const mouseLeaveHandler = () => handleMouseLeave(element);
 
     element.addEventListener("mousemove", mouseMoveHandler, { passive: true });
@@ -167,14 +132,12 @@ export const init3DTiltEffect = () => {
     };
   };
 
-  // Store all cleanup functions
   const cleanupFunctions: Array<() => void> = [];
+  tiltElements.forEach((element) =>
+    cleanupFunctions.push(attachEvents(element))
+  );
 
-  tiltElements.forEach((element) => {
-    cleanupFunctions.push(attachEvents(element));
-  });
-
-  // Return function to clean up all event listeners
+  // Return cleanup function to remove all event listeners
   return () => {
     cleanupFunctions.forEach((cleanup) => cleanup());
   };
@@ -185,21 +148,16 @@ export const init3DCodeAnimation = () => {
   const codeElement = document.querySelector(".floating-code-3d");
   if (!codeElement) return () => {}; // Return empty cleanup if element doesn't exist
 
-  // Create a more natural floating animation effect
   const animate = () => {
-    const time = Date.now() * 0.001; // time in seconds
+    const time = Date.now() * 0.001;
+    const translateY = Math.sin(time * 0.5) * 8 + Math.sin(time * 0.32) * 3;
+    const rotateY = Math.sin(time * 0.3) * 2;
+    const rotateX = Math.cos(time * 0.4) * 1.5;
 
-    // Create subtle floating motion with multiple frequency components
-    const translateY = Math.sin(time * 0.5) * 8 + Math.sin(time * 0.32) * 3; // Combined frequencies
-    const rotateY = Math.sin(time * 0.3) * 2; // Subtle rotation
-    const rotateX = Math.cos(time * 0.4) * 1.5; // Additional axis rotation for more realism
-
-    codeElement.setAttribute(
-      "style",
-      `transform: translateY(${translateY}px) rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateZ(0);
-       transition: transform 0.1s cubic-bezier(0.25, 0.1, 0.25, 1);
-       will-change: transform;`
-    );
+    codeElement.style.transform = `translateY(${translateY}px) rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateZ(0)`;
+    codeElement.style.transition =
+      "transform 0.1s cubic-bezier(0.25, 0.1, 0.25, 1)";
+    codeElement.style.willChange = "transform";
 
     requestAnimationFrame(animate);
   };
@@ -207,10 +165,8 @@ export const init3DCodeAnimation = () => {
   // Start animation
   const animationFrame = requestAnimationFrame(animate);
 
-  // Return cleanup function
-  return () => {
-    cancelAnimationFrame(animationFrame);
-  };
+  // Return cleanup function to cancel animation
+  return () => cancelAnimationFrame(animationFrame);
 };
 
 // Enhanced typing animation for code elements with more realistic behavior
@@ -225,37 +181,28 @@ export const initTypingAnimation = () => {
     let currentText = "";
     let charIndex = 0;
 
-    // Clear any existing content
     element.textContent = "";
 
-    // Start typing after specified delay
     setTimeout(() => {
-      // Add randomization to typing speed for more natural effect
       const typingInterval = setInterval(() => {
         if (charIndex < text.length) {
-          // Add random variation to typing speed (±30% variation)
           const randomFactor = 0.7 + Math.random() * 0.6;
-
           currentText += text.charAt(charIndex);
           element.textContent = currentText;
           charIndex++;
 
-          // Dynamically adjust interval for next character for more human-like typing
           if (charIndex < text.length) {
             clearInterval(typingInterval);
 
-            // Slight pause for punctuation
             const nextChar = text.charAt(charIndex);
             const isPunctuation = [".", ",", ";", ":", "!", "?"].includes(
               nextChar
             );
-
             const nextDelay = isPunctuation
-              ? speed * 3 * randomFactor // Longer pause for punctuation
-              : speed * randomFactor; // Regular typing with randomness
+              ? speed * 3 * randomFactor
+              : speed * randomFactor;
 
             setTimeout(() => {
-              // Recursively call with new interval
               const newTypingInterval = setInterval(() => {
                 if (charIndex < text.length) {
                   currentText += text.charAt(charIndex);
@@ -264,14 +211,12 @@ export const initTypingAnimation = () => {
                 } else {
                   clearInterval(newTypingInterval);
 
-                  // Add blinking cursor at the end if specified
                   if (element.hasAttribute("data-typing-cursor")) {
                     const cursor = document.createElement("span");
                     cursor.className = "typing-cursor";
                     cursor.textContent = "|";
                     element.appendChild(cursor);
 
-                    // Make cursor blink with slight randomness
                     setInterval(() => {
                       cursor.style.opacity =
                         cursor.style.opacity === "0" ? "1" : "0";
@@ -283,15 +228,12 @@ export const initTypingAnimation = () => {
           }
         } else {
           clearInterval(typingInterval);
-
-          // Add blinking cursor at the end if specified
           if (element.hasAttribute("data-typing-cursor")) {
             const cursor = document.createElement("span");
             cursor.className = "typing-cursor";
             cursor.textContent = "|";
             element.appendChild(cursor);
 
-            // Make cursor blink
             setInterval(() => {
               cursor.style.opacity = cursor.style.opacity === "0" ? "1" : "0";
             }, 530);
@@ -305,24 +247,23 @@ export const initTypingAnimation = () => {
   return () => {};
 };
 
-// Add new function for scroll progress indicator
+// Scroll progress indicator
 export const initScrollProgress = () => {
-  const scrollProgress = document.querySelector(".scroll-progress");
-  if (!scrollProgress) return () => {};
+  const progressBar = document.querySelector(".progress-bar");
 
-  const updateScrollProgress = () => {
-    const totalHeight = document.body.scrollHeight - window.innerHeight;
-    const progress = (window.scrollY / totalHeight) * 100;
-    scrollProgress.setAttribute("style", `width: ${progress}%`);
+  const updateProgressBar = () => {
+    const scrollPosition = window.scrollY;
+    const docHeight =
+      document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercentage = (scrollPosition / docHeight) * 100;
+
+    progressBar.style.width = `${scrollPercentage}%`;
   };
 
-  // Optimize with passive listener
-  window.addEventListener("scroll", updateScrollProgress, { passive: true });
+  window.addEventListener("scroll", updateProgressBar, { passive: true });
 
-  // Initial call
-  updateScrollProgress();
-
+  // Return cleanup function to remove scroll event listener
   return () => {
-    window.removeEventListener("scroll", updateScrollProgress);
+    window.removeEventListener("scroll", updateProgressBar);
   };
 };

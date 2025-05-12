@@ -1,30 +1,43 @@
 {
   "compilerOptions": {
+    // Target modern JavaScript
     "target": "ES2020",
+
+    // Use `define` semantics for class fields (standard-compliant)
     "useDefineForClassFields": true,
+
+    // Include modern JavaScript and DOM libraries
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
+
+    // Use modern module output
     "module": "ESNext",
+
+    // Skip checking of library files (faster compilation)
     "skipLibCheck": true,
 
     /* Bundler-related settings */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
+    "moduleResolution": "bundler", // Resolve modules like Vite/Webpack
+    "allowImportingTsExtensions": true, // Allow importing .ts/.tsx extensions
+    "isolatedModules": true, // Treat each file as a separate module
+    "moduleDetection": "force", // Force detection of modules (no auto)
 
+    // Don’t emit compiled files (use with bundlers like Vite)
     "noEmit": true,
+
+    // Use the new JSX transform (React 17+)
     "jsx": "react-jsx",
 
     /* Linting & Type Checking */
-    "strict": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noImplicitAny": false,
-    "noFallthroughCasesInSwitch": false,
+    "strict": false, // Disable all strict type checks
+    "noUnusedLocals": false, // Allow unused local variables
+    "noUnusedParameters": false, // Allow unused function parameters
+    "noImplicitAny": false, // Allow 'any' without explicit type
+    "noFallthroughCasesInSwitch": false, // Allow case fallthrough in switch
 
+    // Base path for module resolution
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"] // Alias "@" to "./src/"
     }
   },
   "include": ["src"]

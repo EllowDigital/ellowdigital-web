@@ -1,33 +1,37 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
-// Ensure the root element exists before rendering
+// Ensure root element exists
 const rootElement = document.getElementById('root');
 if (!rootElement) {
-  throw new Error('Root element not found');
+  throw new Error('Failed to find the root element');
 }
 
-// Create the root and render the App component
+// Initialize React root
 const root = ReactDOM.createRoot(rootElement);
+
+// Render the app with global error boundary
 root.render(
-  <ErrorBoundary>
-    <App />
-  </ErrorBoundary>
+  <React.StrictMode>
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
+  </React.StrictMode>
 );
 
-// Add service worker registration for PWA support
+// Register service worker for PWA support in production
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
+    navigator.serviceWorker
+      .register('/sw.js')
       .then(registration => {
-        console.log('SW registered:', registration);
+        console.log('Service Worker registered:', registration);
       })
-      .catch(registrationError => {
-        console.log('SW registration failed:', registrationError);
+      .catch(error => {
+        console.error('Service Worker registration failed:', error);
       });
   });
 }

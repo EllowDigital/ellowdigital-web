@@ -20,9 +20,8 @@ type ValidationOptions = {
  * @returns Function to start validation check
  */
 export const createLinkValidator = () => {
-  // Issues collection
   let issues: LinkIssue[] = [];
-  
+
   // Security check for links that should use HTTPS
   const checkSecureLinks = (links: NodeListOf<HTMLAnchorElement>) => {
     links.forEach(link => {
@@ -33,21 +32,21 @@ export const createLinkValidator = () => {
           url: href,
           element: link,
           type: 'security',
-          description: 'Link should use HTTPS for security'
+          description: 'Link should use HTTPS for security',
         });
       }
     });
   };
-  
+
   // Check for external links missing target and rel attributes
   const checkExternalLinks = (links: NodeListOf<HTMLAnchorElement>) => {
     const currentDomain = window.location.hostname;
-    
+
     links.forEach(link => {
       const href = link.href;
       try {
         const linkDomain = new URL(href).hostname;
-        
+
         // If external link
         if (linkDomain && linkDomain !== currentDomain) {
           // Check for target attribute
@@ -56,17 +55,17 @@ export const createLinkValidator = () => {
               url: href,
               element: link,
               type: 'external',
-              description: 'External link missing target="_blank" attribute'
+              description: 'External link missing target="_blank" attribute',
             });
           }
-          
+
           // Check for rel attribute with noreferrer and noopener for security
           if (!link.rel || !link.rel.includes('noreferrer') || !link.rel.includes('noopener')) {
             issues.push({
               url: href,
               element: link,
               type: 'security',
-              description: 'External link should have rel="noreferrer noopener" for security'
+              description: 'External link should have rel="noreferrer noopener" for security',
             });
           }
         }
@@ -75,7 +74,7 @@ export const createLinkValidator = () => {
       }
     });
   };
-  
+
   // Check fragment links (anchors to page sections)
   const checkFragmentLinks = (links: NodeListOf<HTMLAnchorElement>) => {
     links.forEach(link => {
@@ -90,30 +89,30 @@ export const createLinkValidator = () => {
             url: href,
             element: link,
             type: 'fragment',
-            description: `Fragment link points to non-existent element with id "${targetId}"`
+            description: `Fragment link points to non-existent element with id "${targetId}"`,
           });
         }
       }
     });
   };
-  
+
   // Check for tracking parameters in URLs that might be unnecessary
   const checkTrackingParameters = (links: NodeListOf<HTMLAnchorElement>) => {
     const trackingParams = ['utm_source', 'utm_medium', 'utm_campaign', 'fbclid', 'gclid'];
-    
+
     links.forEach(link => {
       const href = link.href;
-      
+
       try {
         const url = new URL(href);
-        
+
         trackingParams.forEach(param => {
           if (url.searchParams.has(param)) {
             issues.push({
               url: href,
               element: link,
               type: 'tracking',
-              description: `Link contains tracking parameter "${param}" which may not be necessary for internal navigation`
+              description: `Link contains tracking parameter "${param}" which may not be necessary for internal navigation`,
             });
           }
         });
@@ -122,21 +121,21 @@ export const createLinkValidator = () => {
       }
     });
   };
-  
+
   // Fix link issues automatically
   const fixLinkIssues = (autoFix: boolean = false) => {
     if (!autoFix) return;
-    
+
     issues.forEach(issue => {
       const { element, type } = issue;
-      
+
       switch (type) {
         case 'security':
           // Fix HTTP to HTTPS
           if (element.href.startsWith('http:')) {
             element.href = element.href.replace('http:', 'https:');
           }
-          
+
           // Add security attributes to external links
           if (!element.getAttribute('rel') || 
               !element.getAttribute('rel')?.includes('noreferrer') ||
@@ -144,40 +143,40 @@ export const createLinkValidator = () => {
             element.setAttribute('rel', 'noreferrer noopener');
           }
           break;
-        
+
         case 'external':
           // Add target blank to external links
           if (!element.target) {
             element.target = '_blank';
           }
           break;
-          
+
         // We don't auto-fix fragment or tracking issues as they need manual review
       }
     });
   };
-  
+
   // Main validation function - update to require consoleOutput parameter
   const validateLinks = (options: ValidationOptions = { autoFix: false, consoleOutput: true }) => {
     if (typeof window === 'undefined') return { issues: [] };
-    
+
     // Reset issues
     issues = [];
-    
+
     // Get all links
     const links = document.querySelectorAll<HTMLAnchorElement>('a[href]');
-    
+
     // Run all checks
     checkSecureLinks(links);
     checkExternalLinks(links);
     checkFragmentLinks(links);
     checkTrackingParameters(links);
-    
+
     // Auto fix if enabled
     if (options.autoFix) {
       fixLinkIssues(true);
     }
-    
+
     // Console output for development
     if (options.consoleOutput) {
       if (issues.length > 0) {
@@ -193,10 +192,10 @@ export const createLinkValidator = () => {
         console.info('Link validation completed: No issues found.');
       }
     }
-    
+
     return { issues };
   };
-  
+
   return validateLinks;
 };
 
@@ -206,9 +205,9 @@ export const createLinkValidator = () => {
  */
 export const validateLinksAfterLoad = (options: ValidationOptions = { autoFix: false, consoleOutput: true }) => {
   if (typeof window === 'undefined') return () => {};
-  
+
   const validator = createLinkValidator();
-  
+
   // We use both load and DOMContentLoaded to ensure we catch as many links as possible
   const validate = () => {
     // Wait a bit after load to ensure all dynamic content is rendered
@@ -216,13 +215,13 @@ export const validateLinksAfterLoad = (options: ValidationOptions = { autoFix: f
       validator(options);
     }, 1000);
   };
-  
+
   if (document.readyState === 'complete') {
     validate();
   } else {
     window.addEventListener('load', validate);
   }
-  
+
   return () => {
     window.removeEventListener('load', validate);
   };

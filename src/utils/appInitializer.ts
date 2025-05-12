@@ -1,4 +1,3 @@
-
 /**
  * Application initialization utility
  * Handles all setup tasks that need to run when the app starts
@@ -13,13 +12,13 @@ import { toast } from 'sonner';
  * Initialize all application services and optimizations
  */
 export const initializeApplication = () => {
-  // Set up error handling for uncaught errors
+  // Set up global error handling
   setupGlobalErrorHandling();
   
   // Initialize performance optimizations
   const cleanupPerformance = initPerformanceOptimizations();
   
-  // Set up performance monitoring
+  // Initialize performance monitoring
   initializePerformanceMonitoring();
   initWebVitalsMonitoring();
   
@@ -29,10 +28,8 @@ export const initializeApplication = () => {
   // Apply responsive optimizations
   applyResponsiveOptimizations();
   
-  // Return cleanup function
-  return () => {
-    cleanupPerformance();
-  };
+  // Return cleanup function for performance optimizations
+  return () => cleanupPerformance();
 };
 
 /**
@@ -40,32 +37,32 @@ export const initializeApplication = () => {
  */
 const setupGlobalErrorHandling = () => {
   if (typeof window !== 'undefined') {
-    // Original error handler
+    // Store the original error handler
     const originalOnError = window.onerror;
-    
-    // Global error handler
+
+    // Set up global error handler
     window.onerror = (message, source, lineno, colno, error) => {
       console.error('Global error caught:', { message, source, lineno, colno, error });
-      
-      // Show user-friendly toast
+
+      // Show user-friendly toast message
       toast.error('Something went wrong', {
         description: 'The application encountered an error',
         duration: 5000,
       });
-      
-      // Call original handler if exists
+
+      // Call the original error handler, if defined
       if (originalOnError) {
         return originalOnError(message, source, lineno, colno, error);
       }
-      
+
       // Return false to allow default browser error handling
       return false;
     };
-    
-    // Unhandled promise rejection handler
+
+    // Handle unhandled promise rejections
     window.addEventListener('unhandledrejection', (event) => {
       console.error('Unhandled promise rejection:', event.reason);
-      
+
       toast.error('Background operation failed', {
         duration: 4000,
       });
@@ -79,33 +76,28 @@ const setupGlobalErrorHandling = () => {
 const optimizeImageLoading = () => {
   if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
     // Create observer for lazy loading
-    const imageObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const image = entry.target as HTMLImageElement;
-            if (image.dataset.src) {
-              // Replace src with data-src when visible
-              image.src = image.dataset.src;
-              image.removeAttribute('data-src');
-              imageObserver.unobserve(image);
-            }
+    const imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const image = entry.target as HTMLImageElement;
+          if (image.dataset.src) {
+            // Replace src with data-src when image becomes visible
+            image.src = image.dataset.src;
+            image.removeAttribute('data-src');
+            imageObserver.unobserve(image); // Stop observing the image once loaded
           }
-        });
-      },
-      {
-        rootMargin: '200px 0px', // Start loading before visible
-        threshold: 0.01, // Trigger when just 1% visible
-      }
-    );
-    
-    // Find all images with data-src attribute
-    const lazyImages = document.querySelectorAll('img[data-src]');
-    lazyImages.forEach((img) => {
-      imageObserver.observe(img);
+        }
+      });
+    }, {
+      rootMargin: '200px 0px', // Start loading before the image is visible
+      threshold: 0.01, // Trigger when just 1% visible
     });
     
-    // Handle native lazy loading for browsers that support it
+    // Find all images with data-src attribute and observe them
+    const lazyImages = document.querySelectorAll('img[data-src]');
+    lazyImages.forEach((img) => imageObserver.observe(img));
+    
+    // Enable native lazy loading for browsers that support it
     if ('loading' in HTMLImageElement.prototype) {
       const images = document.querySelectorAll('img.lazy:not([data-src])');
       images.forEach((img) => {
@@ -120,17 +112,9 @@ const optimizeImageLoading = () => {
  */
 const applyResponsiveOptimizations = () => {
   if (typeof window !== 'undefined') {
-    // Check for touch capabilities
-    const isTouch = 'ontouchstart' in window || 
-                    navigator.maxTouchPoints > 0 || 
-                    (navigator as any).msMaxTouchPoints > 0;
-    
-    // Add appropriate class to body
-    if (isTouch) {
-      document.body.classList.add('touch-device');
-    } else {
-      document.body.classList.add('no-touch');
-    }
+    // Check if the device supports touch events
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || (navigator as any).msMaxTouchPoints > 0;
+    document.body.classList.add(isTouchDevice ? 'touch-device' : 'no-touch');
     
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -138,7 +122,7 @@ const applyResponsiveOptimizations = () => {
       document.body.classList.add('reduced-motion');
     }
     
-    // Check connection type for data saving mode
+    // Check for data saver mode based on network connection
     if ('connection' in navigator) {
       const connection = (navigator as any).connection;
       if (connection && connection.saveData) {
@@ -146,7 +130,7 @@ const applyResponsiveOptimizations = () => {
       }
     }
     
-    // Apply responsive font size based on viewport
+    // Update font size based on viewport width
     updateResponsiveFontSize();
     window.addEventListener('resize', updateResponsiveFontSize);
   }
@@ -156,27 +140,20 @@ const applyResponsiveOptimizations = () => {
  * Update root font size based on viewport width for better responsiveness
  */
 const updateResponsiveFontSize = () => {
-  // Base font size calculation
-  const minWidth = 320; // Minimum viewport width to consider
-  const maxWidth = 1920; // Maximum viewport width to consider
+  const minWidth = 320; // Minimum viewport width
+  const maxWidth = 1920; // Maximum viewport width
   const minFontSize = 14; // Minimum font size in px
   const maxFontSize = 18; // Maximum font size in px
   
   const width = window.innerWidth;
   
-  // Calculate font size based on viewport width
-  let fontSize;
-  if (width <= minWidth) {
-    fontSize = minFontSize;
-  } else if (width >= maxWidth) {
-    fontSize = maxFontSize;
-  } else {
-    // Linear interpolation between min and max font sizes
-    const fontRange = maxFontSize - minFontSize;
-    const widthRange = maxWidth - minWidth;
-    fontSize = minFontSize + fontRange * ((width - minWidth) / widthRange);
-  }
+  // Calculate font size based on viewport width using linear interpolation
+  const fontSize = width <= minWidth
+    ? minFontSize
+    : width >= maxWidth
+    ? maxFontSize
+    : minFontSize + ((width - minWidth) / (maxWidth - minWidth)) * (maxFontSize - minFontSize);
   
-  // Apply font size to html element (affects rem units)
+  // Apply font size to the root element (affects rem units)
   document.documentElement.style.fontSize = `${fontSize}px`;
 };

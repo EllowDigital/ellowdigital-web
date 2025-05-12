@@ -1,11 +1,8 @@
-
 import type { Config } from "tailwindcss";
 
-export default {
-  // Disable dark mode
-  darkMode: "class",
+const config: Config = {
+  darkMode: "class", // Use class-based dark mode
 
-  // Paths to all of the template files that Tailwind should scan for class names
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -13,20 +10,17 @@ export default {
     "./src/**/*.{ts,tsx}",
   ],
 
-  // Prefix for utility classes (empty in this case)
   prefix: "",
 
-  // Tailwind theme customization
   theme: {
     container: {
-      center: true, // Centers the container
-      padding: "2rem", // Adds padding to the container
+      center: true,
+      padding: "2rem",
       screens: {
-        "2xl": "1400px", // Sets container max width for '2xl' screen size
+        "2xl": "1400px",
       },
     },
     extend: {
-      // Custom colors for various UI elements - updated to yellow, black, white theme
       colors: {
         border: "#222222",
         input: "#222222",
@@ -34,62 +28,60 @@ export default {
         background: "#121212",
         foreground: "#F6F6F6",
         primary: {
-          DEFAULT: "#FFD700", // Main accent color (yellow)
-          foreground: "#121212", // Black
+          DEFAULT: "#FFD700",
+          foreground: "#121212",
         },
         secondary: {
-          DEFAULT: "#222222", // Dark gray/almost black
-          foreground: "#FFD700", // Yellow
+          DEFAULT: "#222222",
+          foreground: "#FFD700",
         },
         destructive: {
           DEFAULT: "#b91c1c",
-          foreground: "#fff",
+          foreground: "#ffffff",
         },
         muted: {
           DEFAULT: "#353535",
           foreground: "#BBBBBB",
         },
         accent: {
-          DEFAULT: "#FFD700", // Yellow
-          foreground: "#121212", // Black
+          DEFAULT: "#FFD700",
+          foreground: "#121212",
         },
         popover: {
           DEFAULT: "#1A1A1A",
-          foreground: "#FFD700", // Yellow
+          foreground: "#FFD700",
         },
         card: {
           DEFAULT: "#191919",
-          foreground: "#FFD700", // Yellow
+          foreground: "#FFD700",
         },
         sidebar: {
           DEFAULT: "#191919",
-          foreground: "#FFD700", // Yellow
-          primary: "#FFD700", // Yellow
+          foreground: "#FFD700",
+          primary: "#FFD700",
           "primary-foreground": "#191919",
-          accent: "#FFDF00", // Slightly different yellow
+          accent: "#FFDF00",
           "accent-foreground": "#191919",
           border: "#353535",
-          ring: "#FFD700", // Yellow
+          ring: "#FFD700",
         },
         brand: {
-          gold: "#FFD700", // Main yellow
-          yellow: "#FFDF00", // Slightly different yellow
-          softYellow: "#FFF8DC", // Cornsilk (soft yellow)
-          black: "#121212", // Black
-          offBlack: "#1A1A1A", // Slightly lighter black
-          white: "#F8F8F8", // Off-white
-          offWhite: "#EBEBEB", // Slightly darker white
+          gold: "#FFD700",
+          yellow: "#FFDF00",
+          softYellow: "#FFF8DC",
+          black: "#121212",
+          offBlack: "#1A1A1A",
+          white: "#F8F8F8",
+          offWhite: "#EBEBEB",
         },
       },
 
-      // Custom border radii values
       borderRadius: {
-        lg: "var(--radius)", // Large border radius
-        md: "calc(var(--radius) - 2px)", // Medium border radius
-        sm: "calc(var(--radius) - 4px)", // Small border radius
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
 
-      // Custom breakpoints for responsive design
       screens: {
         xs: "475px",
         sm: "640px",
@@ -102,7 +94,6 @@ export default {
         "tablet-landscape": { min: "768px", max: "1023px" },
       },
 
-      // Custom keyframes for animations
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -138,7 +129,6 @@ export default {
         },
       },
 
-      // Custom animations for transitions
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
@@ -150,7 +140,6 @@ export default {
         shimmer: "shimmer 2s infinite linear",
       },
 
-      // Custom box shadows for UI elements
       boxShadow: {
         elegant: "0 10px 30px -10px rgba(0, 0, 0, 0.2)",
         "card-hover": "0 20px 30px -15px rgba(0, 0, 0, 0.2)",
@@ -160,7 +149,6 @@ export default {
           "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 -2px 0 0 rgba(255, 255, 255, 0.15) inset, 0 2px 0 0 rgba(0, 0, 0, 0.1) inset",
       },
 
-      // Custom transition properties
       transitionProperty: {
         height: "height",
         spacing: "margin, padding",
@@ -170,6 +158,7 @@ export default {
     },
   },
 
-  // Plugins for additional functionality (e.g., animations)
   plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+};
+
+export default config;
