@@ -6,7 +6,7 @@
 
 import { initPerformanceOptimizations } from './performanceUtils';
 import { initializePerformanceMonitoring } from './performanceMonitor';
-import { initPerformanceMonitoring } from './performanceMonitoring';
+import { initPerformanceMonitoring as initWebVitalsMonitoring } from './performanceMonitoring';
 import { toast } from 'sonner';
 
 /**
@@ -21,7 +21,7 @@ export const initializeApplication = () => {
   
   // Set up performance monitoring
   initializePerformanceMonitoring();
-  initPerformanceMonitoring();
+  initWebVitalsMonitoring();
   
   // Optimize image loading
   optimizeImageLoading();
