@@ -16,7 +16,8 @@ import { initPerformanceOptimizations } from "@/utils/performanceUtils";
 import { initPerformanceMonitoring } from "@/utils/performanceMonitoring";
 import { SkipToContent } from "@/components/accessibility/SkipToContent";
 import { AxiosInterceptor } from "@/utils/axiosInterceptor";
-import { optimizeImageLoading, handleBrokenImages } from "@/utils/assetOptimizationUtils";
+import { optimizeImageLoading, handleBrokenImages } from "@/utils/assets/imageOptimization";
+import { deferNonCriticalResources } from "@/utils/assets/resourceOptimization";
 import { validateLinksAfterLoad } from "@/utils/linkValidationUtils";
 
 // Create and configure the React Query client with optimized settings
@@ -43,6 +44,7 @@ const App = () => {
     // Initialize asset optimization
     const cleanupImageLoading = optimizeImageLoading();
     const cleanupBrokenImageHandling = handleBrokenImages();
+    const cleanupResourceOptimization = deferNonCriticalResources();
     
     // Link validation in dev mode only
     let cleanupLinkValidation = () => {};
@@ -58,6 +60,7 @@ const App = () => {
       cleanupPerformance();
       cleanupImageLoading();
       cleanupBrokenImageHandling();
+      cleanupResourceOptimization();
       cleanupLinkValidation();
     };
   }, []);

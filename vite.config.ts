@@ -1,10 +1,10 @@
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 import viteCompression from "vite-plugin-compression";
 import { VitePWA } from "vite-plugin-pwa";
-import rollupNodePolyfills from "rollup-plugin-node-polyfills";
 import inject from "@rollup/plugin-inject";
 
 export default defineConfig(({ mode }) => {
@@ -70,22 +70,24 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
-        stream: "rollup-plugin-node-polyfills/polyfills/stream",
-        util: "rollup-plugin-node-polyfills/polyfills/util",
-        buffer: "rollup-plugin-node-polyfills/polyfills/buffer-es6",
-        process: "rollup-plugin-node-polyfills/polyfills/process-es6",
+        // Use browser-compatible versions of node built-ins
+        stream: "stream-browserify",
+        buffer: "buffer",
+        util: "util",
+        process: "process/browser",
       },
-      mainFields: ["module", "jsnext:main", "jsnext"],
     },
     build: {
       sourcemap: false,
       minify: "terser",
       rollupOptions: {
         plugins: [
-          rollupNodePolyfills(),
           inject({
+            // Inject these globals in the bundle
             Buffer: ["buffer", "Buffer"],
-            process: "process",
+            process: "process/browser",
+            global: "rollup-plugin-node-polyfills/polyfills/global",
+            util: "util",
           }),
         ],
         output: {
@@ -101,21 +103,26 @@ export default defineConfig(({ mode }) => {
         },
       },
       chunkSizeWarningLimit: 1000,
+      // Add specific handling for environment variables
+      commonjsOptions: {
+        transformMixedEsModules: true,
+      },
     },
     preview: {
       port: 8080,
       strictPort: true,
     },
+    define: {
+      // Define global variables that will be available in the bundle
+      'process.env': {},
+      'global': 'window',
+    },
     optimizeDeps: {
-      include: ["util", "stream", "buffer", "process"],
+      include: ["buffer", "process/browser", "util", "stream-browserify"],
       esbuildOptions: {
         define: {
           global: "globalThis",
         },
-        inject: [
-          path.resolve(__dirname, "node_modules", "buffer", "index.js"),
-          path.resolve(__dirname, "node_modules", "process", "browser.js"),
-        ],
       },
     },
   };

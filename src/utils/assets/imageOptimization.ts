@@ -45,8 +45,10 @@ export const optimizeImageLoading = () => {
 
   // Add 'loading=lazy' attribute to all images that support it
   if ('loading' in HTMLImageElement.prototype) {
-    document.querySelectorAll('img:not([loading])').forEach((img) => {
-      img.loading = 'lazy';
+    document.querySelectorAll('img').forEach((img: HTMLImageElement) => {
+      if (!img.hasAttribute('loading')) {
+        img.loading = 'lazy';
+      }
     });
   }
 
