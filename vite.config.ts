@@ -1,3 +1,4 @@
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -69,7 +70,7 @@ export default defineConfig(({ mode }) => {
         stream: "stream-browserify",
         buffer: "buffer",
         util: "util",
-        process: path.resolve(__dirname, "node_modules/process/browser"), // Ensure absolute path for process/browser
+        process: "process/browser",
       },
     },
 

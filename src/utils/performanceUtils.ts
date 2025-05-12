@@ -1,3 +1,4 @@
+
 /**
  * Performance optimization utilities for React applications
  * This module provides functions to optimize the performance of React applications
