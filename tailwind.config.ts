@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -25,7 +26,7 @@ export default {
       },
     },
     extend: {
-      // Custom colors for various UI elements
+      // Custom colors for various UI elements - updated to yellow, black, white theme
       colors: {
         border: "#222222",
         input: "#222222",
@@ -33,12 +34,12 @@ export default {
         background: "#121212",
         foreground: "#F6F6F6",
         primary: {
-          DEFAULT: "#FFD700", // Main accent color
-          foreground: "#121212",
+          DEFAULT: "#FFD700", // Main accent color (yellow)
+          foreground: "#121212", // Black
         },
         secondary: {
-          DEFAULT: "#222222",
-          foreground: "#FFD700",
+          DEFAULT: "#222222", // Dark gray/almost black
+          foreground: "#FFD700", // Yellow
         },
         destructive: {
           DEFAULT: "#b91c1c",
@@ -49,35 +50,35 @@ export default {
           foreground: "#BBBBBB",
         },
         accent: {
-          DEFAULT: "#FFD700",
-          foreground: "#121212",
+          DEFAULT: "#FFD700", // Yellow
+          foreground: "#121212", // Black
         },
         popover: {
           DEFAULT: "#1A1A1A",
-          foreground: "#FFD700",
+          foreground: "#FFD700", // Yellow
         },
         card: {
           DEFAULT: "#191919",
-          foreground: "#FFD700",
+          foreground: "#FFD700", // Yellow
         },
         sidebar: {
           DEFAULT: "#191919",
-          foreground: "#FFD700",
-          primary: "#FFD700",
+          foreground: "#FFD700", // Yellow
+          primary: "#FFD700", // Yellow
           "primary-foreground": "#191919",
-          accent: "#FFDF00",
+          accent: "#FFDF00", // Slightly different yellow
           "accent-foreground": "#191919",
           border: "#353535",
-          ring: "#FFD700",
+          ring: "#FFD700", // Yellow
         },
         brand: {
-          gold: "#FFD700",
-          yellow: "#FFDF00",
-          softYellow: "#222222",
-          black: "#121212",
-          offBlack: "#1A1A1A",
-          white: "#F8F8F8",
-          offWhite: "#EBEBEB",
+          gold: "#FFD700", // Main yellow
+          yellow: "#FFDF00", // Slightly different yellow
+          softYellow: "#FFF8DC", // Cornsilk (soft yellow)
+          black: "#121212", // Black
+          offBlack: "#1A1A1A", // Slightly lighter black
+          white: "#F8F8F8", // Off-white
+          offWhite: "#EBEBEB", // Slightly darker white
         },
       },
 
