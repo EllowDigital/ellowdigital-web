@@ -18,23 +18,17 @@ export default defineConfig(({ mode }) => {
       strictPort: true,
       allowedHosts: ["da7405f0-30e5-42c0-84c0-542948da552d.lovableproject.com"],
     },
+
     preview: {
       port: 8080,
       strictPort: true,
     },
+
     plugins: [
       react(),
       isDev && componentTagger(),
-      isProd &&
-        viteCompression({
-          algorithm: "gzip",
-          ext: ".gz",
-        }),
-      isProd &&
-        viteCompression({
-          algorithm: "brotliCompress",
-          ext: ".br",
-        }),
+      isProd && viteCompression({ algorithm: "gzip", ext: ".gz" }),
+      isProd && viteCompression({ algorithm: "brotliCompress", ext: ".br" }),
       VitePWA({
         registerType: "autoUpdate",
         includeAssets: [
@@ -45,8 +39,7 @@ export default defineConfig(({ mode }) => {
         manifest: {
           name: "EllowDigital India",
           short_name: "EllowDigital",
-          description:
-            "Digital transformation services for businesses in India",
+          description: "Digital transformation services for businesses in India",
           theme_color: "#FF7517",
           icons: [
             {
@@ -69,15 +62,17 @@ export default defineConfig(({ mode }) => {
         },
       }),
     ].filter(Boolean),
+
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "src"),
         stream: "stream-browserify",
         buffer: "buffer",
         util: "util",
-        process: "process/browser",
+        process: path.resolve(__dirname, "node_modules/process/browser"), // Ensure absolute path for process/browser
       },
     },
+
     build: {
       sourcemap: false,
       minify: "terser",
@@ -103,10 +98,12 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
+
     define: {
       "process.env": {},
       global: "window",
     },
+
     optimizeDeps: {
       include: ["buffer", "process/browser", "util", "stream-browserify"],
       esbuildOptions: {

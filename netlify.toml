@@ -1,20 +1,20 @@
-
 # Netlify configuration file
+
 [build]
   publish = "dist"
   command = "npm run build"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "18.20.8"
   NPM_FLAGS = "--no-optional"
 
-# Redirect and rewrite rules to handle SPA routing
+# Redirects for SPA routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-# Set security headers
+# Global security headers
 [[headers]]
   for = "/*"
   [headers.values]
@@ -24,16 +24,20 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.gpteng.co; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://*.netlify.app https://*.ellowdigitals.me; frame-src 'none';"
 
-# Asset optimization
+# Asset optimization settings
 [build.processing]
   skip_processing = false
+
 [build.processing.css]
   bundle = true
   minify = true
+
 [build.processing.js]
   bundle = true
   minify = true
+
 [build.processing.html]
   pretty_urls = true
+
 [build.processing.images]
   compress = true
