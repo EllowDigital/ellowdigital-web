@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react"; // Updated to standard react plugin
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 import viteCompression from "vite-plugin-compression";
@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => {
       headers: securityHeaders,
     },
     plugins: [
-      react(),
+      react(), // Uses standard react plugin
       isDevelopment && componentTagger(),
       isProduction && viteCompression({ algorithm: "gzip", ext: ".gz" }),
       isProduction && viteCompression({ algorithm: "brotliCompress", ext: ".br" }),
