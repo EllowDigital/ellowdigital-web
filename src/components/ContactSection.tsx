@@ -13,7 +13,9 @@ const ContactSection = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -35,7 +37,8 @@ const ContactSection = () => {
       <div className="section-container">
         <h2 className="section-title">Let's Connect</h2>
         <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto mb-16">
-          Have a project in mind? Get in touch and let's create something amazing together.
+          Have a project in mind? Get in touch and let's create something
+          amazing together.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -43,23 +46,42 @@ const ContactSection = () => {
           <div className="space-y-8">
             <h3 className="text-2xl font-bold">Get in Touch</h3>
             <p className="text-muted-foreground">
-              Fill out the form and I'll get back to you as soon as possible. Looking forward to hearing about your project!
+              Fill out the form and I'll get back to you as soon as possible.
+              Looking forward to hearing about your project!
             </p>
 
             <div className="space-y-6">
               {[
-                { icon: <Mail className="h-5 w-5 text-brand-purple" />, label: "Email", value: "contact@ellowdigitals.com" },
-                { icon: <Phone className="h-5 w-5 text-brand-purple" />, label: "Phone", value: "+91 98765 43210" },
-                { icon: <Github className="h-5 w-5 text-brand-purple" />, label: "GitHub", value: "github.com/ellowdigitals", href: "https://github.com/ellowdigitals" }
+                {
+                  icon: <Mail className="h-5 w-5 text-brand-purple" />,
+                  label: "Email",
+                  value: "contact@ellowdigitals.com",
+                },
+                {
+                  icon: <Phone className="h-5 w-5 text-brand-purple" />,
+                  label: "Phone",
+                  value: "+91 98765 43210",
+                },
+                {
+                  icon: <Github className="h-5 w-5 text-brand-purple" />,
+                  label: "GitHub",
+                  value: "github.com/ellowdigitals",
+                  href: "https://github.com/ellowdigitals",
+                },
               ].map((contact, index) => (
                 <div key={index} className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-brand-purple/10 flex items-center justify-center">
                     {contact.icon}
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">{contact.label}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {contact.label}
+                    </p>
                     {contact.href ? (
-                      <a href={contact.href} className="font-medium hover:text-brand-purple">
+                      <a
+                        href={contact.href}
+                        className="font-medium hover:text-brand-purple"
+                      >
                         {contact.value}
                       </a>
                     ) : (
@@ -75,7 +97,9 @@ const ContactSection = () => {
           <div className="bg-card rounded-xl border border-border/60 p-6 shadow-sm">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium">Name</label>
+                <label htmlFor="name" className="text-sm font-medium">
+                  Name
+                </label>
                 <Input
                   id="name"
                   name="name"
@@ -87,7 +111,9 @@ const ContactSection = () => {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium">Email</label>
+                <label htmlFor="email" className="text-sm font-medium">
+                  Email
+                </label>
                 <Input
                   id="email"
                   name="email"
@@ -100,7 +126,9 @@ const ContactSection = () => {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-medium">Message</label>
+                <label htmlFor="message" className="text-sm font-medium">
+                  Message
+                </label>
                 <Textarea
                   id="message"
                   name="message"

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 // Breakpoint values to detect screen sizes (same as Tailwind's)
 export const BREAKPOINTS = {
@@ -7,12 +7,14 @@ export const BREAKPOINTS = {
   md: 768,
   lg: 1024,
   xl: 1280,
-  '2xl': 1536,
+  "2xl": 1536,
 };
 
 // Hook to track current breakpoint
 export function useBreakpoint() {
-  const [breakpoint, setBreakpoint] = useState(() => getBreakpoint(window.innerWidth));
+  const [breakpoint, setBreakpoint] = useState(() =>
+    getBreakpoint(window.innerWidth)
+  );
 
   useEffect(() => {
     // Throttle resize event for performance
@@ -21,8 +23,8 @@ export function useBreakpoint() {
       setBreakpoint(getBreakpoint(window.innerWidth));
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return breakpoint;
@@ -30,12 +32,12 @@ export function useBreakpoint() {
 
 // Get current breakpoint from window width
 function getBreakpoint(width: number) {
-  if (width < BREAKPOINTS.sm) return 'xs';
-  if (width < BREAKPOINTS.md) return 'sm';
-  if (width < BREAKPOINTS.lg) return 'md';
-  if (width < BREAKPOINTS.xl) return 'lg';
-  if (width < BREAKPOINTS['2xl']) return 'xl';
-  return '2xl';
+  if (width < BREAKPOINTS.sm) return "xs";
+  if (width < BREAKPOINTS.md) return "sm";
+  if (width < BREAKPOINTS.lg) return "md";
+  if (width < BREAKPOINTS.xl) return "lg";
+  if (width < BREAKPOINTS["2xl"]) return "xl";
+  return "2xl";
 }
 
 // Hook to detect if the device supports touch events
@@ -45,9 +47,9 @@ export function useTouchDevice() {
   useEffect(() => {
     const detectTouch = () => {
       setIsTouch(
-        'ontouchstart' in window ||
-        navigator.maxTouchPoints > 0 ||
-        (navigator as any).msMaxTouchPoints > 0
+        "ontouchstart" in window ||
+          navigator.maxTouchPoints > 0 ||
+          (navigator as any).msMaxTouchPoints > 0
       );
     };
 
@@ -73,26 +75,25 @@ export function responsiveFontSize(
   const intercept = minFontRem - slope * minScreenWidth;
 
   // Return the CSS clamp function for responsive font size
-  return `clamp(${minFontRem}rem, ${intercept.toFixed(4)}rem + ${(slope * 100).toFixed(4)}vw, ${maxFontRem}rem)`;
+  return `clamp(${minFontRem}rem, ${intercept.toFixed(4)}rem + ${(
+    slope * 100
+  ).toFixed(4)}vw, ${maxFontRem}rem)`;
 }
 
 // Function to check if an element is in the viewport
 export function isElementInViewport(
-  element: HTMLElement | null, 
+  element: HTMLElement | null,
   offset: number = 0
 ) {
   if (!element) return false;
 
   const rect = element.getBoundingClientRect();
-  return (
-    rect.top - offset <= window.innerHeight &&
-    rect.bottom + offset >= 0
-  );
+  return rect.top - offset <= window.innerHeight && rect.bottom + offset >= 0;
 }
 
 // Function to batch DOM operations for better performance
 export function batchDomOperations<T>(
-  calculateFn: () => T, 
+  calculateFn: () => T,
   updateFn: (result: T) => void
 ) {
   requestAnimationFrame(() => {
@@ -110,10 +111,10 @@ export function getAspectRatio(width: number, height: number) {
 
 // Media query helpers for conditional rendering
 export const mediaQueries = {
-  xs: '(max-width: 474px)',
-  sm: '(min-width: 475px) and (max-width: 639px)',
-  md: '(min-width: 640px) and (max-width: 767px)',
-  lg: '(min-width: 768px) and (max-width: 1023px)',
-  xl: '(min-width: 1024px) and (max-width: 1279px)',
-  '2xl': '(min-width: 1280px)',
+  xs: "(max-width: 474px)",
+  sm: "(min-width: 475px) and (max-width: 639px)",
+  md: "(min-width: 640px) and (max-width: 767px)",
+  lg: "(min-width: 768px) and (max-width: 1023px)",
+  xl: "(min-width: 1024px) and (max-width: 1279px)",
+  "2xl": "(min-width: 1280px)",
 };

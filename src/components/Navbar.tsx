@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import Logo from "./Logo";
@@ -45,13 +44,14 @@ const Navbar = () => {
     const updateScroll = () => {
       setIsScrolled(window.scrollY > 10);
       setScrollProgress(
-        (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
+        (window.scrollY / (document.body.scrollHeight - window.innerHeight)) *
+          100
       );
 
       if (isHomePage) {
         const sections = document.querySelectorAll("section[id]");
         const offset = window.scrollY + 100;
-        
+
         // Find active section
         let activeId = "";
         for (const section of sections) {
@@ -63,7 +63,7 @@ const Navbar = () => {
             break;
           }
         }
-        
+
         // Only update if different to prevent unnecessary renders
         if (activeId !== activeSection) {
           setActiveSection(activeId);
@@ -85,14 +85,18 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScrollThrottled, { passive: true });
     updateScroll();
-    
+
     return () => window.removeEventListener("scroll", handleScrollThrottled);
   }, [isHomePage, activeSection]);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (isMobileOpen && navRef.current && !navRef.current.contains(e.target as Node)) {
+      if (
+        isMobileOpen &&
+        navRef.current &&
+        !navRef.current.contains(e.target as Node)
+      ) {
         setIsMobileOpen(false);
       }
     };
@@ -101,7 +105,7 @@ const Navbar = () => {
     if (isMobileOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
-    
+
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMobileOpen]);
 
@@ -144,15 +148,15 @@ const Navbar = () => {
   // Animation variants
   const mobileMenuVariants = {
     hidden: { opacity: 0, height: 0 },
-    visible: { opacity: 1, height: 'auto' },
-    exit: { opacity: 0, height: 0 }
+    visible: { opacity: 1, height: "auto" },
+    exit: { opacity: 0, height: 0 },
   };
 
   // Decorative elements animation variants
   const decorVariants = {
     initial: { opacity: 0, scale: 0.8 },
     animate: { opacity: 0.7, scale: 1, transition: { duration: 0.5 } },
-    hover: { scale: 1.1, opacity: 0.9, transition: { duration: 0.3 } }
+    hover: { scale: 1.1, opacity: 0.9, transition: { duration: 0.3 } },
   };
 
   return (
@@ -168,20 +172,21 @@ const Navbar = () => {
 
       <nav
         ref={navRef}
-        className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${isScrolled
-          ? "bg-black/90 shadow-md backdrop-blur-xl border-b border-brand-yellow/10"
-          : "bg-black/70 backdrop-blur-md"
-          }`}
+        className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${
+          isScrolled
+            ? "bg-black/90 shadow-md backdrop-blur-xl border-b border-brand-yellow/10"
+            : "bg-black/70 backdrop-blur-md"
+        }`}
       >
         {/* Decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div 
+          <motion.div
             className="absolute -top-10 -right-10 w-20 h-20 bg-brand-yellow/5 rounded-full blur-xl"
             initial="initial"
             animate="animate"
             variants={decorVariants}
           />
-          <motion.div 
+          <motion.div
             className="absolute -bottom-12 left-1/4 w-24 h-24 bg-brand-yellow/5 rounded-full blur-xl"
             initial="initial"
             animate="animate"
@@ -210,7 +215,7 @@ const Navbar = () => {
                 key={link.href}
                 onClick={() => handleNavClick(link.href)}
                 className={`relative px-3 xl:px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                  (isHomePage && activeSection === link.href.substring(1)) || 
+                  (isHomePage && activeSection === link.href.substring(1)) ||
                   (!isHomePage && location.pathname === link.href)
                     ? "text-brand-yellow"
                     : "text-white hover:text-brand-yellow"
@@ -219,9 +224,9 @@ const Navbar = () => {
                 {link.name}
                 <span
                   className={`absolute left-0 bottom-0 h-0.5 bg-brand-yellow transition-all duration-300 ${
-                    (isHomePage && activeSection === link.href.substring(1)) || 
-                    (!isHomePage && location.pathname === link.href) 
-                      ? "w-full" 
+                    (isHomePage && activeSection === link.href.substring(1)) ||
+                    (!isHomePage && location.pathname === link.href)
+                      ? "w-full"
                       : "w-0 group-hover:w-full"
                   }`}
                 />
@@ -237,7 +242,7 @@ const Navbar = () => {
               >
                 <Search className="w-4 h-4 text-white/80 hover:text-brand-yellow" />
               </button>
-              
+
               <div className="flex items-center text-xs text-white/70">
                 <MapPin className="w-3 h-3 mr-1 text-brand-yellow" />
                 <span>India</span>
@@ -288,7 +293,7 @@ const Navbar = () => {
                   key={link.href}
                   onClick={() => handleNavClick(link.href)}
                   className={`block w-full text-center py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 ${
-                    (isHomePage && activeSection === link.href.substring(1)) || 
+                    (isHomePage && activeSection === link.href.substring(1)) ||
                     (!isHomePage && location.pathname === link.href)
                       ? "bg-brand-yellow/10 text-brand-yellow"
                       : "text-white hover:bg-brand-yellow/5 hover:text-brand-yellow"
@@ -299,7 +304,7 @@ const Navbar = () => {
                   {link.name}
                 </motion.button>
               ))}
-              
+
               {/* Search button for mobile */}
               <motion.button
                 onClick={() => {
@@ -313,7 +318,7 @@ const Navbar = () => {
                 <Search className="w-4 h-4" />
                 <span>Search</span>
               </motion.button>
-              
+
               <motion.button
                 onClick={() => handleNavClick("#contact")}
                 className="block w-full text-center py-3 mt-2 bg-brand-yellow text-black font-bold rounded-lg shadow"
@@ -322,7 +327,7 @@ const Navbar = () => {
               >
                 Get Started
               </motion.button>
-              
+
               {/* Additional elements with yellow theme */}
               <div className="flex justify-center items-center gap-4 mt-4 pt-4 border-t border-white/10">
                 <motion.div

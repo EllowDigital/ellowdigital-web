@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet";
 
 type SEOProps = {
@@ -18,26 +17,27 @@ const SEOHead = ({
   description = "EllowDigital specializes in digital transformation, offering SEO services, web development, UI/UX design, and digital marketing solutions to boost your business growth.",
   canonicalUrl = "https://ellowdigitals.me/",
   ogType = "website",
-  ogImage = "https://ellowdigital.netlify.app/favicon/share.jpg", 
+  ogImage = "https://ellowdigital.netlify.app/favicon/share.jpg",
   ogImageAlt = "EllowDigital logo and branding",
   twitterCard = "summary_large_image",
   structuredData,
-  children
+  children,
 }: SEOProps) => {
   // Default structured data for the organization
   const defaultStructuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "EllowDigital",
-    "url": "https://ellowdigitals.me",
-    "logo": "https://ellowdigitals.netlify.app/assets/favicon/share.jpg",
-    "sameAs": [
+    name: "EllowDigital",
+    url: "https://ellowdigitals.me",
+    logo: "https://ellowdigitals.netlify.app/assets/favicon/share.jpg",
+    sameAs: [
       "https://www.facebook.com/ellowdigitals",
       "https://twitter.com/ellowdigitals",
       "https://www.linkedin.com/company/ellowdigitals",
-      "https://www.instagram.com/ellowdigitals"
+      "https://www.instagram.com/ellowdigitals",
     ],
-    "description": "EllowDigital provides digital transformation services including SEO, web development, and digital marketing solutions designed to accelerate business growth."
+    description:
+      "EllowDigital provides digital transformation services including SEO, web development, and digital marketing solutions designed to accelerate business growth.",
   };
 
   // Use custom structured data or default
@@ -49,7 +49,7 @@ const SEOHead = ({
       <title>{title}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={canonicalUrl} />
-      
+
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={ogType} />
       <meta property="og:url" content={canonicalUrl} />
@@ -69,11 +69,9 @@ const SEOHead = ({
       <meta name="twitter:image:alt" content={ogImageAlt} />
       <meta name="twitter:site" content="@EllowDigital" />
       <meta name="twitter:creator" content="@EllowDigital" />
-      
+
       {/* Structured Data / JSON-LD */}
-      <script type="application/ld+json">
-        {JSON.stringify(jsonLd)}
-      </script>
+      <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
 
       {/* Additional meta tags can be passed as children */}
       {children}

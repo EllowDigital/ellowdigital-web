@@ -1,5 +1,14 @@
-
-import { Mail, Phone, Instagram, Github, Shield, FileText, Users, Cookie, FileX } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  Instagram,
+  Github,
+  Shield,
+  FileText,
+  Users,
+  Cookie,
+  FileX,
+} from "lucide-react";
 import Logo from "./Logo";
 import { Link } from "react-router-dom";
 
@@ -9,7 +18,6 @@ const Footer = () => {
   return (
     <footer className="w-full bg-[#000000] text-foreground border-t border-border py-10 md:py-14">
       <div className="section-container max-w-7xl mx-auto px-4 sm:px-8 flex flex-col lg:flex-row flex-wrap gap-12 lg:gap-16">
-
         {/* Branding & Social Links */}
         <div className="flex-1 min-w-[220px] flex flex-col items-start gap-4">
           <div className="flex items-center gap-3 mb-2">
@@ -85,18 +93,23 @@ const Footer = () => {
             {
               title: "Contact",
               links: [
-                { label: "ellowdigitals@gmail.com", href: "mailto:ellowdigitals@gmail.com" },
+                {
+                  label: "ellowdigitals@gmail.com",
+                  href: "mailto:ellowdigitals@gmail.com",
+                },
                 { label: "+91 89604 46756", href: "tel:+919876543210" },
                 { label: "Contact Form", href: "#contact" },
               ],
             },
           ].map((section) => (
             <div key={section.title}>
-              <h4 className="font-bold text-brand-yellow mb-2 tracking-wide">{section.title}</h4>
+              <h4 className="font-bold text-brand-yellow mb-2 tracking-wide">
+                {section.title}
+              </h4>
               <ul className="space-y-2 text-base">
                 {section.links.map((link) => (
                   <li key={link.label}>
-                    {link.href.startsWith('/') ? (
+                    {link.href.startsWith("/") ? (
                       <Link
                         to={link.href}
                         className="hover:text-brand-yellow/90 transition-colors"
@@ -123,26 +136,42 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 mt-7 pt-5 border-t border-border flex flex-col md:flex-row items-center justify-between gap-3 text-muted-foreground text-sm">
         <div>
           &copy; {currentYear}{" "}
-          <span className="font-bold text-brand-yellow">EllowDigital</span>. All Rights Reserved.
+          <span className="font-bold text-brand-yellow">EllowDigital</span>. All
+          Rights Reserved.
         </div>
         <div className="hidden md:inline-block">|</div>
         <div className="text-brand-yellow font-semibold">
           Making Digital Simple.
         </div>
         <div className="flex flex-wrap gap-3 md:gap-4 mt-2 md:mt-0 justify-center">
-          <Link to="/team" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
+          <Link
+            to="/team"
+            className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1"
+          >
             <Users className="w-3 h-3" /> Our Team
           </Link>
-          <Link to="/privacy-policy" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
+          <Link
+            to="/privacy-policy"
+            className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1"
+          >
             <Shield className="w-3 h-3" /> Privacy Policy
           </Link>
-          <Link to="/terms-of-service" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
+          <Link
+            to="/terms-of-service"
+            className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1"
+          >
             <FileText className="w-3 h-3" /> Terms of Service
           </Link>
-          <Link to="/refund-policy" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
+          <Link
+            to="/refund-policy"
+            className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1"
+          >
             <FileX className="w-3 h-3" /> Refund Policy
           </Link>
-          <Link to="/cookies-policy" className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1">
+          <Link
+            to="/cookies-policy"
+            className="hover:text-brand-yellow/90 text-xs sm:text-sm flex items-center gap-1"
+          >
             <Cookie className="w-3 h-3" /> Cookies Policy
           </Link>
         </div>

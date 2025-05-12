@@ -1,18 +1,23 @@
-
 import { User, Mail, Briefcase, Award, MapPin } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 const FounderSection = () => {
   return (
-    <section id="founder" className="section-container py-20 relative overflow-hidden">
+    <section
+      id="founder"
+      className="section-container py-20 relative overflow-hidden"
+    >
       {/* Background blobs */}
       <div className="absolute top-1/3 right-1/4 w-56 h-56 md:w-72 md:h-72 bg-brand-yellow/10 rounded-full blur-3xl morph-shape"></div>
-      <div className="absolute bottom-1/3 left-1/4 w-80 h-80 md:w-96 md:h-96 bg-brand-yellow/5 rounded-full blur-3xl morph-shape" style={{ animationDelay: '7s' }}></div>
+      <div
+        className="absolute bottom-1/3 left-1/4 w-80 h-80 md:w-96 md:h-96 bg-brand-yellow/5 rounded-full blur-3xl morph-shape"
+        style={{ animationDelay: "7s" }}
+      ></div>
 
       <div className="max-w-4xl mx-auto">
         <h2 className="section-title reveal-animate">Meet Our Founder</h2>
-        
+
         {/* Yellow divider replacing tricolor */}
         <div className="w-40 h-1 bg-brand-yellow mx-auto mb-12 rounded-full opacity-70"></div>
 
@@ -25,19 +30,29 @@ const FounderSection = () => {
                   src="/images/founder.jpg"
                   alt="Founder"
                   className="object-cover w-full h-56 md:h-full rounded-t-xl md:rounded-t-none md:rounded-l-xl transition-transform duration-700 hover:scale-105"
-                  style={{ aspectRatio: "1/1.1", objectFit: "cover", maxHeight: "360px" }}
+                  style={{
+                    aspectRatio: "1/1.1",
+                    objectFit: "cover",
+                    maxHeight: "360px",
+                  }}
                   loading="lazy"
                 />
                 {/* Social Icons */}
                 <div className="absolute bottom-3 left-3 flex gap-2">
-                  <a href="mailto:sarwanyadav6174@gmail.com" className="w-8 h-8 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center text-white hover:bg-brand-yellow hover:text-black transition-colors">
+                  <a
+                    href="mailto:sarwanyadav6174@gmail.com"
+                    className="w-8 h-8 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center text-white hover:bg-brand-yellow hover:text-black transition-colors"
+                  >
                     <Mail className="h-5 w-5" />
                   </a>
-                  <a href="https://sarwan.netlify.app/" className="w-8 h-8 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center text-white hover:bg-brand-yellow hover:text-black transition-colors">
+                  <a
+                    href="https://sarwan.netlify.app/"
+                    className="w-8 h-8 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center text-white hover:bg-brand-yellow hover:text-black transition-colors"
+                  >
                     <User className="h-5 w-5" />
                   </a>
                 </div>
-                
+
                 {/* Location badge */}
                 <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm text-xs py-1 px-2 rounded-full flex items-center">
                   <MapPin className="h-3 w-3 mr-1 text-brand-yellow" />
@@ -63,19 +78,30 @@ const FounderSection = () => {
                 </div>
 
                 <p className="text-base">
-                  With a passion for innovation and deep understanding of the tech landscape, I founded EllowDigitals to help businesses establish a powerful digital presence. Our solutions are tailored to the unique needs of the market.
+                  With a passion for innovation and deep understanding of the
+                  tech landscape, I founded EllowDigitals to help businesses
+                  establish a powerful digital presence. Our solutions are
+                  tailored to the unique needs of the market.
                 </p>
 
                 <div className="pt-4 border-t border-border">
                   <p className="font-semibold">Our Vision</p>
                   <p className="text-muted-foreground">
-                    "To empower businesses through innovative digital solutions that fuel growth and success. We believe in digital transformation and are committed to making technology accessible, affordable, and effective for businesses of all sizes."
+                    "To empower businesses through innovative digital solutions
+                    that fuel growth and success. We believe in digital
+                    transformation and are committed to making technology
+                    accessible, affordable, and effective for businesses of all
+                    sizes."
                   </p>
                 </div>
 
-                <Button 
+                <Button
                   className="mt-4 bg-gradient-to-r from-brand-yellow to-brand-gold hover:bg-brand-yellow hover:to-brand-gold text-black w-full md:w-auto rounded-xl py-3 text-lg font-semibold shadow-lg"
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() =>
+                    document
+                      .getElementById("contact")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
                 >
                   Connect With Me
                 </Button>

@@ -18,7 +18,9 @@ const TechItem: FC<TechItemProps> = memo(({ name, category }) => {
         </div>
       </div>
       <span className="text-sm font-medium">{name}</span>
-      <span className="text-xs text-muted-foreground capitalize">{category}</span>
+      <span className="text-xs text-muted-foreground capitalize">
+        {category}
+      </span>
     </div>
   );
 });
@@ -41,7 +43,8 @@ const TechStack = () => {
       <div className="section-container">
         <h2 className="section-title">Our Tech Stack</h2>
         <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto mb-12">
-          We leverage the latest technologies to create fast, secure, and scalable digital solutions.
+          We leverage the latest technologies to create fast, secure, and
+          scalable digital solutions.
         </p>
 
         <div className="relative">

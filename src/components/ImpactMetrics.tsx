@@ -116,11 +116,15 @@ const ImpactMetrics = () => {
         >
           Our Impact By the Numbers
         </h2>
-        <div ref={dividerRef} className="animated-divider reveal-animate mb-8" />
+        <div
+          ref={dividerRef}
+          className="animated-divider reveal-animate mb-8"
+        />
 
         <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-10 md:mb-16 px-4 reveal-animate text-sm md:text-base">
-          We're proud of the results we've achieved for our clients. These metrics showcase our
-          commitment to excellence and delivering exceptional digital solutions.
+          We're proud of the results we've achieved for our clients. These
+          metrics showcase our commitment to excellence and delivering
+          exceptional digital solutions.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
@@ -145,7 +149,9 @@ const ImpactMetrics = () => {
                     <span className="bg-gradient-to-r bg-clip-text text-transparent from-brand-gold to-brand-yellow">
                       {counts[index]}
                     </span>
-                    <span className="text-brand-yellow ml-1">{metric.suffix}</span>
+                    <span className="text-brand-yellow ml-1">
+                      {metric.suffix}
+                    </span>
                   </h3>
                   <p className="text-base md:text-lg font-medium text-foreground">
                     {metric.label}

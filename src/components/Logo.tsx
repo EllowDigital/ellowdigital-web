@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 
 const LOGO_IMG_DARK = "/logo.webp";
@@ -21,7 +20,9 @@ const Logo = () => {
       className="block outline-none focus:ring-2 focus:ring-brand-yellow rounded transition-shadow"
     >
       <div
-        className={`inline-flex items-center select-none overflow-hidden ${mounted ? "animate-fade-in" : "opacity-0"}`}
+        className={`inline-flex items-center select-none overflow-hidden ${
+          mounted ? "animate-fade-in" : "opacity-0"
+        }`}
         style={{ minHeight: 48 }}
       >
         {!imgError ? (
@@ -43,7 +44,9 @@ const Logo = () => {
         ) : (
           <span className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-brand-yellow to-brand-gold bg-clip-text text-transparent tracking-wider">
             Ellow<span className="text-foreground">Digital</span>
-            <span className="text-xs align-top text-brand-yellow ml-1">India</span>
+            <span className="text-xs align-top text-brand-yellow ml-1">
+              India
+            </span>
           </span>
         )}
       </div>

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import Navbar from "@/components/Navbar";
@@ -27,7 +26,11 @@ const TeamPage = () => {
       role: "Founder & Lead Developer",
       image: "/images/founder.jpg",
       bio: "Sarwan is the founder of EllowDigital with over 2 years of experience in web development and digital marketing. He's passionate about creating innovative digital solutions that help businesses grow.",
-      specialties: ["Full-stack Development", "UI/UX Design", "Project Management"],
+      specialties: [
+        "Full-stack Development",
+        "UI/UX Design",
+        "Project Management",
+      ],
       social: {
         linkedin: "https://linkedin.com/in/sarwan6174",
         github: "https://github.com/devsarwan",
@@ -76,7 +79,10 @@ const TeamPage = () => {
     <>
       <Helmet>
         <title>Our Team | EllowDigital</title>
-        <meta name="description" content="Meet the talented team behind EllowDigital - experts in web development, design, and digital marketing." />
+        <meta
+          name="description"
+          content="Meet the talented team behind EllowDigital - experts in web development, design, and digital marketing."
+        />
       </Helmet>
 
       <Navbar />
@@ -93,7 +99,10 @@ const TeamPage = () => {
                 The talented people behind EllowDigital's success
               </p>
               <div className="flex items-center justify-center">
-                <Badge variant="outline" className="px-3 py-1 text-brand-yellow border-brand-yellow/50 gap-1">
+                <Badge
+                  variant="outline"
+                  className="px-3 py-1 text-brand-yellow border-brand-yellow/50 gap-1"
+                >
                   <Users className="w-4 h-4" />
                   <span>Our Experts</span>
                 </Badge>
@@ -106,7 +115,10 @@ const TeamPage = () => {
         <section className="section-container py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {teamMembers.map((member) => (
-              <Card key={member.id} className="card-hover overflow-hidden bg-card/50 border-border/50">
+              <Card
+                key={member.id}
+                className="card-hover overflow-hidden bg-card/50 border-border/50"
+              >
                 <div className="p-6">
                   <div className="flex items-center gap-4 mb-4">
                     <Avatar className="w-16 h-16 border-2 border-brand-yellow">
@@ -129,7 +141,11 @@ const TeamPage = () => {
                       <h4 className="text-sm font-medium mb-2">Specialties:</h4>
                       <div className="flex flex-wrap gap-2">
                         {member.specialties.map((specialty, index) => (
-                          <Badge key={index} variant="secondary" className="bg-brand-yellow/10 hover:bg-brand-yellow/20 text-xs">
+                          <Badge
+                            key={index}
+                            variant="secondary"
+                            className="bg-brand-yellow/10 hover:bg-brand-yellow/20 text-xs"
+                          >
                             {specialty}
                           </Badge>
                         ))}
@@ -163,14 +179,16 @@ const TeamPage = () => {
               Want to Join Our Team?
             </h2>
             <p className="text-muted-foreground mb-6">
-              We're always looking for talented individuals to join our growing team. If you're passionate about creating amazing digital experiences, we'd love to hear from you.
+              We're always looking for talented individuals to join our growing
+              team. If you're passionate about creating amazing digital
+              experiences, we'd love to hear from you.
             </p>
             <a
               href="#contact"
               onClick={(e) => {
                 e.preventDefault();
                 // Navigate to home page and scroll to contact section
-                window.location.href = '/#contact';
+                window.location.href = "/#contact";
               }}
               className="px-6 py-2.5 bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-full shadow hover:scale-105 transition-transform inline-block"
             >

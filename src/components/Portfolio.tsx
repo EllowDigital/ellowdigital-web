@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -41,7 +40,7 @@ const projects = [
       "A modern personal portfolio website crafted for Sarwan, showcasing professional achievements, project highlights, and a streamlined contact interface.",
     tech: ["HTML", "CSS", "JavaScript", "JQuery"],
     link: "https://sarwan.netlify.app/",
-  }
+  },
 ];
 
 const Portfolio = () => {
@@ -57,32 +56,32 @@ const Portfolio = () => {
   // Animation variants
   const containerVariants = {
     hidden: {},
-    visible: { 
-      transition: { 
+    visible: {
+      transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.2
-      } 
-    }
+        delayChildren: 0.2,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { 
+      transition: {
         duration: 0.5,
-        ease: [0.25, 1, 0.5, 1]
-      }
+        ease: [0.25, 1, 0.5, 1],
+      },
     },
-    exit: { 
-      opacity: 0, 
+    exit: {
+      opacity: 0,
       y: 20,
-      transition: { 
+      transition: {
         duration: 0.3,
-        ease: "easeIn" 
-      }
-    }
+        ease: "easeIn",
+      },
+    },
   };
 
   return (
@@ -104,16 +103,12 @@ const Portfolio = () => {
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="section-title">
-            Our Portfolio
-          </h2>
-          <div
-            className="h-1 w-24 mx-auto bg-gradient-to-r from-brand-gold to-brand-yellow rounded-full mb-8 sm:mb-12"
-          ></div>
+          <h2 className="section-title">Our Portfolio</h2>
+          <div className="h-1 w-24 mx-auto bg-gradient-to-r from-brand-gold to-brand-yellow rounded-full mb-8 sm:mb-12"></div>
         </motion.div>
 
         {/* Responsive category filter */}
-        <motion.div 
+        <motion.div
           className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 sm:mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -124,10 +119,11 @@ const Portfolio = () => {
             {categories.map((category, index) => (
               <motion.button
                 key={index}
-                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full transition-all text-sm whitespace-nowrap ${filter === category
-                  ? "bg-brand-yellow text-black font-medium"
-                  : "bg-card hover:bg-brand-yellow/20"
-                  }`}
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full transition-all text-sm whitespace-nowrap ${
+                  filter === category
+                    ? "bg-brand-yellow text-black font-medium"
+                    : "bg-card hover:bg-brand-yellow/20"
+                }`}
                 onClick={() => setFilter(category)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -140,7 +136,7 @@ const Portfolio = () => {
 
         {/* Responsive projects grid with animation */}
         <AnimatePresence mode="wait">
-          <motion.div 
+          <motion.div
             key={filter}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
             variants={containerVariants}
@@ -175,8 +171,9 @@ const Portfolio = () => {
 
                     {/* Hover overlay */}
                     <div
-                      className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent flex items-end justify-center p-4 sm:p-6 transition-opacity duration-300 ${hoveredIndex === index ? "opacity-100" : "opacity-0"
-                        }`}
+                      className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent flex items-end justify-center p-4 sm:p-6 transition-opacity duration-300 ${
+                        hoveredIndex === index ? "opacity-100" : "opacity-0"
+                      }`}
                     >
                       <Button className="bg-brand-yellow hover:bg-brand-gold text-black">
                         <a
@@ -218,7 +215,7 @@ const Portfolio = () => {
         </AnimatePresence>
 
         {/* View all button */}
-        <motion.div 
+        <motion.div
           className="text-center mt-10 sm:mt-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

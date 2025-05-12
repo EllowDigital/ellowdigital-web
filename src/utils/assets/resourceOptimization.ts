@@ -7,12 +7,12 @@
  */
 export const deferNonCriticalResources = () => {
   // Ensure this code runs only in the browser environment
-  if (typeof window === 'undefined') return () => {};
+  if (typeof window === "undefined") return () => {};
 
   // List of non-critical resource types to defer loading
   const resourcesToDefer = [
-    { selector: 'link[rel="preconnect"]', delay: 1000 },   // Preconnect links
-    { selector: 'link[rel="dns-prefetch"]', delay: 1000 },  // DNS prefetch links
+    { selector: 'link[rel="preconnect"]', delay: 1000 }, // Preconnect links
+    { selector: 'link[rel="dns-prefetch"]', delay: 1000 }, // DNS prefetch links
   ];
 
   // Create a timeout to handle resource deferring after the initial load
@@ -22,7 +22,7 @@ export const deferNonCriticalResources = () => {
       const elements = document.querySelectorAll(selector);
 
       elements.forEach((element, index) => {
-        const clonedElement = element.cloneNode(true);  // Clone the element to preserve the attributes
+        const clonedElement = element.cloneNode(true); // Clone the element to preserve the attributes
         const parentNode = element.parentNode;
 
         if (parentNode) {
@@ -32,7 +32,7 @@ export const deferNonCriticalResources = () => {
           // Re-append the cloned element after a specified delay to defer loading
           setTimeout(() => {
             parentNode.appendChild(clonedElement);
-          }, delay + (index * 100)); // Stagger loading to avoid race conditions
+          }, delay + index * 100); // Stagger loading to avoid race conditions
         }
       });
     });

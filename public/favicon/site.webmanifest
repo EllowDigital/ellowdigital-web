@@ -36,9 +36,6 @@
   "scope": "/",
   "orientation": "portrait",
   "lang": "en",
-  "display_override": [
-    "window-controls-overlay",
-    "fullscreen"
-  ],
+  "display_override": ["window-controls-overlay", "fullscreen"],
   "prefer_related_applications": false
 }

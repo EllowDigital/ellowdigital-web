@@ -7,11 +7,11 @@
  */
 export const optimizeImageLoading = () => {
   // Ensure this code runs only in the browser environment
-  if (typeof window === 'undefined') return () => {};
+  if (typeof window === "undefined") return () => {};
 
   // Check if IntersectionObserver is available
-  if (!('IntersectionObserver' in window)) {
-    console.warn('IntersectionObserver not supported in this browser');
+  if (!("IntersectionObserver" in window)) {
+    console.warn("IntersectionObserver not supported in this browser");
     return () => {};
   }
 
@@ -25,29 +25,29 @@ export const optimizeImageLoading = () => {
           // Replace data-src with src when image comes into view
           if (img.dataset.src) {
             img.src = img.dataset.src;
-            img.removeAttribute('data-src');
+            img.removeAttribute("data-src");
             imageObserver.unobserve(img); // Stop observing after the image is loaded
           }
         }
       });
     },
     {
-      rootMargin: '200px 0px', // Start loading images 200px before they come into view
+      rootMargin: "200px 0px", // Start loading images 200px before they come into view
       threshold: 0.01, // Trigger when even a small part of the image is visible
     }
   );
 
   // Observe all images with a data-src attribute for lazy loading
-  const lazyImages = document.querySelectorAll('img[data-src]');
+  const lazyImages = document.querySelectorAll("img[data-src]");
   lazyImages.forEach((img) => {
     imageObserver.observe(img);
   });
 
   // Add 'loading=lazy' attribute to all images that support it
-  if ('loading' in HTMLImageElement.prototype) {
-    document.querySelectorAll('img').forEach((img: HTMLImageElement) => {
-      if (!img.hasAttribute('loading')) {
-        img.loading = 'lazy'; // Use native lazy loading for supported browsers
+  if ("loading" in HTMLImageElement.prototype) {
+    document.querySelectorAll("img").forEach((img: HTMLImageElement) => {
+      if (!img.hasAttribute("loading")) {
+        img.loading = "lazy"; // Use native lazy loading for supported browsers
       }
     });
   }
@@ -65,26 +65,26 @@ export const optimizeImageLoading = () => {
  */
 export const handleBrokenImages = () => {
   // Ensure this code runs only in the browser environment
-  if (typeof window === 'undefined') return () => {};
+  if (typeof window === "undefined") return () => {};
 
   // Default image to use as a fallback for broken images
-  const defaultImage = '/placeholder.svg';
+  const defaultImage = "/placeholder.svg";
 
   // Set fallback for broken images
   const handleError = (event: Event) => {
     const img = event.target as HTMLImageElement;
-    
+
     // Prevent infinite loop if fallback image also fails
     if (img.src !== defaultImage) {
       img.src = defaultImage;
-      img.alt = 'Image not found';
-      img.classList.add('broken-image'); // Add a class to handle broken image styles
+      img.alt = "Image not found";
+      img.classList.add("broken-image"); // Add a class to handle broken image styles
     }
   };
 
   // Add error handler to all existing images
-  document.querySelectorAll('img').forEach((img) => {
-    img.addEventListener('error', handleError);
+  document.querySelectorAll("img").forEach((img) => {
+    img.addEventListener("error", handleError);
   });
 
   // Add error handler to new images as they are added to the DOM
@@ -93,15 +93,15 @@ export const handleBrokenImages = () => {
       mutation.addedNodes.forEach((node) => {
         if (node.nodeType === Node.ELEMENT_NODE) {
           const element = node as Element;
-          
+
           // Check if the new element is an image and add error handler
-          if (element.tagName === 'IMG') {
-            element.addEventListener('error', handleError);
+          if (element.tagName === "IMG") {
+            element.addEventListener("error", handleError);
           }
-          
+
           // Add error handler to any img elements inside newly added nodes
-          element.querySelectorAll('img').forEach((img) => {
-            img.addEventListener('error', handleError);
+          element.querySelectorAll("img").forEach((img) => {
+            img.addEventListener("error", handleError);
           });
         }
       });
@@ -114,8 +114,8 @@ export const handleBrokenImages = () => {
   // Return cleanup function to disconnect the observer and remove event listeners
   return () => {
     observer.disconnect(); // Stop observing DOM mutations
-    document.querySelectorAll('img').forEach((img) => {
-      img.removeEventListener('error', handleError); // Remove error handler from images
+    document.querySelectorAll("img").forEach((img) => {
+      img.removeEventListener("error", handleError); // Remove error handler from images
     });
   };
 };

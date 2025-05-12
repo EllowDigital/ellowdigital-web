@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import { Users, Activity, Eye, Check } from "lucide-react";
@@ -8,23 +7,24 @@ const processes = [
   {
     icon: Users,
     title: "Personalized Collaboration",
-    description: "Direct communication and tailored solutions for your unique needs."
+    description:
+      "Direct communication and tailored solutions for your unique needs.",
   },
   {
     icon: Activity,
     title: "Agile Methodology",
-    description: "Iterative development with flexible adaptation to changes."
+    description: "Iterative development with flexible adaptation to changes.",
   },
   {
     icon: Eye,
     title: "Transparency",
-    description: "Clear communication and regular progress updates."
+    description: "Clear communication and regular progress updates.",
   },
   {
     icon: Check,
     title: "Quality Delivery",
-    description: "Rigorous testing and optimization for top performance."
-  }
+    description: "Rigorous testing and optimization for top performance.",
+  },
 ];
 
 const WorkProcess = () => {
@@ -43,9 +43,9 @@ const WorkProcess = () => {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.15
-      }
-    }
+        staggerChildren: 0.15,
+      },
+    },
   };
 
   const itemVariants = {
@@ -55,9 +55,9 @@ const WorkProcess = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    }
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
   };
 
   const titleVariants = {
@@ -67,44 +67,47 @@ const WorkProcess = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   return (
-    <section id="how-we-work" className="section-container py-16 sm:py-20 md:py-24 relative overflow-hidden snap-start">
+    <section
+      id="how-we-work"
+      className="section-container py-16 sm:py-20 md:py-24 relative overflow-hidden snap-start"
+    >
       {/* Adaptive blob background */}
       <div className="absolute top-1/3 left-1/3 w-64 sm:w-96 h-64 sm:h-96 bg-brand-yellow/5 rounded-full blur-3xl morph-shape"></div>
 
       <div className="max-w-6xl mx-auto">
-        <motion.div 
+        <motion.div
           initial="hidden"
           animate={controls}
           variants={{
             hidden: {},
             visible: {
               transition: {
-                staggerChildren: 0.2
-              }
-            }
+                staggerChildren: 0.2,
+              },
+            },
           }}
         >
-          <motion.h2 
-            ref={titleRef} 
+          <motion.h2
+            ref={titleRef}
             className="section-title"
             variants={titleVariants}
           >
             How We Work
           </motion.h2>
-          
-          <motion.div 
+
+          <motion.div
             className="h-1 w-24 mx-auto bg-gradient-to-r from-brand-gold to-brand-yellow rounded-full mb-12 sm:mb-16"
             variants={titleVariants}
           ></motion.div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
           variants={containerVariants}
           initial="hidden"
@@ -116,9 +119,7 @@ const WorkProcess = () => {
               className="relative"
               variants={itemVariants}
             >
-              <Card
-                className="h-full neo-effect transition-all duration-300 border border-border hover:border-brand-yellow/30"
-              >
+              <Card className="h-full neo-effect transition-all duration-300 border border-border hover:border-brand-yellow/30">
                 <CardContent className="p-5 sm:p-6 text-center">
                   <div className="mb-5 sm:mb-6 relative">
                     <div className="absolute inset-0 bg-brand-yellow/10 rounded-full blur-xl"></div>
@@ -126,11 +127,15 @@ const WorkProcess = () => {
                       <process.icon className="w-7 h-7 text-brand-yellow" />
                     </div>
                   </div>
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">{process.title}</h3>
-                  <p className="text-muted-foreground text-sm sm:text-base">{process.description}</p>
+                  <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">
+                    {process.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm sm:text-base">
+                    {process.description}
+                  </p>
                 </CardContent>
               </Card>
-              
+
               {/* Connection dots - responsive hidden on mobile, only between cards */}
               {index < processes.length - 1 && (
                 <div className="hidden lg:block absolute top-1/2 -right-3 -translate-y-1/2 z-10">

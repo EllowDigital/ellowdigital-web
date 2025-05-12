@@ -5,11 +5,19 @@
  */
 
 // Import utilities from focused modules
-import { isElementInViewport, batchDomOperations, optimizeMediaLoading } from './performance/domUtils';
-import { optimizeNetworkRequests } from './performance/networkUtils';
-import { optimizeScrollPerformance } from './performance/scrollUtils';
-import { monitorMemoryUsage } from './performance/memoryUtils';
-import { useRenderCount, useDeferredCalculation, useThrottledValue } from './performance/reactPerformanceHooks';
+import {
+  isElementInViewport,
+  batchDomOperations,
+  optimizeMediaLoading,
+} from "./performance/domUtils";
+import { optimizeNetworkRequests } from "./performance/networkUtils";
+import { optimizeScrollPerformance } from "./performance/scrollUtils";
+import { monitorMemoryUsage } from "./performance/memoryUtils";
+import {
+  useRenderCount,
+  useDeferredCalculation,
+  useThrottledValue,
+} from "./performance/reactPerformanceHooks";
 
 /**
  * Initialize all performance optimizations.
@@ -28,7 +36,7 @@ export const initPerformanceOptimizations = () => {
 
   // Return a combined cleanup function
   return () => {
-    cleanupFns.forEach(cleanup => cleanup());
+    cleanupFns.forEach((cleanup) => cleanup());
   };
 };
 
@@ -47,5 +55,5 @@ export {
   // React performance hooks
   useRenderCount,
   useDeferredCalculation,
-  useThrottledValue
+  useThrottledValue,
 };

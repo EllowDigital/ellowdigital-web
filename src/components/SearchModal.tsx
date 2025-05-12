@@ -1,11 +1,6 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Search, X } from "lucide-react";
-import { 
-  Dialog, 
-  DialogContent,
-  DialogHeader 
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
@@ -18,18 +13,18 @@ const searchData = {
     { title: "Mobile Apps", href: "#services" },
     { title: "UI/UX Design", href: "#services" },
     { title: "E-commerce Solutions", href: "#services" },
-    { title: "Digital Marketing", href: "#services" }
+    { title: "Digital Marketing", href: "#services" },
   ],
   pages: [
     { title: "About Us", href: "#about" },
     { title: "Portfolio", href: "#portfolio" },
     { title: "Contact", href: "#contact" },
-    { title: "Team", href: "/team" }
+    { title: "Team", href: "/team" },
   ],
   offers: [
     { title: "Static Website Package", href: "#offers" },
-    { title: "School CS Projects", href: "#offers" }
-  ]
+    { title: "School CS Projects", href: "#offers" },
+  ],
 };
 
 type SearchResult = {
@@ -71,19 +66,19 @@ const SearchModal = ({ open, onOpenChange }: SearchModalProps) => {
     }
 
     const allResults: SearchResult[] = [];
-    
+
     // Search through all categories
     Object.entries(searchData).forEach(([category, items]) => {
-      items.forEach(item => {
+      items.forEach((item) => {
         if (item.title.toLowerCase().includes(query.toLowerCase())) {
           allResults.push({
             ...item,
-            category
+            category,
           });
         }
       });
     });
-    
+
     setResults(allResults);
     setSelectedIndex(allResults.length > 0 ? 0 : -1);
   }, [query]);
@@ -91,7 +86,7 @@ const SearchModal = ({ open, onOpenChange }: SearchModalProps) => {
   // Handle navigation
   const handleNavigate = (result: SearchResult) => {
     onOpenChange(false);
-    
+
     if (result.href.startsWith("#")) {
       setTimeout(() => {
         const element = document.querySelector(result.href);
@@ -111,13 +106,13 @@ const SearchModal = ({ open, onOpenChange }: SearchModalProps) => {
     switch (e.key) {
       case "ArrowDown":
         e.preventDefault();
-        setSelectedIndex(prev => 
+        setSelectedIndex((prev) =>
           prev < results.length - 1 ? prev + 1 : prev
         );
         break;
       case "ArrowUp":
         e.preventDefault();
-        setSelectedIndex(prev => (prev > 0 ? prev - 1 : prev));
+        setSelectedIndex((prev) => (prev > 0 ? prev - 1 : prev));
         break;
       case "Enter":
         if (selectedIndex >= 0 && results[selectedIndex]) {
@@ -182,36 +177,40 @@ const SearchModal = ({ open, onOpenChange }: SearchModalProps) => {
           </div>
         ) : (
           <div className="mt-4 max-h-[300px] overflow-y-auto">
-            {Object.entries(groupedResults).map(([category, categoryResults]) => (
-              <div key={category} className="mb-4">
-                <h3 className="text-xs uppercase text-muted-foreground mb-2 px-2">
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
-                </h3>
-                <div className="space-y-1">
-                  {categoryResults.map((result, index) => {
-                    const resultIndex = results.findIndex(
-                      (r) => r.title === result.title && r.category === result.category
-                    );
-                    return (
-                      <div
-                        key={`${result.category}-${index}`}
-                        className={`px-2 py-1.5 rounded-md cursor-pointer flex items-center ${
-                          resultIndex === selectedIndex
-                            ? "bg-orange-500/10 text-orange-500"
-                            : "hover:bg-muted"
-                        }`}
-                        onClick={() => handleNavigate(result)}
-                      >
-                        <div className="mr-3 p-1.5 rounded-md bg-muted">
-                          <Search className="h-3.5 w-3.5 text-muted-foreground" />
+            {Object.entries(groupedResults).map(
+              ([category, categoryResults]) => (
+                <div key={category} className="mb-4">
+                  <h3 className="text-xs uppercase text-muted-foreground mb-2 px-2">
+                    {category.charAt(0).toUpperCase() + category.slice(1)}
+                  </h3>
+                  <div className="space-y-1">
+                    {categoryResults.map((result, index) => {
+                      const resultIndex = results.findIndex(
+                        (r) =>
+                          r.title === result.title &&
+                          r.category === result.category
+                      );
+                      return (
+                        <div
+                          key={`${result.category}-${index}`}
+                          className={`px-2 py-1.5 rounded-md cursor-pointer flex items-center ${
+                            resultIndex === selectedIndex
+                              ? "bg-orange-500/10 text-orange-500"
+                              : "hover:bg-muted"
+                          }`}
+                          onClick={() => handleNavigate(result)}
+                        >
+                          <div className="mr-3 p-1.5 rounded-md bg-muted">
+                            <Search className="h-3.5 w-3.5 text-muted-foreground" />
+                          </div>
+                          <span>{result.title}</span>
                         </div>
-                        <span>{result.title}</span>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            )}
           </div>
         )}
 

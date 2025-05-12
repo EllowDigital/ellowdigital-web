@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -30,36 +29,37 @@ const homePageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   "@id": "https://ellowdigitals.me/",
-  "url": "https://ellowdigitals.me/",
-  "name": "EllowDigital - Digital Transformation Services in India",
-  "description": "EllowDigital offers expert digital services including web development, SEO, and digital marketing solutions for businesses in India.",
-  "isPartOf": {
+  url: "https://ellowdigitals.me/",
+  name: "EllowDigital - Digital Transformation Services in India",
+  description:
+    "EllowDigital offers expert digital services including web development, SEO, and digital marketing solutions for businesses in India.",
+  isPartOf: {
     "@type": "WebSite",
-    "url": "https://ellowdigitals.me/",
-    "name": "EllowDigital",
-    "description": "Professional digital services for businesses in India"
+    url: "https://ellowdigitals.me/",
+    name: "EllowDigital",
+    description: "Professional digital services for businesses in India",
   },
-  "offers": {
+  offers: {
     "@type": "AggregateOffer",
-    "highPrice": "15999",
-    "lowPrice": "4999",
-    "priceCurrency": "INR",
-    "offerCount": "2",
-    "offers": [
+    highPrice: "15999",
+    lowPrice: "4999",
+    priceCurrency: "INR",
+    offerCount: "2",
+    offers: [
       {
         "@type": "Offer",
-        "name": "Business Website",
-        "price": "15999",
-        "priceCurrency": "INR"
+        name: "Business Website",
+        price: "15999",
+        priceCurrency: "INR",
       },
       {
         "@type": "Offer",
-        "name": "School CS Projects",
-        "price": "4999",
-        "priceCurrency": "INR"
-      }
-    ]
-  }
+        name: "School CS Projects",
+        price: "4999",
+        priceCurrency: "INR",
+      },
+    ],
+  },
 };
 
 const Index = () => {
@@ -93,7 +93,7 @@ const Index = () => {
 
   return (
     <>
-      <SEOHead 
+      <SEOHead
         title="EllowDigital | Digital Transformation Services in India"
         description="EllowDigital offers web development, SEO, and digital marketing services to accelerate your business growth in the digital landscape across India."
         canonicalUrl="https://ellowdigitals.me/"

@@ -54,15 +54,18 @@ const HeroSection = () => {
       {/* Enhanced Abstract Background with Animated Elements */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(50,50,50,0.3)_0,rgba(0,0,0,0)_70%)]"></div>
-        
+
         {/* Professional Grid Pattern */}
-        <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(rgba(255,215,0,0.03) 1px, transparent 1px), 
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `linear-gradient(rgba(255,215,0,0.03) 1px, transparent 1px), 
                             linear-gradient(90deg, rgba(255,215,0,0.03) 1px, transparent 1px)`,
-          backgroundSize: '40px 40px',
-          opacity: 0.5
-        }}></div>
-        
+            backgroundSize: "40px 40px",
+            opacity: 0.5,
+          }}
+        ></div>
+
         <svg
           viewBox="0 0 1200 800"
           xmlns="http://www.w3.org/2000/svg"
@@ -145,14 +148,18 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-brand-yellow/30 rounded-full blur-3xl animate-pulse-subtle"></div>
       </div>
       <div className="absolute bottom-[15%] left-[15%] w-40 h-40 opacity-20">
-        <div className="absolute inset-0 bg-brand-gold/40 rounded-full blur-3xl animate-pulse-subtle" 
-             style={{ animationDelay: "1.5s" }}></div>
+        <div
+          className="absolute inset-0 bg-brand-gold/40 rounded-full blur-3xl animate-pulse-subtle"
+          style={{ animationDelay: "1.5s" }}
+        ></div>
       </div>
 
       {/* Professional Accolades */}
       <div className="absolute top-28 sm:top-32 right-6 sm:right-10 hidden md:flex items-center gap-2 px-3 py-1.5 bg-black/50 backdrop-blur-sm border border-brand-yellow/20 rounded-full">
         <Award className="w-4 h-4 text-brand-yellow" />
-        <span className="text-xs text-white/90 font-medium">Award Winning Agency</span>
+        <span className="text-xs text-white/90 font-medium">
+          Award Winning Agency
+        </span>
       </div>
 
       {/* Main Hero Content with enhanced styling */}
@@ -162,9 +169,11 @@ const HeroSection = () => {
           {/* Professional badge */}
           <div className="flex items-center gap-2 px-3 py-1.5 bg-brand-yellow/10 backdrop-blur-sm border border-brand-yellow/30 rounded-full mb-2">
             <Sparkles className="w-4 h-4 text-brand-yellow" />
-            <span className="text-xs text-brand-yellow font-medium">Trusted by Global Brands</span>
+            <span className="text-xs text-brand-yellow font-medium">
+              Trusted by Global Brands
+            </span>
           </div>
-          
+
           <h1
             ref={headlineRef}
             className="opacity-0 translate-y-7 transition-all duration-700 text-4xl sm:text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg"
@@ -184,7 +193,7 @@ const HeroSection = () => {
             Future-proof, lightning-fast web/apps — all with personal,
             expert-crafted care.
           </p>
-          
+
           {/* Trust indicators */}
           <div className="flex flex-wrap items-center gap-4 mb-2">
             <div className="flex items-center gap-1 text-white/70 text-sm">
@@ -195,22 +204,25 @@ const HeroSection = () => {
               <Star className="w-4 h-4 text-brand-yellow" fill="#FFD700" />
               <span className="ml-1 text-xs">5.0 (230+ Reviews)</span>
             </div>
-            
+
             <div className="h-4 w-px bg-white/20"></div>
-            
+
             <div className="text-white/70 text-xs flex items-center">
-              <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-medium mr-2">99.9%</span>
+              <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-medium mr-2">
+                99.9%
+              </span>
               Client Satisfaction
             </div>
           </div>
-          
+
           <a
             ref={ctaRef}
             href="#contact"
             className="opacity-0 translate-y-4 scale-90 transition-all duration-700 group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-full shadow-lg overflow-hidden"
           >
             <span className="relative z-10 flex items-center">
-              Start Your Project <ArrowRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
+              Start Your Project{" "}
+              <ArrowRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
             </span>
             <span className="absolute -z-10 inset-0 rounded-full blur-xl opacity-60 bg-brand-yellow animate-pulse-subtle"></span>
             {/* Professional animation on hover */}
@@ -225,7 +237,7 @@ const HeroSection = () => {
             <div className="absolute -top-10 -right-16 w-32 h-32">
               <div className="absolute inset-0 bg-gradient-to-br from-brand-yellow/10 to-brand-gold/5 rounded-full blur-3xl"></div>
             </div>
-            
+
             {/* Enhanced Laptop with screen */}
             <div className="relative w-[420px] h-[280px] transition-all duration-300">
               <div className="absolute -inset-6 bg-black/50 rounded-xl blur-xl -z-10"></div>
@@ -297,7 +309,7 @@ const HeroSection = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Enhanced floating tech icons with better animations */}
             <div
               className="absolute -top-10 -right-6 w-14 h-14 bg-brand-yellow/20 backdrop-blur-sm rounded-lg flex items-center justify-center text-brand-yellow animate-float shadow-lg border border-brand-yellow/30"
@@ -365,7 +377,10 @@ const HeroSection = () => {
         </span>
         <div className="w-8 h-8 rounded-full border-2 border-brand-yellow/50 flex items-center justify-center relative">
           <ChevronDown className="w-5 h-5 text-brand-yellow" />
-          <div className="absolute inset-0 rounded-full border-2 border-brand-yellow/20 scale-[1.15] opacity-70 animate-ping" style={{ animationDuration: '1.5s' }}></div>
+          <div
+            className="absolute inset-0 rounded-full border-2 border-brand-yellow/20 scale-[1.15] opacity-70 animate-ping"
+            style={{ animationDuration: "1.5s" }}
+          ></div>
         </div>
       </div>
     </section>

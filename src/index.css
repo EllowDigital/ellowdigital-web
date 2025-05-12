@@ -142,8 +142,7 @@
 
   /* Soft glow effect for highlighted elements */
   .soft-glow {
-    box-shadow:
-      0 0 15px rgba(255, 215, 0, 0.15),
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.15),
       0 0 30px rgba(255, 215, 0, 0.05);
   }
 

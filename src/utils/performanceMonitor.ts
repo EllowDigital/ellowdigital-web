@@ -47,7 +47,9 @@ export const initializePerformanceMonitoring = () => {
         if (pageNavigation) {
           console.info(
             "Page loaded in:",
-            `${Math.round(pageNavigation.loadEventEnd - pageNavigation.startTime)}ms`
+            `${Math.round(
+              pageNavigation.loadEventEnd - pageNavigation.startTime
+            )}ms`
           );
         }
       }
@@ -71,7 +73,9 @@ export const useRenderPerformance = (componentName: string) => {
         const renderTime = performance.now() - renderStart.current;
         if (renderTime > RENDER_THRESHOLD_MS) {
           console.warn(
-            `Slow render detected in ${componentName}: ${Math.round(renderTime)}ms`
+            `Slow render detected in ${componentName}: ${Math.round(
+              renderTime
+            )}ms`
           );
         }
       }

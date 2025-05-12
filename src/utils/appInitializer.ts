@@ -3,10 +3,10 @@
  * Handles all setup tasks that need to run when the app starts
  */
 
-import { initPerformanceOptimizations } from './performanceUtils';
-import { initializePerformanceMonitoring } from './performanceMonitor';
-import { initPerformanceMonitoring as initWebVitalsMonitoring } from './performanceMonitoring';
-import { toast } from 'sonner';
+import { initPerformanceOptimizations } from "./performanceUtils";
+import { initializePerformanceMonitoring } from "./performanceMonitor";
+import { initPerformanceMonitoring as initWebVitalsMonitoring } from "./performanceMonitoring";
+import { toast } from "sonner";
 
 /**
  * Initialize all application services and optimizations
@@ -14,20 +14,20 @@ import { toast } from 'sonner';
 export const initializeApplication = () => {
   // Set up global error handling
   setupGlobalErrorHandling();
-  
+
   // Initialize performance optimizations
   const cleanupPerformance = initPerformanceOptimizations();
-  
+
   // Initialize performance monitoring
   initializePerformanceMonitoring();
   initWebVitalsMonitoring();
-  
+
   // Optimize image loading
   optimizeImageLoading();
-  
+
   // Apply responsive optimizations
   applyResponsiveOptimizations();
-  
+
   // Return cleanup function for performance optimizations
   return () => cleanupPerformance();
 };
@@ -36,17 +36,23 @@ export const initializeApplication = () => {
  * Set up global error handling
  */
 const setupGlobalErrorHandling = () => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     // Store the original error handler
     const originalOnError = window.onerror;
 
     // Set up global error handler
     window.onerror = (message, source, lineno, colno, error) => {
-      console.error('Global error caught:', { message, source, lineno, colno, error });
+      console.error("Global error caught:", {
+        message,
+        source,
+        lineno,
+        colno,
+        error,
+      });
 
       // Show user-friendly toast message
-      toast.error('Something went wrong', {
-        description: 'The application encountered an error',
+      toast.error("Something went wrong", {
+        description: "The application encountered an error",
         duration: 5000,
       });
 
@@ -60,10 +66,10 @@ const setupGlobalErrorHandling = () => {
     };
 
     // Handle unhandled promise rejections
-    window.addEventListener('unhandledrejection', (event) => {
-      console.error('Unhandled promise rejection:', event.reason);
+    window.addEventListener("unhandledrejection", (event) => {
+      console.error("Unhandled promise rejection:", event.reason);
 
-      toast.error('Background operation failed', {
+      toast.error("Background operation failed", {
         duration: 4000,
       });
     });
@@ -74,34 +80,37 @@ const setupGlobalErrorHandling = () => {
  * Optimize image loading across the site
  */
 const optimizeImageLoading = () => {
-  if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+  if (typeof window !== "undefined" && "IntersectionObserver" in window) {
     // Create observer for lazy loading
-    const imageObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const image = entry.target as HTMLImageElement;
-          if (image.dataset.src) {
-            // Replace src with data-src when image becomes visible
-            image.src = image.dataset.src;
-            image.removeAttribute('data-src');
-            imageObserver.unobserve(image); // Stop observing the image once loaded
+    const imageObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const image = entry.target as HTMLImageElement;
+            if (image.dataset.src) {
+              // Replace src with data-src when image becomes visible
+              image.src = image.dataset.src;
+              image.removeAttribute("data-src");
+              imageObserver.unobserve(image); // Stop observing the image once loaded
+            }
           }
-        }
-      });
-    }, {
-      rootMargin: '200px 0px', // Start loading before the image is visible
-      threshold: 0.01, // Trigger when just 1% visible
-    });
-    
+        });
+      },
+      {
+        rootMargin: "200px 0px", // Start loading before the image is visible
+        threshold: 0.01, // Trigger when just 1% visible
+      }
+    );
+
     // Find all images with data-src attribute and observe them
-    const lazyImages = document.querySelectorAll('img[data-src]');
+    const lazyImages = document.querySelectorAll("img[data-src]");
     lazyImages.forEach((img) => imageObserver.observe(img));
-    
+
     // Enable native lazy loading for browsers that support it
-    if ('loading' in HTMLImageElement.prototype) {
-      const images = document.querySelectorAll('img.lazy:not([data-src])');
+    if ("loading" in HTMLImageElement.prototype) {
+      const images = document.querySelectorAll("img.lazy:not([data-src])");
       images.forEach((img) => {
-        (img as HTMLImageElement).loading = 'lazy';
+        (img as HTMLImageElement).loading = "lazy";
       });
     }
   }
@@ -111,28 +120,33 @@ const optimizeImageLoading = () => {
  * Apply responsive optimizations based on device capabilities
  */
 const applyResponsiveOptimizations = () => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     // Check if the device supports touch events
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || (navigator as any).msMaxTouchPoints > 0;
-    document.body.classList.add(isTouchDevice ? 'touch-device' : 'no-touch');
-    
+    const isTouchDevice =
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      (navigator as any).msMaxTouchPoints > 0;
+    document.body.classList.add(isTouchDevice ? "touch-device" : "no-touch");
+
     // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
     if (prefersReducedMotion) {
-      document.body.classList.add('reduced-motion');
+      document.body.classList.add("reduced-motion");
     }
-    
+
     // Check for data saver mode based on network connection
-    if ('connection' in navigator) {
+    if ("connection" in navigator) {
       const connection = (navigator as any).connection;
       if (connection && connection.saveData) {
-        document.body.classList.add('data-saver');
+        document.body.classList.add("data-saver");
       }
     }
-    
+
     // Update font size based on viewport width
     updateResponsiveFontSize();
-    window.addEventListener('resize', updateResponsiveFontSize);
+    window.addEventListener("resize", updateResponsiveFontSize);
   }
 };
 
@@ -144,16 +158,19 @@ const updateResponsiveFontSize = () => {
   const maxWidth = 1920; // Maximum viewport width
   const minFontSize = 14; // Minimum font size in px
   const maxFontSize = 18; // Maximum font size in px
-  
+
   const width = window.innerWidth;
-  
+
   // Calculate font size based on viewport width using linear interpolation
-  const fontSize = width <= minWidth
-    ? minFontSize
-    : width >= maxWidth
-    ? maxFontSize
-    : minFontSize + ((width - minWidth) / (maxWidth - minWidth)) * (maxFontSize - minFontSize);
-  
+  const fontSize =
+    width <= minWidth
+      ? minFontSize
+      : width >= maxWidth
+      ? maxFontSize
+      : minFontSize +
+        ((width - minWidth) / (maxWidth - minWidth)) *
+          (maxFontSize - minFontSize);
+
   // Apply font size to the root element (affects rem units)
   document.documentElement.style.fontSize = `${fontSize}px`;
 };

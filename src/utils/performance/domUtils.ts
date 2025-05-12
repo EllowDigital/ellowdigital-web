@@ -1,7 +1,7 @@
 /**
  * DOM-related performance optimization utilities
  */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Check if an element is currently in the viewport
@@ -44,47 +44,52 @@ export const batchDomOperations = <T>(
  */
 export const optimizeMediaLoading = () => {
   // Create an IntersectionObserver to observe when media elements come into the viewport
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const element = entry.target;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const element = entry.target;
 
-        // Handle images with a data-src attribute for lazy loading
-        if (element.tagName === 'IMG') {
-          const img = element as HTMLImageElement;
-          if (img.dataset.src) {
-            img.src = img.dataset.src;
-            img.removeAttribute('data-src');
+          // Handle images with a data-src attribute for lazy loading
+          if (element.tagName === "IMG") {
+            const img = element as HTMLImageElement;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.removeAttribute("data-src");
+            }
           }
-        }
 
-        // Handle videos with a data-src attribute for lazy loading
-        if (element.tagName === 'VIDEO') {
-          const video = element as HTMLVideoElement;
-          if (video.dataset.src) {
-            video.src = video.dataset.src;
-            video.load();
-            video.removeAttribute('data-src');
+          // Handle videos with a data-src attribute for lazy loading
+          if (element.tagName === "VIDEO") {
+            const video = element as HTMLVideoElement;
+            if (video.dataset.src) {
+              video.src = video.dataset.src;
+              video.load();
+              video.removeAttribute("data-src");
+            }
           }
-        }
 
-        // Stop observing the element after it has been loaded
-        observer.unobserve(element);
-      }
-    });
-  }, {
-    rootMargin: '200px', // Start loading when element is within 200px of the viewport
-  });
+          // Stop observing the element after it has been loaded
+          observer.unobserve(element);
+        }
+      });
+    },
+    {
+      rootMargin: "200px", // Start loading when element is within 200px of the viewport
+    }
+  );
 
   // Observe all media elements (images and videos) with a data-src attribute
-  const lazyElements = document.querySelectorAll('img[data-src], video[data-src]');
-  lazyElements.forEach(element => {
+  const lazyElements = document.querySelectorAll(
+    "img[data-src], video[data-src]"
+  );
+  lazyElements.forEach((element) => {
     observer.observe(element);
   });
 
   // Apply priority hints to critical above-the-fold images for faster loading
-  document.querySelectorAll('img.priority').forEach(img => {
-    (img as HTMLImageElement).fetchPriority = 'high';
+  document.querySelectorAll("img.priority").forEach((img) => {
+    (img as HTMLImageElement).fetchPriority = "high";
   });
 
   // Return cleanup function to disconnect the observer
@@ -104,20 +109,22 @@ export const purgeOffscreenElements = () => {
   };
 
   // Find and purge offscreen elements
-  document.querySelectorAll('[data-purgeable]').forEach(el => {
+  document.querySelectorAll("[data-purgeable]").forEach((el) => {
     const element = el as HTMLElement;
     const rect = element.getBoundingClientRect();
     const elemTop = rect.top + window.scrollY;
     const elemBottom = rect.bottom + window.scrollY;
 
     // If element is far from the viewport (outside the buffer zone)
-    if (elemBottom < viewport.top - viewport.buffer || elemTop > viewport.bottom + viewport.buffer) {
-
+    if (
+      elemBottom < viewport.top - viewport.buffer ||
+      elemTop > viewport.bottom + viewport.buffer
+    ) {
       // Store original content and replace it with a placeholder
       if (!element.dataset.purged) {
         element.dataset.purgedContent = element.innerHTML;
-        element.dataset.purged = 'true';
-        element.innerHTML = ''; // Remove the content to reduce memory usage
+        element.dataset.purged = "true";
+        element.innerHTML = ""; // Remove the content to reduce memory usage
         element.style.minHeight = `${rect.height}px`; // Maintain layout consistency
       }
     } else {
@@ -126,9 +133,9 @@ export const purgeOffscreenElements = () => {
         if (element.dataset.purgedContent) {
           element.innerHTML = element.dataset.purgedContent;
         }
-        element.removeAttribute('data-purged');
-        element.removeAttribute('data-purged-content');
-        element.style.minHeight = ''; // Remove the placeholder height
+        element.removeAttribute("data-purged");
+        element.removeAttribute("data-purged-content");
+        element.style.minHeight = ""; // Remove the placeholder height
       }
     }
   });

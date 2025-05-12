@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 /**
  * A utility function to combine class names using `clsx` and `tailwind-merge`.
- * 
+ *
  * @param inputs - A list of class values to be merged and processed.
  * @returns A merged string of class names.
  */

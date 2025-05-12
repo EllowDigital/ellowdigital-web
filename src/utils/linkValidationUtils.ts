@@ -5,7 +5,7 @@
 type LinkIssue = {
   url: string;
   element: HTMLAnchorElement;
-  type: 'security' | 'external' | 'fragment' | 'tracking';
+  type: "security" | "external" | "fragment" | "tracking";
   description: string;
 };
 
@@ -24,15 +24,15 @@ export const createLinkValidator = () => {
 
   // Security check for links that should use HTTPS
   const checkSecureLinks = (links: NodeListOf<HTMLAnchorElement>) => {
-    links.forEach(link => {
+    links.forEach((link) => {
       const href = link.href;
-      
-      if (href.startsWith('http:') && !href.includes('localhost')) {
+
+      if (href.startsWith("http:") && !href.includes("localhost")) {
         issues.push({
           url: href,
           element: link,
-          type: 'security',
-          description: 'Link should use HTTPS for security',
+          type: "security",
+          description: "Link should use HTTPS for security",
         });
       }
     });
@@ -42,7 +42,7 @@ export const createLinkValidator = () => {
   const checkExternalLinks = (links: NodeListOf<HTMLAnchorElement>) => {
     const currentDomain = window.location.hostname;
 
-    links.forEach(link => {
+    links.forEach((link) => {
       const href = link.href;
       try {
         const linkDomain = new URL(href).hostname;
@@ -54,18 +54,23 @@ export const createLinkValidator = () => {
             issues.push({
               url: href,
               element: link,
-              type: 'external',
+              type: "external",
               description: 'External link missing target="_blank" attribute',
             });
           }
 
           // Check for rel attribute with noreferrer and noopener for security
-          if (!link.rel || !link.rel.includes('noreferrer') || !link.rel.includes('noopener')) {
+          if (
+            !link.rel ||
+            !link.rel.includes("noreferrer") ||
+            !link.rel.includes("noopener")
+          ) {
             issues.push({
               url: href,
               element: link,
-              type: 'security',
-              description: 'External link should have rel="noreferrer noopener" for security',
+              type: "security",
+              description:
+                'External link should have rel="noreferrer noopener" for security',
             });
           }
         }
@@ -77,18 +82,18 @@ export const createLinkValidator = () => {
 
   // Check fragment links (anchors to page sections)
   const checkFragmentLinks = (links: NodeListOf<HTMLAnchorElement>) => {
-    links.forEach(link => {
-      const href = link.getAttribute('href');
-      
-      if (href && href.startsWith('#') && href !== '#') {
+    links.forEach((link) => {
+      const href = link.getAttribute("href");
+
+      if (href && href.startsWith("#") && href !== "#") {
         const targetId = href.substring(1);
         const targetElement = document.getElementById(targetId);
-        
+
         if (!targetElement) {
           issues.push({
             url: href,
             element: link,
-            type: 'fragment',
+            type: "fragment",
             description: `Fragment link points to non-existent element with id "${targetId}"`,
           });
         }
@@ -98,20 +103,26 @@ export const createLinkValidator = () => {
 
   // Check for tracking parameters in URLs that might be unnecessary
   const checkTrackingParameters = (links: NodeListOf<HTMLAnchorElement>) => {
-    const trackingParams = ['utm_source', 'utm_medium', 'utm_campaign', 'fbclid', 'gclid'];
+    const trackingParams = [
+      "utm_source",
+      "utm_medium",
+      "utm_campaign",
+      "fbclid",
+      "gclid",
+    ];
 
-    links.forEach(link => {
+    links.forEach((link) => {
       const href = link.href;
 
       try {
         const url = new URL(href);
 
-        trackingParams.forEach(param => {
+        trackingParams.forEach((param) => {
           if (url.searchParams.has(param)) {
             issues.push({
               url: href,
               element: link,
-              type: 'tracking',
+              type: "tracking",
               description: `Link contains tracking parameter "${param}" which may not be necessary for internal navigation`,
             });
           }
@@ -126,28 +137,30 @@ export const createLinkValidator = () => {
   const fixLinkIssues = (autoFix: boolean = false) => {
     if (!autoFix) return;
 
-    issues.forEach(issue => {
+    issues.forEach((issue) => {
       const { element, type } = issue;
 
       switch (type) {
-        case 'security':
+        case "security":
           // Fix HTTP to HTTPS
-          if (element.href.startsWith('http:')) {
-            element.href = element.href.replace('http:', 'https:');
+          if (element.href.startsWith("http:")) {
+            element.href = element.href.replace("http:", "https:");
           }
 
           // Add security attributes to external links
-          if (!element.getAttribute('rel') || 
-              !element.getAttribute('rel')?.includes('noreferrer') ||
-              !element.getAttribute('rel')?.includes('noopener')) {
-            element.setAttribute('rel', 'noreferrer noopener');
+          if (
+            !element.getAttribute("rel") ||
+            !element.getAttribute("rel")?.includes("noreferrer") ||
+            !element.getAttribute("rel")?.includes("noopener")
+          ) {
+            element.setAttribute("rel", "noreferrer noopener");
           }
           break;
 
-        case 'external':
+        case "external":
           // Add target blank to external links
           if (!element.target) {
-            element.target = '_blank';
+            element.target = "_blank";
           }
           break;
 
@@ -157,14 +170,16 @@ export const createLinkValidator = () => {
   };
 
   // Main validation function - update to require consoleOutput parameter
-  const validateLinks = (options: ValidationOptions = { autoFix: false, consoleOutput: true }) => {
-    if (typeof window === 'undefined') return { issues: [] };
+  const validateLinks = (
+    options: ValidationOptions = { autoFix: false, consoleOutput: true }
+  ) => {
+    if (typeof window === "undefined") return { issues: [] };
 
     // Reset issues
     issues = [];
 
     // Get all links
-    const links = document.querySelectorAll<HTMLAnchorElement>('a[href]');
+    const links = document.querySelectorAll<HTMLAnchorElement>("a[href]");
 
     // Run all checks
     checkSecureLinks(links);
@@ -180,16 +195,18 @@ export const createLinkValidator = () => {
     // Console output for development
     if (options.consoleOutput) {
       if (issues.length > 0) {
-        console.group('Link Validation Issues');
-        issues.forEach(issue => {
-          console.warn(`${issue.type.toUpperCase()} issue with link: ${issue.url}`);
+        console.group("Link Validation Issues");
+        issues.forEach((issue) => {
+          console.warn(
+            `${issue.type.toUpperCase()} issue with link: ${issue.url}`
+          );
           console.warn(issue.description);
-          console.warn('Element:', issue.element);
-          console.warn('---');
+          console.warn("Element:", issue.element);
+          console.warn("---");
         });
         console.groupEnd();
       } else {
-        console.info('Link validation completed: No issues found.');
+        console.info("Link validation completed: No issues found.");
       }
     }
 
@@ -203,8 +220,10 @@ export const createLinkValidator = () => {
  * Run link validation when the page is fully loaded
  * Update to use the ValidationOptions type for the options parameter
  */
-export const validateLinksAfterLoad = (options: ValidationOptions = { autoFix: false, consoleOutput: true }) => {
-  if (typeof window === 'undefined') return () => {};
+export const validateLinksAfterLoad = (
+  options: ValidationOptions = { autoFix: false, consoleOutput: true }
+) => {
+  if (typeof window === "undefined") return () => {};
 
   const validator = createLinkValidator();
 
@@ -216,13 +235,13 @@ export const validateLinksAfterLoad = (options: ValidationOptions = { autoFix: f
     }, 1000);
   };
 
-  if (document.readyState === 'complete') {
+  if (document.readyState === "complete") {
     validate();
   } else {
-    window.addEventListener('load', validate);
+    window.addEventListener("load", validate);
   }
 
   return () => {
-    window.removeEventListener('load', validate);
+    window.removeEventListener("load", validate);
   };
 };

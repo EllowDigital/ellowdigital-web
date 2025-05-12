@@ -40,19 +40,20 @@ export const createError = (
  */
 export const handleError = (error: any, silent = false): void => {
   const enhancedError = normalizeError(error);
-  
+
   // Log errors in development for debugging
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     console.error("Error caught:", enhancedError);
   }
-  
+
   // Show user-friendly toast notifications unless silent is true
   if (!silent) {
     const message = getUserFriendlyMessage(enhancedError);
     toast.error(message, {
-      description: enhancedError.type === ErrorType.NETWORK 
-        ? "Please check your connection and try again." 
-        : undefined,
+      description:
+        enhancedError.type === ErrorType.NETWORK
+          ? "Please check your connection and try again."
+          : undefined,
       duration: 5000,
     });
   }
@@ -74,11 +75,9 @@ const normalizeError = (error: any): EnhancedError => {
     return createError(error);
   } else {
     // Handle unknown error format
-    return createError(
-      "An unexpected error occurred",
-      ErrorType.UNKNOWN,
-      { rawError: error }
-    );
+    return createError("An unexpected error occurred", ErrorType.UNKNOWN, {
+      rawError: error,
+    });
   }
 };
 
@@ -86,16 +85,21 @@ const normalizeError = (error: any): EnhancedError => {
  * Determine the type of the error based on its properties
  */
 const determineErrorType = (error: any): ErrorType => {
-  if (error.message?.includes("Network") || 
-      error.message?.includes("fetch") || 
-      error.message?.includes("connection") ||
-      error.name === "AbortError") {
+  if (
+    error.message?.includes("Network") ||
+    error.message?.includes("fetch") ||
+    error.message?.includes("connection") ||
+    error.name === "AbortError"
+  ) {
     return ErrorType.NETWORK;
   }
 
-  if (error.status === 401 || error.status === 403 || 
-      error.message?.includes("unauthorized") || 
-      error.message?.includes("permission")) {
+  if (
+    error.status === 401 ||
+    error.status === 403 ||
+    error.message?.includes("unauthorized") ||
+    error.message?.includes("permission")
+  ) {
     return ErrorType.AUTHORIZATION;
   }
 
@@ -103,8 +107,10 @@ const determineErrorType = (error: any): ErrorType => {
     return ErrorType.VALIDATION;
   }
 
-  if ((error.status && error.status >= 500) || 
-      error.message?.includes("server")) {
+  if (
+    (error.status && error.status >= 500) ||
+    error.message?.includes("server")
+  ) {
     return ErrorType.SERVER;
   }
 
@@ -121,7 +127,7 @@ const getUserFriendlyMessage = (error: EnhancedError): string => {
     [ErrorType.AUTHORIZATION]: "You don't have permission for this action",
     [ErrorType.SERVER]: "Server error occurred",
     [ErrorType.CLIENT]: "An error occurred in the application",
-    [ErrorType.UNKNOWN]: "Something went wrong"
+    [ErrorType.UNKNOWN]: "Something went wrong",
   };
 
   // Return the custom error message or default message based on type
@@ -161,10 +167,10 @@ export const withErrorHandling = <T extends (...args: any[]) => any>(
   return (...args: Parameters<T>) => {
     try {
       const result = handler(...args);
-      
+
       // Handle promises
       if (result instanceof Promise) {
-        return result.catch(error => {
+        return result.catch((error) => {
           handleError(error);
         });
       }

@@ -1,5 +1,10 @@
-
-import { CheckCircle, Users, Award, Briefcase, LightbulbIcon } from "lucide-react";
+import {
+  CheckCircle,
+  Users,
+  Award,
+  Briefcase,
+  LightbulbIcon,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 
@@ -9,7 +14,7 @@ const AboutSection = () => {
     { text: "Creative UI/UX design", icon: LightbulbIcon },
     { text: "Clean, efficient code", icon: CheckCircle },
     { text: "Personalized strategies", icon: Briefcase },
-    { text: "Future-proof solutions", icon: Award }
+    { text: "Future-proof solutions", icon: Award },
   ];
 
   // Animation variants for improved performance and mobile responsiveness
@@ -19,23 +24,26 @@ const AboutSection = () => {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.3
-      }
-    }
+        delayChildren: 0.3,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } }
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } },
   };
 
   return (
-    <section id="about" className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden">
+    <section
+      id="about"
+      className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden"
+    >
       {/* Background Elements */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-background to-muted/20"></div>
       <div className="absolute top-1/4 right-0 h-64 w-64 bg-brand-gold/5 rounded-full filter blur-3xl"></div>
       <div className="absolute bottom-1/4 left-0 h-64 w-64 bg-brand-gold/10 rounded-full filter blur-3xl"></div>
-      
+
       <div className="section-container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left Column: About Information - Order adjusted for mobile */}
@@ -48,17 +56,20 @@ const AboutSection = () => {
             </div>
 
             <p className="text-muted-foreground text-lg max-w-prose">
-              At EllowDigital, we are a solo-powered micro-agency dedicated to delivering high-performance websites,
-              mobile apps, and software solutions that are tailored to your unique business needs.
+              At EllowDigital, we are a solo-powered micro-agency dedicated to
+              delivering high-performance websites, mobile apps, and software
+              solutions that are tailored to your unique business needs.
             </p>
 
             <p className="text-muted-foreground text-lg max-w-prose">
-              We believe that every project is an opportunity to make a lasting impact. That's why we focus on quality,
-              efficiency, and user-centric design to ensure that our solutions not only meet your needs but exceed expectations.
+              We believe that every project is an opportunity to make a lasting
+              impact. That's why we focus on quality, efficiency, and
+              user-centric design to ensure that our solutions not only meet
+              your needs but exceed expectations.
             </p>
 
             {/* Highlights with improved responsive layout */}
-            <motion.div 
+            <motion.div
               className="mt-8 grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4"
               variants={containerVariants}
               initial="hidden"
@@ -72,7 +83,9 @@ const AboutSection = () => {
                       <div className="rounded-full bg-brand-gold/10 p-2 group-hover:bg-brand-gold/20 transition-colors flex-shrink-0">
                         <item.icon className="h-4 w-4 sm:h-5 sm:w-5 text-brand-gold" />
                       </div>
-                      <span className="font-medium text-sm sm:text-base">{item.text}</span>
+                      <span className="font-medium text-sm sm:text-base">
+                        {item.text}
+                      </span>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -81,7 +94,7 @@ const AboutSection = () => {
           </div>
 
           {/* Right Column: Mission and Philosophy - Improved mobile responsiveness with motion */}
-          <motion.div 
+          <motion.div
             className="relative order-1 lg:order-2"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -100,9 +113,11 @@ const AboutSection = () => {
                     Our Mission
                   </h3>
                   <p className="text-muted-foreground text-sm sm:text-base">
-                    Our mission is to empower businesses with meaningful digital experiences. By blending innovative
-                    technology, agile development, and human-centered design, we create results that not only meet your
-                    goals but resonate with your audience.
+                    Our mission is to empower businesses with meaningful digital
+                    experiences. By blending innovative technology, agile
+                    development, and human-centered design, we create results
+                    that not only meet your goals but resonate with your
+                    audience.
                   </p>
                 </div>
 
@@ -113,19 +128,26 @@ const AboutSection = () => {
                     Our Philosophy
                   </h3>
                   <p className="text-muted-foreground text-sm sm:text-base">
-                    Our philosophy is simple: technology should empower people. With a passion for creating impactful digital experiences,
-                    we blend innovative technology with human-centered design to bring your boldest ideas to life. Every solution is
-                    crafted to be scalable, intuitive, and future-proof.
+                    Our philosophy is simple: technology should empower people.
+                    With a passion for creating impactful digital experiences,
+                    we blend innovative technology with human-centered design to
+                    bring your boldest ideas to life. Every solution is crafted
+                    to be scalable, intuitive, and future-proof.
                   </p>
                 </div>
 
                 {/* Quote - Improved for mobile */}
                 <div className="relative bg-muted/30 p-3 sm:p-5 rounded-lg mt-4 sm:mt-6 border-l-4 border-brand-gold">
-                  <div className="absolute top-0 right-0 text-4xl sm:text-5xl text-brand-gold/10 font-serif">"</div>
+                  <div className="absolute top-0 right-0 text-4xl sm:text-5xl text-brand-gold/10 font-serif">
+                    "
+                  </div>
                   <p className="text-xs sm:text-sm italic relative z-10">
-                    Every line of code and every pixel should serve a purpose — to create beautiful experiences that solve real problems.
+                    Every line of code and every pixel should serve a purpose —
+                    to create beautiful experiences that solve real problems.
                   </p>
-                  <div className="absolute bottom-0 right-4 text-4xl sm:text-5xl text-brand-gold/10 font-serif">"</div>
+                  <div className="absolute bottom-0 right-4 text-4xl sm:text-5xl text-brand-gold/10 font-serif">
+                    "
+                  </div>
                 </div>
               </CardContent>
             </Card>
