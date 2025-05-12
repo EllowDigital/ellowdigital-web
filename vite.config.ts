@@ -5,6 +5,7 @@ import { componentTagger } from "lovable-tagger";
 import viteCompression from "vite-plugin-compression";
 import { VitePWA } from "vite-plugin-pwa";
 import rollupNodePolyfills from "rollup-plugin-node-polyfills";
+import inject from "@rollup/plugin-inject";
 
 export default defineConfig(({ mode }) => {
   const isDevelopment = mode === "development";
@@ -69,10 +70,10 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
-        stream: "stream-browserify",
-        util: "util",
-        process: "process/browser",
-        buffer: "buffer",
+        stream: "rollup-plugin-node-polyfills/polyfills/stream",
+        util: "rollup-plugin-node-polyfills/polyfills/util",
+        buffer: "rollup-plugin-node-polyfills/polyfills/buffer-es6",
+        process: "rollup-plugin-node-polyfills/polyfills/process-es6",
       },
       mainFields: ["module", "jsnext:main", "jsnext"],
     },
@@ -80,7 +81,13 @@ export default defineConfig(({ mode }) => {
       sourcemap: false,
       minify: "terser",
       rollupOptions: {
-        plugins: [rollupNodePolyfills()],
+        plugins: [
+          rollupNodePolyfills(),
+          inject({
+            Buffer: ["buffer", "Buffer"],
+            process: "process",
+          }),
+        ],
         output: {
           manualChunks: {
             react: ["react", "react-dom", "react-router-dom"],
@@ -100,12 +107,16 @@ export default defineConfig(({ mode }) => {
       strictPort: true,
     },
     optimizeDeps: {
+      include: ["util", "stream", "buffer", "process"],
       esbuildOptions: {
         define: {
           global: "globalThis",
         },
+        inject: [
+          path.resolve(__dirname, "node_modules", "buffer", "index.js"),
+          path.resolve(__dirname, "node_modules", "process", "browser.js"),
+        ],
       },
-      include: ["stream", "util", "process", "buffer"],
     },
   };
 });
