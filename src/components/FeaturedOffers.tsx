@@ -56,7 +56,10 @@ const FeaturedOffers = () => {
               } hover:shadow-xl transition-all duration-500`}
             >
               {offer.isPopular && (
-                <div className="absolute -right-12 top-6 rotate-45 bg-brand-yellow text-black text-xs font-medium py-1 px-10 shadow-md">
+                <div 
+                  className="absolute -right-12 top-6 rotate-45 bg-brand-yellow text-black text-xs font-medium py-1 px-10 shadow-md"
+                  aria-label="Popular offer"
+                >
                   Popular
                 </div>
               )}
@@ -81,10 +84,10 @@ const FeaturedOffers = () => {
                   <div className="ml-2 text-sm text-muted-foreground">{index === 0 ? "/website" : ""}</div>
                 </div>
                 
-                <ul className="space-y-3">
+                <ul className="space-y-3" aria-label={`Features of ${offer.title}`}>
                   {offer.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <CheckCircle className="h-5 w-5 text-brand-yellow shrink-0 mt-0.5" />
+                      <CheckCircle className="h-5 w-5 text-brand-yellow shrink-0 mt-0.5" aria-hidden="true" />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -95,6 +98,7 @@ const FeaturedOffers = () => {
                 <Button 
                   onClick={scrollToContact}
                   className="w-full bg-brand-yellow hover:bg-brand-gold text-black font-semibold py-2 px-4 rounded-md transition-colors"
+                  aria-label={`Get started with ${offer.title}`}
                 >
                   Get Started
                 </Button>

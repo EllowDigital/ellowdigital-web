@@ -16,6 +16,8 @@ import { initPerformanceOptimizations } from "@/utils/performanceUtils";
 import { initPerformanceMonitoring } from "@/utils/performanceMonitoring";
 import { SkipToContent } from "@/components/accessibility/SkipToContent";
 import { AxiosInterceptor } from "@/utils/axiosInterceptor";
+import { optimizeImageLoading, handleBrokenImages } from "@/utils/assetOptimizationUtils";
+import { validateLinksAfterLoad } from "@/utils/linkValidationUtils";
 
 // Create and configure the React Query client with optimized settings
 const queryClient = new QueryClient({
@@ -29,14 +31,35 @@ const queryClient = new QueryClient({
   },
 });
 
+// Environment detection
+const isDev = process.env.NODE_ENV === 'development';
+
 const App = () => {
   useEffect(() => {
     // Initialize performance optimizations and monitoring on mount
     const cleanupPerformance = initPerformanceOptimizations();
     initPerformanceMonitoring();
+    
+    // Initialize asset optimization
+    const cleanupImageLoading = optimizeImageLoading();
+    const cleanupBrokenImageHandling = handleBrokenImages();
+    
+    // Link validation in dev mode only
+    let cleanupLinkValidation = () => {};
+    if (isDev) {
+      cleanupLinkValidation = validateLinksAfterLoad({ 
+        autoFix: false,
+        consoleOutput: true 
+      });
+    }
 
-    // Cleanup performance optimizations on unmount
-    return () => cleanupPerformance();
+    // Cleanup all optimizations on unmount
+    return () => {
+      cleanupPerformance();
+      cleanupImageLoading();
+      cleanupBrokenImageHandling();
+      cleanupLinkValidation();
+    };
   }, []);
 
   return (

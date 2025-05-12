@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -14,6 +15,7 @@ import Testimonials from "@/components/Testimonials";
 import Portfolio from "@/components/Portfolio";
 import ImpactMetrics from "@/components/ImpactMetrics";
 import SmartContactForm from "@/components/SmartContactForm";
+import SEOHead from "@/components/SEOHead";
 import {
   initScrollRevealAnimations,
   init3DTiltEffect,
@@ -22,6 +24,43 @@ import {
 } from "@/utils/animationUtils";
 import Preloader from "@/components/Preloader";
 import { Toaster } from "sonner";
+
+// Homepage JSON-LD structured data
+const homePageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://ellowdigitals.me/",
+  "url": "https://ellowdigitals.me/",
+  "name": "EllowDigital - Digital Transformation Services in India",
+  "description": "EllowDigital offers expert digital services including web development, SEO, and digital marketing solutions for businesses in India.",
+  "isPartOf": {
+    "@type": "WebSite",
+    "url": "https://ellowdigitals.me/",
+    "name": "EllowDigital",
+    "description": "Professional digital services for businesses in India"
+  },
+  "offers": {
+    "@type": "AggregateOffer",
+    "highPrice": "15999",
+    "lowPrice": "4999",
+    "priceCurrency": "INR",
+    "offerCount": "2",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Business Website",
+        "price": "15999",
+        "priceCurrency": "INR"
+      },
+      {
+        "@type": "Offer",
+        "name": "School CS Projects",
+        "price": "4999",
+        "priceCurrency": "INR"
+      }
+    ]
+  }
+};
 
 const Index = () => {
   const [isInitialized, setIsInitialized] = useState(false);
@@ -54,6 +93,13 @@ const Index = () => {
 
   return (
     <>
+      <SEOHead 
+        title="EllowDigital | Digital Transformation Services in India"
+        description="EllowDigital offers web development, SEO, and digital marketing services to accelerate your business growth in the digital landscape across India."
+        canonicalUrl="https://ellowdigitals.me/"
+        structuredData={homePageSchema}
+      />
+
       {/* Enhanced Preloader with smooth transition */}
       {isLoading && <Preloader />}
 
@@ -74,7 +120,7 @@ const Index = () => {
         }`}
       >
         <Navbar />
-        <main className="flex-grow overflow-x-hidden">
+        <main className="flex-grow overflow-x-hidden" id="main-content">
           <HeroSection />
           <AboutSection />
           <FounderSection />
