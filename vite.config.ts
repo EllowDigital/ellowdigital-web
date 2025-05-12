@@ -1,4 +1,3 @@
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -7,28 +6,31 @@ import viteCompression from "vite-plugin-compression";
 import { VitePWA } from "vite-plugin-pwa";
 import inject from "@rollup/plugin-inject";
 
+// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const isDevelopment = mode === "development";
-  const isProduction = mode === "production";
+  const isDev = mode === "development";
+  const isProd = mode === "production";
 
   return {
     server: {
       host: "::",
       port: 8080,
       strictPort: true,
-      allowedHosts: [
-        "da7405f0-30e5-42c0-84c0-542948da552d.lovableproject.com",
-      ],
+      allowedHosts: ["da7405f0-30e5-42c0-84c0-542948da552d.lovableproject.com"],
+    },
+    preview: {
+      port: 8080,
+      strictPort: true,
     },
     plugins: [
       react(),
-      isDevelopment && componentTagger(),
-      isProduction &&
+      isDev && componentTagger(),
+      isProd &&
         viteCompression({
           algorithm: "gzip",
           ext: ".gz",
         }),
-      isProduction &&
+      isProd &&
         viteCompression({
           algorithm: "brotliCompress",
           ext: ".br",
@@ -69,8 +71,7 @@ export default defineConfig(({ mode }) => {
     ].filter(Boolean),
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, "./src"),
-        // Use browser-compatible versions of node built-ins
+        "@": path.resolve(__dirname, "src"),
         stream: "stream-browserify",
         buffer: "buffer",
         util: "util",
@@ -80,10 +81,13 @@ export default defineConfig(({ mode }) => {
     build: {
       sourcemap: false,
       minify: "terser",
+      chunkSizeWarningLimit: 1000,
+      commonjsOptions: {
+        transformMixedEsModules: true,
+      },
       rollupOptions: {
         plugins: [
           inject({
-            // Inject these globals in the bundle
             Buffer: ["buffer", "Buffer"],
             process: "process/browser",
             global: "rollup-plugin-node-polyfills/polyfills/global",
@@ -94,28 +98,14 @@ export default defineConfig(({ mode }) => {
           manualChunks: {
             react: ["react", "react-dom", "react-router-dom"],
             ui: ["@/components/ui/index"],
-            vendor: [
-              "@tanstack/react-query",
-              "lucide-react",
-              "framer-motion",
-            ],
+            vendor: ["@tanstack/react-query", "lucide-react", "framer-motion"],
           },
         },
       },
-      chunkSizeWarningLimit: 1000,
-      // Add specific handling for environment variables
-      commonjsOptions: {
-        transformMixedEsModules: true,
-      },
-    },
-    preview: {
-      port: 8080,
-      strictPort: true,
     },
     define: {
-      // Define global variables that will be available in the bundle
-      'process.env': {},
-      'global': 'window',
+      "process.env": {},
+      global: "window",
     },
     optimizeDeps: {
       include: ["buffer", "process/browser", "util", "stream-browserify"],
