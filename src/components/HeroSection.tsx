@@ -170,7 +170,7 @@ const HeroSection = () => {
           <div className="flex items-center gap-2 px-3 py-1.5 bg-brand-yellow/10 backdrop-blur-sm border border-brand-yellow/30 rounded-full mb-2">
             <Sparkles className="w-4 h-4 text-brand-yellow" />
             <span className="text-xs text-brand-yellow font-medium">
-              Trusted by Global Brands
+              Trusted by Indian's
             </span>
           </div>
 
@@ -202,7 +202,7 @@ const HeroSection = () => {
               <Star className="w-4 h-4 text-brand-yellow" fill="#FFD700" />
               <Star className="w-4 h-4 text-brand-yellow" fill="#FFD700" />
               <Star className="w-4 h-4 text-brand-yellow" fill="#FFD700" />
-              <span className="ml-1 text-xs">5.0 (230+ Reviews)</span>
+              <span className="ml-1 text-xs">5.0 (30+ Reviews)</span>
             </div>
 
             <div className="h-4 w-px bg-white/20"></div>

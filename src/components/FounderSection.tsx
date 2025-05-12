@@ -56,7 +56,7 @@ const FounderSection = () => {
                 {/* Location badge */}
                 <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm text-xs py-1 px-2 rounded-full flex items-center">
                   <MapPin className="h-3 w-3 mr-1 text-brand-yellow" />
-                  <span>New Delhi, India</span>
+                  <span>Uttar Pradesh, India</span>
                 </div>
               </div>
 

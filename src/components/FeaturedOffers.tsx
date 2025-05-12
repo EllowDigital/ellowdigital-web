@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 const offers = [
   {
     title: "Business Website",
-    price: "₹15,999",
+    price: "₹1,999",
     description:
       "Perfect for businesses looking to establish a digital presence.",
     features: [
@@ -27,7 +27,7 @@ const offers = [
   },
   {
     title: "School CS Projects",
-    price: "Starting at ₹4,999",
+    price: "Starting at ₹269",
     description: "Expert-crafted projects to help students score high.",
     features: [
       "Class 12 computer science projects",

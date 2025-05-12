@@ -60,7 +60,7 @@ const reasons = [
 
 // Professional client logos
 const clientLogos = [
-  { name: "Global Corp", logo: <TrendingUp className="w-6 h-6" /> },
+  { name: "Indian Corp", logo: <TrendingUp className="w-6 h-6" /> },
   { name: "Tech Solutions", logo: <Zap className="w-6 h-6" /> },
   { name: "Security First", logo: <Shield className="w-6 h-6" /> },
   { name: "Premium Services", logo: <Award className="w-6 h-6" /> },
