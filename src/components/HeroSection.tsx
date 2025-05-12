@@ -3,7 +3,7 @@ import {
   init3DCodeAnimation,
   initTypingAnimation,
 } from "@/utils/animationUtils";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, Award, Sparkles, Star } from "lucide-react";
 
 const HeroSection = () => {
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -51,8 +51,18 @@ const HeroSection = () => {
       id="home"
       className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden pt-24 z-10"
     >
-      {/* Abstract Coding Team Silhouettes as Animated Blobs */}
+      {/* Enhanced Abstract Background with Animated Elements */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(50,50,50,0.3)_0,rgba(0,0,0,0)_70%)]"></div>
+        
+        {/* Professional Grid Pattern */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `linear-gradient(rgba(255,215,0,0.03) 1px, transparent 1px), 
+                            linear-gradient(90deg, rgba(255,215,0,0.03) 1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
+          opacity: 0.5
+        }}></div>
+        
         <svg
           viewBox="0 0 1200 800"
           xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +70,7 @@ const HeroSection = () => {
           className="w-full h-full blur-[50px]"
         >
           <defs>
-            {/* Black, white, yellow animated gradient */}
+            {/* Enhanced Black, white, yellow animated gradient */}
             <linearGradient
               id="grad-animated"
               x1="0%"
@@ -130,16 +140,40 @@ const HeroSection = () => {
         </svg>
       </div>
 
-      {/* Main Hero Content */}
+      {/* Professional decorative elements */}
+      <div className="absolute top-[20%] right-[15%] w-32 h-32 opacity-20">
+        <div className="absolute inset-0 bg-brand-yellow/30 rounded-full blur-3xl animate-pulse-subtle"></div>
+      </div>
+      <div className="absolute bottom-[15%] left-[15%] w-40 h-40 opacity-20">
+        <div className="absolute inset-0 bg-brand-gold/40 rounded-full blur-3xl animate-pulse-subtle" 
+             style={{ animationDelay: "1.5s" }}></div>
+      </div>
+
+      {/* Professional Accolades */}
+      <div className="absolute top-28 sm:top-32 right-6 sm:right-10 hidden md:flex items-center gap-2 px-3 py-1.5 bg-black/50 backdrop-blur-sm border border-brand-yellow/20 rounded-full">
+        <Award className="w-4 h-4 text-brand-yellow" />
+        <span className="text-xs text-white/90 font-medium">Award Winning Agency</span>
+      </div>
+
+      {/* Main Hero Content with enhanced styling */}
       <div className="relative flex flex-col md:flex-row items-center w-full max-w-7xl mx-auto px-6 py-12 md:py-0 z-10">
-        {/* Left: Headline, tagline, CTA */}
+        {/* Left: Enhanced Headline, tagline, CTA */}
         <div className="w-full md:w-1/2 flex flex-col gap-8 items-start">
+          {/* Professional badge */}
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-brand-yellow/10 backdrop-blur-sm border border-brand-yellow/30 rounded-full mb-2">
+            <Sparkles className="w-4 h-4 text-brand-yellow" />
+            <span className="text-xs text-brand-yellow font-medium">Trusted by Global Brands</span>
+          </div>
+          
           <h1
             ref={headlineRef}
             className="opacity-0 translate-y-7 transition-all duration-700 text-4xl sm:text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg"
           >
             Crafting Bold{" "}
-            <span className="gradient-text relative">Digital Solutions</span>{" "}
+            <span className="gradient-text relative">
+              Digital Solutions
+              <div className="absolute -inset-1 bg-brand-yellow/10 rounded-md blur-lg -z-10"></div>
+            </span>{" "}
             for Visionaries
           </h1>
           <p
@@ -150,23 +184,51 @@ const HeroSection = () => {
             Future-proof, lightning-fast web/apps — all with personal,
             expert-crafted care.
           </p>
+          
+          {/* Trust indicators */}
+          <div className="flex flex-wrap items-center gap-4 mb-2">
+            <div className="flex items-center gap-1 text-white/70 text-sm">
+              <Star className="w-4 h-4 text-brand-yellow" fill="#FFD700" />
+              <Star className="w-4 h-4 text-brand-yellow" fill="#FFD700" />
+              <Star className="w-4 h-4 text-brand-yellow" fill="#FFD700" />
+              <Star className="w-4 h-4 text-brand-yellow" fill="#FFD700" />
+              <Star className="w-4 h-4 text-brand-yellow" fill="#FFD700" />
+              <span className="ml-1 text-xs">5.0 (230+ Reviews)</span>
+            </div>
+            
+            <div className="h-4 w-px bg-white/20"></div>
+            
+            <div className="text-white/70 text-xs flex items-center">
+              <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-medium mr-2">99.9%</span>
+              Client Satisfaction
+            </div>
+          </div>
+          
           <a
             ref={ctaRef}
             href="#contact"
-            className="opacity-0 translate-y-4 scale-90 transition-all duration-700 inline-flex items-center px-8 py-4 bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-full shadow-lg hover:scale-105"
+            className="opacity-0 translate-y-4 scale-90 transition-all duration-700 group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-full shadow-lg overflow-hidden"
           >
             <span className="relative z-10 flex items-center">
-              Start Your Project <ArrowRight className="w-6 h-6 ml-2" />
+              Start Your Project <ArrowRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
             </span>
-            <span className="absolute -z-10 inset-0 rounded-full blur-xl opacity-60 bg-brand-yellow animate-cta-glow"></span>
+            <span className="absolute -z-10 inset-0 rounded-full blur-xl opacity-60 bg-brand-yellow animate-pulse-subtle"></span>
+            {/* Professional animation on hover */}
+            <span className="absolute inset-0 -z-5 bg-white/20 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
           </a>
         </div>
 
-        {/* Right: 3D code animation */}
+        {/* Right: Enhanced 3D code animation */}
         <div className="hidden md:flex w-full md:w-1/2 justify-center mt-12 md:mt-0">
           <div ref={codeRef} className="floating-code-3d relative perspective">
-            {/* Laptop with screen */}
+            {/* Professional decorative elements */}
+            <div className="absolute -top-10 -right-16 w-32 h-32">
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-yellow/10 to-brand-gold/5 rounded-full blur-3xl"></div>
+            </div>
+            
+            {/* Enhanced Laptop with screen */}
             <div className="relative w-[420px] h-[280px] transition-all duration-300">
+              <div className="absolute -inset-6 bg-black/50 rounded-xl blur-xl -z-10"></div>
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[340px] h-[18px] bg-gradient-to-r from-[#222] to-[#333] rounded-[6px] shadow-2xl"></div>
               <div className="absolute bottom-[17px] left-1/2 -translate-x-1/2 w-[350px] h-[8px] bg-[#1a1a1a] rounded-b-[10px]"></div>
               <div className="absolute bottom-[24px] left-1/2 -translate-x-1/2 w-[360px] h-[14px] bg-[#333] rounded-b-[10px]"></div>
@@ -181,57 +243,61 @@ const HeroSection = () => {
                       script.js
                     </div>
                   </div>
-                  {/* Code editor content */}
-                  <div className="flex-1 bg-[#1E1E1E] rounded text-xs p-3 text-left font-mono shadow-inner">
-                    <div className="text-[#9CDCFE]">
-                      <span className="text-[#C586C0]">const</span>{" "}
-                      <span>createWebsite</span>{" "}
-                      <span className="text-white">=</span>{" "}
-                      <span className="text-[#DCDCAA]">(client)</span>{" "}
-                      <span className="text-white">=&gt;</span>{" "}
-                      <span className="text-[#DCDCAA]">{`{`}</span>
-                    </div>
-                    <div className="ml-4 text-[#6A9955]">
-                      // Crafting amazing digital experiences
-                    </div>
-                    <div className="ml-4">
-                      <span className="text-[#C586C0]">return</span>{" "}
-                      <span className="text-[#DCDCAA]">new</span>{" "}
-                      <span className="text-[#4EC9B0]">Promise</span>
-                    </div>
-                    <div className="ml-8">
-                      <span
-                        data-typing="const design = createDesign(client.needs);"
-                        data-typing-delay="800"
-                        data-typing-speed="35"
-                      ></span>
-                    </div>
-                    <div className="ml-8">
-                      <span
-                        data-typing="const code = buildArchitecture(design);"
-                        data-typing-delay="2000"
-                        data-typing-speed="35"
-                      ></span>
-                    </div>
-                    <div className="ml-8">
-                      <span
-                        data-typing="const website = deployOptimized(code);"
-                        data-typing-delay="3200"
-                        data-typing-speed="35"
-                      ></span>
-                    </div>
-                    <div className="ml-8">
-                      <span
-                        data-typing="resolve(website); // Beautiful & Performant"
-                        data-typing-delay="4400"
-                        data-typing-speed="35"
-                        data-typing-cursor
-                      ></span>
+                  {/* Code editor content with professional styling */}
+                  <div className="flex-1 bg-[#1E1E1E] rounded text-xs p-3 text-left font-mono shadow-inner relative">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-brand-yellow/5 opacity-70"></div>
+                    <div className="relative">
+                      <div className="text-[#9CDCFE]">
+                        <span className="text-[#C586C0]">const</span>{" "}
+                        <span>createWebsite</span>{" "}
+                        <span className="text-white">=</span>{" "}
+                        <span className="text-[#DCDCAA]">(client)</span>{" "}
+                        <span className="text-white">=&gt;</span>{" "}
+                        <span className="text-[#DCDCAA]">{`{`}</span>
+                      </div>
+                      <div className="ml-4 text-[#6A9955]">
+                        // Crafting amazing digital experiences
+                      </div>
+                      <div className="ml-4">
+                        <span className="text-[#C586C0]">return</span>{" "}
+                        <span className="text-[#DCDCAA]">new</span>{" "}
+                        <span className="text-[#4EC9B0]">Promise</span>
+                      </div>
+                      <div className="ml-8">
+                        <span
+                          data-typing="const design = createDesign(client.needs);"
+                          data-typing-delay="800"
+                          data-typing-speed="35"
+                        ></span>
+                      </div>
+                      <div className="ml-8">
+                        <span
+                          data-typing="const code = buildArchitecture(design);"
+                          data-typing-delay="2000"
+                          data-typing-speed="35"
+                        ></span>
+                      </div>
+                      <div className="ml-8">
+                        <span
+                          data-typing="const website = deployOptimized(code);"
+                          data-typing-delay="3200"
+                          data-typing-speed="35"
+                        ></span>
+                      </div>
+                      <div className="ml-8">
+                        <span
+                          data-typing="resolve(website); // Beautiful & Performant"
+                          data-typing-delay="4400"
+                          data-typing-speed="35"
+                          data-typing-cursor
+                        ></span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            
             {/* Enhanced floating tech icons with better animations */}
             <div
               className="absolute -top-10 -right-6 w-14 h-14 bg-brand-yellow/20 backdrop-blur-sm rounded-lg flex items-center justify-center text-brand-yellow animate-float shadow-lg border border-brand-yellow/30"
@@ -292,13 +358,14 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll Down Indicator */}
+      {/* Enhanced Scroll Down Indicator */}
       <div className="absolute left-1/2 -translate-x-1/2 bottom-8 hidden sm:flex flex-col items-center animate-bounce">
         <span className="text-white/80 text-sm mb-2 font-medium">
           Scroll Down
         </span>
-        <div className="w-8 h-8 rounded-full border-2 border-brand-yellow/50 flex items-center justify-center">
+        <div className="w-8 h-8 rounded-full border-2 border-brand-yellow/50 flex items-center justify-center relative">
           <ChevronDown className="w-5 h-5 text-brand-yellow" />
+          <div className="absolute inset-0 rounded-full border-2 border-brand-yellow/20 scale-[1.15] opacity-70 animate-ping" style={{ animationDuration: '1.5s' }}></div>
         </div>
       </div>
     </section>

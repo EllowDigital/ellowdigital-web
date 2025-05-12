@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import Logo from "./Logo";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, Globe, Search, Award, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_LINKS = [
@@ -132,11 +132,18 @@ const Navbar = () => {
     exit: { opacity: 0, height: 0 }
   };
 
+  // Decorative elements animation variants
+  const decorVariants = {
+    initial: { opacity: 0, scale: 0.8 },
+    animate: { opacity: 0.7, scale: 1, transition: { duration: 0.5 } },
+    hover: { scale: 1.1, opacity: 0.9, transition: { duration: 0.3 } }
+  };
+
   return (
     <>
-      {/* Scroll Indicator */}
+      {/* Enhanced Scroll Indicator with gradient */}
       <motion.div
-        className="fixed top-0 left-0 h-1 bg-brand-yellow z-50"
+        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-brand-gold via-brand-yellow to-brand-gold z-50"
         style={{ width: `${scrollProgress}%` }}
         initial={{ width: 0 }}
         animate={{ width: `${scrollProgress}%` }}
@@ -145,35 +152,52 @@ const Navbar = () => {
 
       <nav
         ref={navRef}
-        className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ${isScrolled
+        className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${isScrolled
           ? "bg-black/90 shadow-md backdrop-blur-xl border-b border-brand-yellow/10"
           : "bg-black/70 backdrop-blur-md"
           }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
+        {/* Decorative elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div 
+            className="absolute -top-10 -right-10 w-20 h-20 bg-brand-yellow/5 rounded-full blur-xl"
+            initial="initial"
+            animate="animate"
+            variants={decorVariants}
+          />
+          <motion.div 
+            className="absolute -bottom-12 left-1/4 w-24 h-24 bg-brand-gold/5 rounded-full blur-xl"
+            initial="initial"
+            animate="animate"
+            variants={decorVariants}
+            style={{ animationDelay: "0.2s" }}
+          />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between relative">
+          <Link to="/" className="flex items-center gap-2 z-10">
             <Logo />
             <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-brand-yellow to-brand-gold text-transparent bg-clip-text">
               EllowDigital
             </span>
           </Link>
 
-          {/* Desktop Menu */}
+          {/* Desktop Menu with enhanced styling */}
           <div className="hidden lg:flex gap-4 xl:gap-6 items-center">
             {NAV_LINKS.map((link) => (
               <button
                 key={link.href}
                 onClick={() => handleNavClick(link.href)}
-                className={`relative px-3 xl:px-4 py-2 text-sm font-medium transition-colors ${
+                className={`relative px-3 xl:px-4 py-2 text-sm font-medium transition-all duration-300 ${
                   (isHomePage && activeSection === link.href.substring(1)) || 
                   (!isHomePage && location.pathname === link.href)
                     ? "text-brand-yellow"
                     : "text-white hover:text-brand-yellow"
-                }`}
+                } group`}
               >
                 {link.name}
                 <span
-                  className={`absolute left-0 bottom-0 h-0.5 bg-brand-yellow transition-all ${
+                  className={`absolute left-0 bottom-0 h-0.5 bg-gradient-to-r from-brand-gold to-brand-yellow transition-all duration-300 ${
                     (isHomePage && activeSection === link.href.substring(1)) || 
                     (!isHomePage && location.pathname === link.href) 
                       ? "w-full" 
@@ -182,24 +206,43 @@ const Navbar = () => {
                 />
               </button>
             ))}
+
+            {/* Enhanced Action Buttons */}
+            <div className="flex items-center gap-2 ml-2">
+              <button
+                className="p-2 rounded-full hover:bg-white/10 transition-all duration-300"
+                aria-label="Search"
+              >
+                <Search className="w-4 h-4 text-white/80 hover:text-brand-yellow" />
+              </button>
+              <button
+                className="p-2 rounded-full hover:bg-white/10 transition-all duration-300"
+                aria-label="Global"
+              >
+                <Globe className="w-4 h-4 text-white/80 hover:text-brand-yellow" />
+              </button>
+            </div>
+
             <button
               onClick={() => handleNavClick("#contact")}
-              className="px-5 py-2 bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-full shadow hover:scale-105 transition-transform"
+              className="group relative px-5 py-2 overflow-hidden bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold rounded-full shadow hover:shadow-lg transition-all duration-300"
             >
-              <span className="flex items-center gap-1">
+              <span className="relative z-10 flex items-center">
                 Get Started
-                <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform" />
+                <ChevronDown className="w-4 h-4 ml-1 group-hover:rotate-180 transition-transform duration-300" />
               </span>
+              <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
             </button>
           </div>
 
-          {/* Mobile Toggle Button */}
+          {/* Mobile Toggle Button with enhanced styling */}
           <button
-            className="lg:hidden text-brand-yellow p-2"
+            className="lg:hidden text-brand-yellow p-2 relative"
             onClick={toggleMobileMenu}
             aria-label="Toggle mobile menu"
             aria-expanded={isMobileOpen}
           >
+            <div className="absolute -inset-1 bg-brand-yellow/10 rounded-full blur-sm opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
             {isMobileOpen ? (
               <X className="h-6 w-6" />
             ) : (
@@ -208,11 +251,11 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Menu Panel with AnimatePresence for smoother transitions */}
+        {/* Enhanced Mobile Menu Panel with AnimatePresence for smoother transitions */}
         <AnimatePresence>
           {isMobileOpen && (
             <motion.div
-              className="lg:hidden bg-black/95 border-t border-brand-yellow/10 py-2 px-2 space-y-1 overflow-hidden"
+              className="lg:hidden bg-gradient-to-b from-black/95 to-black/90 border-t border-brand-yellow/10 py-2 px-2 space-y-1 overflow-hidden"
               variants={mobileMenuVariants}
               initial="hidden"
               animate="visible"
@@ -223,7 +266,7 @@ const Navbar = () => {
                 <motion.button
                   key={link.href}
                   onClick={() => handleNavClick(link.href)}
-                  className={`block w-full text-center py-3 px-4 rounded-lg text-base font-medium transition-all ${
+                  className={`block w-full text-center py-3 px-4 rounded-lg text-base font-medium transition-all duration-300 ${
                     (isHomePage && activeSection === link.href.substring(1)) || 
                     (!isHomePage && location.pathname === link.href)
                       ? "bg-brand-yellow/10 text-brand-yellow"
@@ -243,6 +286,24 @@ const Navbar = () => {
               >
                 Get Started
               </motion.button>
+              
+              {/* Additional professional elements */}
+              <div className="flex justify-center items-center gap-4 mt-4 pt-4 border-t border-white/10">
+                <motion.div
+                  className="flex items-center gap-2 text-white/70 text-sm"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <Award className="w-4 h-4 text-brand-yellow" />
+                  <span>Award Winning</span>
+                </motion.div>
+                <motion.div
+                  className="flex items-center gap-2 text-white/70 text-sm"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <Zap className="w-4 h-4 text-brand-yellow" />
+                  <span>Fast Response</span>
+                </motion.div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

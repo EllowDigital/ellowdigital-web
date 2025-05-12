@@ -102,7 +102,7 @@
   }
 }
 
-/* --🌑 COMPONENT STYLES -- */
+/* --🌑 ENHANCED COMPONENT STYLES -- */
 @layer components {
   /* Gradient text with improved contrast */
   .gradient-text {
@@ -110,8 +110,24 @@
     text-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
   }
 
+  /* Professional gradient backgrounds */
   .gradient-bg {
     @apply bg-gradient-to-r from-background via-background to-background;
+  }
+
+  .gradient-bg-accent {
+    @apply bg-gradient-to-r from-brand-gold/5 via-brand-yellow/10 to-brand-gold/5;
+  }
+
+  /* Enhanced glass effect for modern UI */
+  .glass-pro {
+    @apply backdrop-blur-md bg-black/40 border border-white/10 shadow-xl;
+  }
+
+  /* Soft glow effect for highlighted elements */
+  .soft-glow {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.15),
+                0 0 30px rgba(255, 215, 0, 0.05);
   }
 
   /* Section container with proper spacing and improved responsive design */
@@ -120,31 +136,62 @@
     padding-block: clamp(2rem, 10vh, 6rem);
   }
 
-  /* Section title with subtle effects */
+  /* Enhanced section title with subtle effects */
   .section-title {
     @apply font-bold mb-6 md:mb-8 text-center text-foreground;
     letter-spacing: -0.02em;
     font-size: clamp(1.75rem, 5vw, 2.75rem);
   }
 
-  /* Card hover effects with smooth transition */
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-card-hover transform hover:-translate-y-2 relative;
+  /* Section title with decorative elements */
+  .section-title-decorated {
+    @apply section-title relative inline-flex flex-col items-center;
   }
+  
+  .section-title-decorated::after {
+    content: "";
+    @apply h-1 w-16 bg-gradient-to-r from-brand-gold to-brand-yellow rounded-full mt-4;
+  }
+
+  /* Professional card with enhanced hover effects */
+  .card-hover {
+    @apply transition-all duration-500 hover:shadow-card-hover transform hover:-translate-y-2 relative;
+  }
+  
   .card-hover::after {
     content: "";
     @apply absolute inset-0 opacity-0 bg-gradient-to-t from-brand-yellow/10 to-transparent rounded-xl transition-opacity duration-300;
   }
+  
   .card-hover:hover::after {
     @apply opacity-100;
   }
 
-  /* Smooth scale animations */
+  /* Professional card with border glow */
+  .card-border-glow {
+    @apply relative;
+  }
+  
+  .card-border-glow::before {
+    content: "";
+    @apply absolute -inset-0.5 rounded-xl opacity-0 bg-gradient-to-tr from-brand-gold via-brand-yellow to-brand-gold blur-sm transition-opacity duration-300;
+    z-index: -1;
+  }
+  
+  .card-border-glow:hover::before {
+    @apply opacity-70;
+  }
+
+  /* Professional scale animations */
   .hover-scale {
     @apply transition-transform duration-300 hover:scale-105;
   }
+  
+  .hover-scale-sm {
+    @apply transition-transform duration-300 hover:scale-[1.03];
+  }
 
-  /* Glass effect with better blending */
+  /* Enhanced glass effect with better blending */
   .glass-effect {
     @apply bg-black/40 backdrop-blur-md border border-white/10 shadow-md;
   }
@@ -152,6 +199,19 @@
   /* Neo effect with subtler shadows */
   .neo-effect {
     @apply bg-card border border-border/50 shadow-[0.25rem_0.25rem_1rem_rgba(0,0,0,0.8),-0.25rem_-0.25rem_1rem_rgba(255,255,255,0.03)];
+  }
+
+  /* Professional badge styles */
+  .badge {
+    @apply inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+  
+  .badge-primary {
+    @apply badge bg-brand-yellow/20 text-brand-yellow border border-brand-yellow/30;
+  }
+  
+  .badge-outline {
+    @apply badge border border-white/20 text-white/70;
   }
 
   /* Morphing shape animation */
@@ -171,7 +231,16 @@
     transform: translateY(0);
   }
 
-  /* Responsive grid layouts */
+  /* Professional decoration elements */
+  .decoration-dot {
+    @apply w-2 h-2 rounded-full bg-brand-yellow;
+  }
+  
+  .decoration-line {
+    @apply h-px bg-gradient-to-r from-transparent via-brand-yellow/30 to-transparent;
+  }
+
+  /* Professional grid layouts */
   .responsive-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
@@ -189,18 +258,49 @@
     flex: 1 1 clamp(min(100%, 20rem), 30%, 100%);
   }
 
-  /* Button styles with smooth transitions and improved accessibility */
+  /* Enhanced button styles with professional effects */
   .btn-primary {
-    @apply bg-brand-yellow hover:bg-brand-gold text-black font-medium px-5 py-3 rounded-md transition-all duration-300 shadow-md hover:shadow-lg;
+    @apply relative overflow-hidden bg-brand-yellow hover:bg-brand-gold text-black font-medium px-5 py-3 rounded-md transition-all duration-500 shadow-md hover:shadow-lg;
     min-height: 48px;
   }
+  
+  .btn-primary::after {
+    content: "";
+    @apply absolute inset-0 bg-white/20 translate-y-full hover:translate-y-0 transition-transform duration-500;
+  }
+
   .btn-secondary {
-    @apply bg-transparent hover:bg-brand-yellow/10 text-foreground border border-brand-yellow/30 font-medium px-5 py-3 rounded-md transition-all duration-300 shadow-sm hover:shadow;
+    @apply relative overflow-hidden bg-transparent hover:bg-brand-yellow/10 text-foreground border border-brand-yellow/30 font-medium px-5 py-3 rounded-md transition-all duration-300 shadow-sm hover:shadow;
     min-height: 48px;
   }
+  
+  .btn-secondary::before {
+    content: "";
+    @apply absolute inset-0 bg-brand-yellow/5 scale-x-0 hover:scale-x-100 transition-transform duration-500;
+    transform-origin: left;
+  }
+
   .btn-outline {
-    @apply bg-transparent hover:bg-foreground/10 text-foreground border border-foreground/30 font-medium px-5 py-3 rounded-md transition-all duration-300;
+    @apply relative overflow-hidden bg-transparent hover:bg-foreground/10 text-foreground border border-foreground/30 font-medium px-5 py-3 rounded-md transition-all duration-300;
     min-height: 48px;
+  }
+  
+  .btn-outline::after {
+    content: "";
+    @apply absolute bottom-0 left-0 right-0 h-px bg-foreground/30 scale-x-0 hover:scale-x-100 transition-transform duration-500;
+    transform-origin: left;
+  }
+
+  /* Professional gradient CTAs */
+  .btn-gradient {
+    @apply relative overflow-hidden bg-gradient-to-r from-brand-gold to-brand-yellow text-black font-bold px-6 py-3 rounded-md transition-all duration-300 shadow-lg hover:shadow-xl;
+    min-height: 48px;
+  }
+  
+  .btn-gradient::before {
+    content: "";
+    @apply absolute inset-0 bg-white/20 scale-x-0 hover:scale-x-100 transition-transform duration-500;
+    transform-origin: left;
   }
 
   /* Aspect ratio container for responsive media */
@@ -229,9 +329,14 @@
     height: 100%;
     object-fit: cover;
   }
+  
+  /* Professional dividers */
+  .divider-gradient {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-brand-yellow/30 to-transparent my-8;
+  }
 }
 
-/* --🌑 ANIMATIONS -- */
+/* --🌑 ENHANCED ANIMATIONS -- */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
@@ -256,6 +361,21 @@
 
 .loading-pulse {
   animation: pulse-loading 1.5s ease-in-out infinite;
+}
+
+/* Professional shimmer effect */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer-effect {
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 215, 0, 0.1) 50%, 
+    transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite linear;
 }
 
 /* --🌑 MEDIA QUERIES -- */

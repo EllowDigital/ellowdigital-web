@@ -1,36 +1,38 @@
 
-/* Root Container */
+/* Root Container with enhanced variables */
 :root {
-  --primary-color: #646cff;
-  --secondary-color: #61dafb;
-  --text-muted: #888;
+  --primary-color: #FFD700;
+  --secondary-color: #FFDF00;
+  --accent-color: #F5F5F5;
+  --text-muted: #999;
   --transition-duration: 300ms;
   --animation-duration: 20s;
+  --glow-color: rgba(255, 215, 0, 0.15);
 }
 
 #root {
   max-width: 100%;
   width: 100%;
   margin: 0 auto;
-  padding: clamp(1rem, 5vw, 2rem);
+  padding: clamp(0.5rem, 3vw, 1.5rem);
   text-align: center;
 }
 
-/* Logo Styling */
+/* Enhanced Logo Styling */
 .logo {
   height: clamp(4em, 8vw, 6em);
-  padding: clamp(1em, 3vw, 1.5em);
+  padding: clamp(0.8em, 2vw, 1.2em);
   will-change: filter;
   transition: filter var(--transition-duration);
 }
 
-/* Logo Hover Effects */
+/* Enhanced Logo Hover Effects */
 .logo:hover {
-  filter: drop-shadow(0 0 2em var(--primary-color)aa);
+  filter: drop-shadow(0 0 2em var(--primary-color));
 }
 
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em var(--secondary-color)aa);
+  filter: drop-shadow(0 0 2em var(--secondary-color));
 }
 
 /* Logo Spin Animation */
@@ -50,36 +52,121 @@
   }
 }
 
-/* Card Styling */
+/* Enhanced Card Styling for professional look */
 .card {
-  padding: clamp(1em, 5vw, 2em);
-  border-radius: 0.5em;
-  background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 200ms ease-in-out;
+  padding: clamp(1.5em, 5vw, 2.5em);
+  border-radius: 0.75em;
+  background-color: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
   width: 100%;
   max-width: 100%;
 }
 
-/* Card Hover Effect */
+/* Enhanced Card Hover Effect */
 .card:hover {
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px);
 }
 
-/* "Read the Docs" Text Styling */
+/* Professional Text Styling */
 .read-the-docs {
   color: var(--text-muted);
   font-size: clamp(0.75rem, 2vw, 0.9rem);
   transition: color 200ms ease;
+  letter-spacing: 0.02em;
 }
 
-/* Hover effect on links */
+/* Enhanced hover effect on links */
 .read-the-docs:hover {
   color: var(--primary-color);
+  text-shadow: 0 0 8px var(--glow-color);
+}
+
+/* Custom animations for professional effects */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.float-animation {
+  animation: float 4s ease-in-out infinite;
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Professional decorative elements */
+.gold-gradient {
+  background: linear-gradient(135deg, #FFD700 0%, #FFC000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-gold-border {
+  position: relative;
+}
+
+.card-gold-border::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75em;
+  padding: 1px;
+  background: linear-gradient(135deg, #FFD700 0%, #FFC000 100%);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Glassmorphism effect for professional UI */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Professional subtle dividers */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  margin: 2rem 0;
+}
+
+.divider.vertical {
+  width: 1px;
+  height: auto;
+  background: linear-gradient(0deg, transparent, rgba(255, 255, 255, 0.1), transparent);
 }
 
 /* Enhanced Responsive Design */
 @media (max-width: 480px) {
+  #root {
+    padding: 0.5rem;
+  }
+
+  .logo {
+    height: 3em;
+    padding: 0.6em;
+  }
+
+  .card {
+    padding: 1.5em;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
   #root {
     padding: 0.75rem;
   }
@@ -90,47 +177,123 @@
   }
 
   .card {
-    padding: 1.25em;
-  }
-}
-
-@media (min-width: 481px) and (max-width: 768px) {
-  #root {
-    padding: 1rem;
-  }
-
-  .logo {
-    height: 4em;
-    padding: 1em;
-  }
-
-  .card {
-    padding: 1.5em;
+    padding: 1.75em;
   }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .card {
-    max-width: 90%;
+    max-width: 85%;
     margin: 0 auto;
   }
 }
 
 @media (min-width: 1025px) {
   .card {
-    max-width: 80%;
+    max-width: 75%;
     margin: 0 auto;
   }
 }
 
-/* Responsive images */
+/* Enhanced responsive images */
 img {
   max-width: 100%;
   height: auto;
+  object-fit: cover;
 }
 
-/* Improved focus states for accessibility */
+/* Improved focus states for accessibility with brand styling */
 :focus {
   outline: 2px solid var(--primary-color);
   outline-offset: 3px;
+  box-shadow: 0 0 0 4px var(--glow-color);
+}
+
+/* Professional button styles */
+.btn-professional {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #FFD700 0%, #FFDF00 100%);
+  color: #000;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-professional::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: all 0.6s ease;
+}
+
+.btn-professional:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(255, 215, 0, 0.4);
+}
+
+.btn-professional:hover::before {
+  left: 100%;
+}
+
+/* Professional badge styling */
+.badge-pro {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #FFD700 0%, #FFDF00 100%);
+  color: #000;
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Professional tooltips */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Professional loading states */
+.loading-skeleton {
+  background: linear-gradient(90deg, #333 0%, #444 50%, #333 100%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 4px;
+  height: 1rem;
+  margin: 0.5rem 0;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }

@@ -25,18 +25,21 @@ const Logo = () => {
         style={{ minHeight: 48 }}
       >
         {!imgError ? (
-          <img
-            src={logoSrc}
-            alt={LOGO_ALT}
-            width={160}
-            height={48}
-            className="h-12 w-auto object-contain transition duration-500 drop-shadow"
-            style={{
-              filter: "drop-shadow(0px 2px 8px rgba(255, 255, 70, 0.12))",
-            }}
-            loading="eager"
-            onError={() => setImgError(true)}
-          />
+          <div className="relative">
+            <img
+              src={logoSrc}
+              alt={LOGO_ALT}
+              width={160}
+              height={48}
+              className="h-12 w-auto object-contain transition duration-500"
+              style={{
+                filter: "drop-shadow(0px 2px 8px rgba(255, 215, 0, 0.2))",
+              }}
+              loading="eager"
+              onError={() => setImgError(true)}
+            />
+            <div className="absolute -inset-1 bg-brand-yellow/10 rounded-full blur-md -z-10"></div>
+          </div>
         ) : (
           <span className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-brand-gold to-brand-yellow bg-clip-text text-transparent tracking-wider">
             Ellow<span className="text-foreground">Digital</span>
