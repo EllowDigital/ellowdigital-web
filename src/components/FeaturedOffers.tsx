@@ -61,7 +61,7 @@ const FeaturedOffers = () => {
                 </div>
               )}
               
-              <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-brand-yellow to-brand-gold"></div>
+              <div className="absolute inset-x-0 h-1 bg-brand-yellow"></div>
               
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -94,7 +94,7 @@ const FeaturedOffers = () => {
               <CardFooter>
                 <Button 
                   onClick={scrollToContact}
-                  className="w-full bg-gradient-to-r from-brand-yellow to-brand-gold hover:from-brand-gold hover:to-brand-yellow text-black font-semibold py-2 px-4 rounded-md transition-colors"
+                  className="w-full bg-brand-yellow hover:bg-brand-gold text-black font-semibold py-2 px-4 rounded-md transition-colors"
                 >
                   Get Started
                 </Button>
@@ -103,11 +103,11 @@ const FeaturedOffers = () => {
           ))}
         </div>
         
-        <div className="mt-12 w-full text-center px-4">
-          <p className="text-sm text-muted-foreground mx-auto">
+        <div className="mt-12 text-center mx-auto max-w-4xl px-4">
+          <p className="text-sm text-muted-foreground">
             All prices are in Indian Rupees (₹). GST applicable as per government regulations.
           </p>
-          <p className="text-xs text-muted-foreground mt-1 mx-auto">
+          <p className="text-xs text-muted-foreground mt-1">
             Serving clients across India including Delhi, Mumbai, Bangalore, Chennai, Kolkata and more.
           </p>
         </div>
