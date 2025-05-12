@@ -47,8 +47,10 @@ export const createError = (
 export const handleError = (error: any, silent = false): void => {
   const enhancedError = normalizeError(error);
   
-  // Log error for debugging
-  console.error("Error caught:", enhancedError);
+  // Only log errors in development
+  if (process.env.NODE_ENV === 'development') {
+    console.error("Error caught:", enhancedError);
+  }
   
   // Show user-friendly notification unless silent
   if (!silent) {
@@ -56,7 +58,8 @@ export const handleError = (error: any, silent = false): void => {
     toast.error(message, {
       description: enhancedError.type === ErrorType.NETWORK 
         ? "Please check your connection and try again." 
-        : undefined
+        : undefined,
+      duration: 5000,
     });
   }
 };
@@ -92,7 +95,8 @@ const determineErrorType = (error: any): ErrorType => {
   // Network errors
   if (error.message?.includes("Network") || 
       error.message?.includes("fetch") || 
-      error.message?.includes("connection")) {
+      error.message?.includes("connection") ||
+      error.name === "AbortError") {
     return ErrorType.NETWORK;
   }
   

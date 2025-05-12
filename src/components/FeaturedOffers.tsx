@@ -103,11 +103,11 @@ const FeaturedOffers = () => {
           ))}
         </div>
         
-        <div className="mt-8 md:mt-12 text-center">
-          <p className="text-sm text-muted-foreground">
+        <div className="mt-8 md:mt-12 text-center w-full">
+          <p className="text-sm text-muted-foreground text-center w-full">
             All prices are in Indian Rupees (₹). GST applicable as per government regulations.
           </p>
-          <p className="text-xs text-muted-foreground mt-1">
+          <p className="text-xs text-muted-foreground mt-1 text-center w-full">
             Serving clients across Delhi, Mumbai, Bangalore, Chennai, Kolkata and more.
           </p>
         </div>

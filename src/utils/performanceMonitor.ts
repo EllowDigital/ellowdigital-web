@@ -21,12 +21,11 @@ export const initializePerformanceMonitoring = () => {
     try {
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          // Log tasks that take more than our threshold
-          if (entry.duration > LONG_TASK_THRESHOLD_MS) {
-            console.warn('Long task detected:', {
+          // Only log critical performance issues
+          if (entry.duration > LONG_TASK_THRESHOLD_MS * 2) {
+            console.warn('Critical performance issue detected:', {
               duration: `${Math.round(entry.duration)}ms`,
-              name: entry.name,
-              startTime: entry.startTime
+              name: entry.name
             });
           }
         }
@@ -34,24 +33,17 @@ export const initializePerformanceMonitoring = () => {
       
       observer.observe({ entryTypes: ['longtask'] });
     } catch (e) {
-      console.error('Performance observer not supported', e);
+      // Silent fail for unsupported browsers
     }
   }
 
-  // Monitor page load metrics
+  // Light-weight page load metrics
   window.addEventListener('load', () => {
-    // Use setTimeout to ensure this runs after the load event completes
     setTimeout(() => {
       if ('performance' in window) {
         const pageNavigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
         if (pageNavigation) {
-          // Log key performance metrics
-          console.info('Page load performance:', {
-            loadTime: `${Math.round(pageNavigation.loadEventEnd - pageNavigation.startTime)}ms`,
-            domContentLoaded: `${Math.round(pageNavigation.domContentLoadedEventEnd - pageNavigation.startTime)}ms`,
-            firstPaint: `${Math.round(performance.getEntriesByName('first-paint')[0]?.startTime || 0)}ms`,
-            firstContentfulPaint: `${Math.round(performance.getEntriesByName('first-contentful-paint')[0]?.startTime || 0)}ms`
-          });
+          console.info('Page loaded in:', `${Math.round(pageNavigation.loadEventEnd - pageNavigation.startTime)}ms`);
         }
       }
     }, 0);
@@ -88,11 +80,16 @@ export const useRenderPerformance = (componentName: string) => {
 export const useDeferredEffect = (callback: () => void | (() => void), deps: React.DependencyList = []) => {
   useEffect(() => {
     // Use requestIdleCallback to run during browser idle time
-    const handle = requestIdleCallback(() => {
-      return callback();
-    });
-
-    return () => cancelIdleCallback(handle);
+    if (typeof requestIdleCallback !== 'undefined') {
+      const handle = requestIdleCallback(() => {
+        return callback();
+      });
+      return () => cancelIdleCallback(handle);
+    } else {
+      // Fallback for browsers without requestIdleCallback
+      const timeoutId = setTimeout(callback, 1);
+      return () => clearTimeout(timeoutId);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 };
@@ -159,25 +156,17 @@ export const optimizeImage = (
   img.src = src;
 };
 
-/**
- * Register the performance utility in the window object for debugging
- */
-if (typeof window !== 'undefined') {
+// Simplified performance debugging tool
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   (window as any).__PERFORMANCE_MONITOR__ = {
     getMetrics: () => {
       if ('performance' in window) {
         return {
-          memory: (performance as any).memory ? {
-            usedJSHeapSize: (performance as any).memory.usedJSHeapSize,
-            totalJSHeapSize: (performance as any).memory.totalJSHeapSize,
-            jsHeapSizeLimit: (performance as any).memory.jsHeapSizeLimit
-          } : 'Not available',
           navigation: performance.getEntriesByType('navigation'),
-          resources: performance.getEntriesByType('resource')
+          resources: performance.getEntriesByType('resource').slice(0, 10)
         };
       }
       return 'Performance API not available';
-    },
-    clearMarks: () => performance.clearMarks()
+    }
   };
 }
