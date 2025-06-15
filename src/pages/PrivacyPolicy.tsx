@@ -275,7 +275,7 @@ const PrivacyPolicy = () => {
               </p>
               <div className="mt-3">
                 <p>
-                  <strong>Email:</strong> ellowdigitals@gmail.com
+                  <strong>Email:</strong> ellowdigitalindia@gmail.com
                 </p>
                 <p>
                   <strong>Phone:</strong> +91 89604 46756

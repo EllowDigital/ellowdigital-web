@@ -106,7 +106,7 @@ const RefundPolicy = () => {
               </ul>
               <p>
                 All cancellation requests must be submitted in writing to
-                ellowdigitals@gmail.com. The effective date of cancellation will
+                ellowdigitalindia@gmail.com. The effective date of cancellation will
                 be the date we receive your written notice.
               </p>
             </section>
@@ -221,7 +221,7 @@ const RefundPolicy = () => {
               </p>
               <div className="mt-3">
                 <p>
-                  <strong>Email:</strong> ellowdigitals@gmail.com
+                  <strong>Email:</strong> ellowdigitalindia@gmail.com
                 </p>
                 <p>
                   <strong>Phone:</strong> +91 89604 46756

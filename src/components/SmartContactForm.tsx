@@ -102,7 +102,7 @@ const SmartContactForm = () => {
         _next: "https://www.ellowdigitals.me/", // Redirect URL after success
         _subject: "New Message from Contact Form",
       };
-      const formAction = "https://formsubmit.co/ellowdigitals@gmail.com";
+      const formAction = "https://formsubmit.co/ellowdigitalindia@gmail.com";
 
       fetch(formAction, {
         method: "POST",
@@ -332,7 +332,7 @@ const SmartContactForm = () => {
                     <Mail className="w-5 h-5 text-brand-yellow" />
                   </span>
                   <span className="font-medium text-base">
-                    ellowdigitals@gmail.com
+                    ellowdigitalindia@gmail.com
                   </span>
                 </div>
               </div>
