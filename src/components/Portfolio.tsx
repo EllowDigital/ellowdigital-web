@@ -19,7 +19,7 @@ const projects = [
     category: "Desktop App",
     image: "/images/projects_img/project1_typeblitz.webp",
     description:
-      "TypeBlitz is a feature-rich desktop application designed to improve typing speed and precision through customized drills, progress tracking, and real-time performance analysis.",
+      "Desktop app to boost typing speed and accuracy with drills, progress tracking, and detailed live stats, plus customizable practice modes, streaks, and daily goals for steady improvement.",
     tech: ["Python", "SQLite3"],
     link: "https://typeblitz.netlify.app/",
   },
@@ -28,7 +28,7 @@ const projects = [
     category: "Web App",
     image: "/images/projects_img/project2_gsai.webp",
     description:
-      "A responsive web application developed for Ghatak Sports Academy India™, offering detailed insights into training programs, event schedules, and institutional updates.",
+      "Responsive web app for GSAI featuring programs, schedules, events, updates, and streamlined admissions info, with an integrated gallery, coach bios, and a mobile-first, performance-optimized UI.",
     tech: ["HTML", "CSS", "JavaScript", "React (Vite)", "TypeScript"],
     link: "https://ghatakgsai.netlify.app/",
   },
@@ -37,9 +37,26 @@ const projects = [
     category: "Website",
     image: "/images/projects_img/project3_sarwan.webp",
     description:
-      "A modern personal portfolio website crafted for Sarwan, showcasing professional achievements, project highlights, and a streamlined contact interface.",
+      "Modern personal portfolio highlighting work, achievements, projects, and an easy, streamlined contact flow, enhanced with smooth animations, responsive layouts, and SEO-friendly metadata.",
     tech: ["HTML", "CSS", "JavaScript", "JQuery"],
     link: "https://sarwan.netlify.app/",
+  },
+  {
+    title: "Tent Decor Expo UP 2025",
+    category: "Web App",
+    image: "/images/projects_img/project4_tdexpoup25.webp",
+    description:
+      "End-to-end event system with online registration, secure e-passes, real-time validation, and check-in, including QR-based verification, admin dashboards, and automated email/SMS notifications.",
+    tech: [
+      "Node.js",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "PostgreSQL",
+      "Cloudinary",
+      "Netlify",
+    ],
+    link: "https://td-expoup25.netlify.app/",
   },
 ];
 
