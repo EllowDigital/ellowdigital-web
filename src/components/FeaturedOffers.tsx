@@ -78,7 +78,9 @@ const offers: Readonly<Offer[]> = [
 const FeaturedOffers = () => {
   const scrollToContact = useCallback(() => {
     if (typeof document !== "undefined") {
-      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+      document
+        .getElementById("contact")
+        ?.scrollIntoView({ behavior: "smooth" });
     }
   }, []);
 
@@ -93,15 +95,17 @@ const FeaturedOffers = () => {
           Featured Offers
         </h2>
         <p className="text-center text-muted-foreground text-lg max-w-2xl mx-auto mb-12 md:mb-16">
-          Special packages designed to meet specific needs with exceptional value.
+          Special packages designed to meet specific needs with exceptional
+          value.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
           {offers.map((offer) => (
             <Card
               key={offer.title}
-              className={`relative overflow-hidden border ${offer.isPopular ? "border-brand-yellow" : "border-border/60"
-                } hover:shadow-xl transition-all duration-500`}
+              className={`relative overflow-hidden border ${
+                offer.isPopular ? "border-brand-yellow" : "border-border/60"
+              } hover:shadow-xl transition-all duration-500`}
               aria-label={offer.title}
             >
               {offer.isPopular && (
@@ -113,7 +117,10 @@ const FeaturedOffers = () => {
                 </div>
               )}
 
-              <div className="absolute inset-x-0 h-1 bg-brand-yellow" aria-hidden="true" />
+              <div
+                className="absolute inset-x-0 h-1 bg-brand-yellow"
+                aria-hidden="true"
+              />
 
               <CardHeader>
                 <CardTitle className="flex items-center flex-wrap gap-2">
@@ -131,21 +138,37 @@ const FeaturedOffers = () => {
 
               <CardContent className="space-y-6">
                 <div className="flex items-baseline">
-                  <div className="text-2xl md:text-3xl font-bold">{offer.price}</div>
+                  <div className="text-2xl md:text-3xl font-bold">
+                    {offer.price}
+                  </div>
                   {offer.priceUnit && (
                     <>
-                      <div className="ml-2 text-sm text-muted-foreground" aria-hidden="true">
+                      <div
+                        className="ml-2 text-sm text-muted-foreground"
+                        aria-hidden="true"
+                      >
                         {offer.priceUnit}
                       </div>
-                      <span className="sr-only">Price {offer.priceUnit.replace("/", " per ")}</span>
+                      <span className="sr-only">
+                        Price {offer.priceUnit.replace("/", " per ")}
+                      </span>
                     </>
                   )}
                 </div>
 
-                <ul className="space-y-3" aria-label={`Features of ${offer.title}`}>
+                <ul
+                  className="space-y-3"
+                  aria-label={`Features of ${offer.title}`}
+                >
                   {offer.features.map((feature, idx) => (
-                    <li key={`${offer.title}-feature-${idx}`} className="flex items-start gap-2">
-                      <CheckCircle className="h-5 w-5 text-brand-yellow shrink-0 mt-0.5" aria-hidden="true" />
+                    <li
+                      key={`${offer.title}-feature-${idx}`}
+                      className="flex items-start gap-2"
+                    >
+                      <CheckCircle
+                        className="h-5 w-5 text-brand-yellow shrink-0 mt-0.5"
+                        aria-hidden="true"
+                      />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -167,10 +190,12 @@ const FeaturedOffers = () => {
 
         <div className="mt-8 md:mt-12 text-center mx-auto max-w-2xl">
           <p className="text-sm text-muted-foreground">
-            All prices are in Indian Rupees (₹). GST applicable as per government regulations.
+            All prices are in Indian Rupees (₹). GST applicable as per
+            government regulations.
           </p>
           <p className="text-xs text-muted-foreground mt-1">
-            Serving clients across Delhi, Mumbai, Bangalore, Chennai, Kolkata and more.
+            Serving clients across Delhi, Mumbai, Bangalore, Chennai, Kolkata
+            and more.
           </p>
         </div>
       </div>
